@@ -10,7 +10,7 @@ private:
 public:
     std::string toString();
 
-    explicit XMLParser(std::string filename);
+    explicit XMLParser(const std::string &filename);
 };
 
 

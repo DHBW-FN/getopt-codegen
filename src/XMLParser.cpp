@@ -4,6 +4,6 @@ std::string XMLParser::toString() {
     return this->filename;
 }
 
-XMLParser::XMLParser(std::string filename) {
+XMLParser::XMLParser(const std::string &filename) {
     this->filename = filename;
 }
