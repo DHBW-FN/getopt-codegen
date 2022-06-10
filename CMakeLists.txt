@@ -3,11 +3,13 @@ project(CodeGenerator)
 
 set(CMAKE_CXX_STANDARD 14)
 
+file(GLOB Source_Files src/*.cpp)
+file(GLOB Model_Files src/models/*.cpp)
 add_executable(
         CodeGenerator
-        src/CodeGenerator.cpp
-        src/XMLParser.cpp
-        src/models/Option.cpp)
+        ${Source_Files}
+        ${Model_Files}
+)
 
 find_package (Boost REQUIRED)
 if(Boost_FOUND)
