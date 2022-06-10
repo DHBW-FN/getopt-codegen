@@ -7,4 +7,5 @@ include_directories(src)
 
 add_executable(CodeGenerator
         src/CodeGenerator.cpp
-        src/XMLParser.cpp)
+        src/XMLParser.cpp
+        src/models/Option.cpp)
