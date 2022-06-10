@@ -10,6 +10,11 @@ enum class ConvertToOptions {
     BOOLEAN
 };
 
+enum class HasArguments {
+    OPTIONAL,
+    REQUIRED
+};
+
 class Option {
 public:
     // Constructor
@@ -23,7 +28,7 @@ public:
     std::vector<int> getExclusions() const;
     const std::string &getConnectToInternalMethod() const;
     const std::string &getConnectToExternalMethod() const;
-    bool isHasArguments() const;
+    HasArguments isHasArguments() const;
     ConvertToOptions getConvertTo() const;
 
     // Setters
@@ -32,12 +37,10 @@ public:
     void setLongOpt(const std::string &longOpt);
     void setDescription(const std::string &description);
     void setExclusions(std::string &exclusions);
-
-    // TODO add remaining setters and conversions
     void setConnectToInternalMethod(const std::string &connectToInternalMethod);
     void setConnectToExternalMethod(const std::string &connectToExternalMethod);
-    void setHasArguments(bool hasArguments);
-    void setConvertTo(ConvertToOptions convertTo);
+    void setHasArguments(std::string &hasArguments);
+    void setConvertTo(std::string &convertTo);
 
 private:
     /**
@@ -84,7 +87,7 @@ private:
      * @brief hasArguments
      * True if the option has arguments.
      */
-    bool hasArguments{};
+    HasArguments hasArguments{};
     /**
      * @brief convertTo
      * Type the argument should be converted to.

@@ -78,10 +78,24 @@ void Option::setConnectToExternalMethod(const std::string &connectToExternalMeth
     Option::connectToExternalMethod = connectToExternalMethod;
 }
 
-void Option::setHasArguments(bool hasArguments) {
-    Option::hasArguments = hasArguments;
+void Option::setHasArguments(std::string &hasArguments) {
+    if (boost::iequals(hasArguments, "optional")) {
+        Option::hasArguments = HasArguments::OPTIONAL;
+    } else if (boost::iequals(hasArguments, "required")) {
+        Option::hasArguments = HasArguments::REQUIRED;
+    } else {
+        throw std::runtime_error("Invalid value for hasArguments");
+    }
 }
 
-void Option::setConvertTo(ConvertToOptions convertTo) {
-    Option::convertTo = convertTo;
+void Option::setConvertTo(std::string &convertTo) {
+    if (boost::iequals(convertTo, "string")) {
+        Option::convertTo = ConvertToOptions::STRING;
+    } else if (boost::iequals(convertTo, "int")) {
+        Option::convertTo = ConvertToOptions::INTEGER;
+    } else if (boost::iequals(convertTo, "bool")) {
+        Option::convertTo = ConvertToOptions::BOOLEAN;
+    } else {
+        throw std::runtime_error("Invalid value for convertTo");
+    }
 }
