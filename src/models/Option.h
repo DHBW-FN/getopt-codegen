@@ -2,6 +2,7 @@
 #define PROGRAMMING_C_OPTION_H
 
 #include <string>
+#include <vector>
 
 enum class ConvertToOptions {
     STRING,
@@ -16,21 +17,23 @@ public:
 
     // Getters
     int getRef() const;
-    char *getShortOpt() const;
+    char getShortOpt() const;
     const std::string &getLongOpt() const;
     const std::string &getDescription() const;
-    int *getExclusions() const;
+    std::vector<int> getExclusions() const;
     const std::string &getConnectToInternalMethod() const;
     const std::string &getConnectToExternalMethod() const;
     bool isHasArguments() const;
     ConvertToOptions getConvertTo() const;
 
     // Setters
-    void setRef(int ref);
-    void setShortOpt(char *shortOpt);
+    void setRef(const std::string &ref);
+    void setShortOpt(const std::string &shortOpt);
     void setLongOpt(const std::string &longOpt);
     void setDescription(const std::string &description);
-    void setExclusions(int *exclusions);
+    void setExclusions(std::string &exclusions);
+
+    // TODO add remaining setters and conversions
     void setConnectToInternalMethod(const std::string &connectToInternalMethod);
     void setConnectToExternalMethod(const std::string &connectToExternalMethod);
     void setHasArguments(bool hasArguments);
@@ -41,13 +44,13 @@ private:
      * @brief ref: Value between 0 and 63
      * Reference to the option.
      */
-    int ref{};
+    int ref;
     /**
      * @brief shortOpt
      * Short option.
      * Example: -h
      */
-    char *shortOpt{};
+    char shortOpt;
     /**
      * @brief longOpt
      * Long option.
@@ -61,9 +64,10 @@ private:
     std::string description;
     /**
      * @brief exclusions
-     * Array of references of other options that are not allowed to be executed with current option.
+     * Exclusions of the option.
+     * Example: -h, --help
      */
-    int* exclusions{};
+    std::vector<int> exclusions;
     /**
      * @brief connectToInternalMethod
      * Name of the method that will be called when the option is executed.
