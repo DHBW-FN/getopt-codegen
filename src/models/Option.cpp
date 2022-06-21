@@ -35,7 +35,7 @@ const std::string &Option::getConnectToExternalMethod() const {
     return connectToExternalMethod;
 }
 
-bool Option::isHasArguments() const {
+HasArguments Option::isHasArguments() const {
     return hasArguments;
 }
 
