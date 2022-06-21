@@ -1,0 +1,68 @@
+#ifndef CODEGENERATOR_STATEMACHINE_H
+#define CODEGENERATOR_STATEMACHINE_H
+
+enum class State {
+    START,
+    GETOPTSETUP,
+    AUTHOR,
+    HEADERFILENAME,
+    SOURCEFILENAME,
+    NAMESPACE,
+    CLASSNAME,
+    OVERALLDESCRIPTION,
+    BLOCK,
+    SAMPLEUSAGE,
+    SAMPLE,
+    OPTIONS,
+    OPTION,
+    END
+};
+
+enum class Event {
+    GETOPTSETUPSTART,
+    GETOPTSETUPEND,
+    AUTHORSTART,
+    AUTHOREND,
+    HEADERFILENAMESTART,
+    HEADERFILENAMEEND,
+    SOURCEFILENAMESTART,
+    SOURCEFILENAMEEND,
+    NAMESPACESTART,
+    NAMESPACEEND,
+    CLASSNAMESTART,
+    CLASSNAMEEND,
+    OVERALLDESCRIPTIONSTART,
+    OVERALLDESCRIPTIONEND,
+    BLOCKSTART,
+    BLOCKEND,
+    SAMPLEUSAGESTART,
+    SAMPLEUSAGEEND,
+    SAMPLESTART,
+    SAMPLEEND,
+    OPTIONSSTART,
+    OPTIONSEND,
+    OPTIONSTART,
+    OPTIONEND
+};
+
+
+class StateMachine {
+public:
+    // Constructor
+    StateMachine();
+
+    // Getters
+    State getState() const;
+
+    // Setters
+    void setState(State state);
+
+    // Methods
+    void handleEvent(Event event);
+
+private:
+    State currentState;
+};
+
+
+#endif //CODEGENERATOR_STATEMACHINE_H
