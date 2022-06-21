@@ -37,13 +37,45 @@ public:
     void addOption(const Option &option);
 
 private:
+    /**
+     * @brief author
+     * Author of the program.
+     */
     Author author;
+    /**
+     * @brief headerFileName
+     * Name of the header file.
+     */
     string headerFileName;
+    /**
+     * @brief sourceFileName
+     * Name of the source file.
+     */
     string sourceFileName;
+    /**
+     * @brief namespaceName
+     * Name of the namespace.
+     */
     string namespaceName;
+    /**
+     * @brief className
+     * Name of the class.
+     */
     string className;
+    /**
+     * @brief overAllDescriptions
+     * Description of the program.
+     */
     vector<string> overAllDescriptions;
+    /**
+     * @brief sampleUsages
+     * Sample usages of the program.
+     */
     vector<string> sampleUsages;
+    /**
+     * @brief options
+     * Options of the program.
+     */
     vector<Option> options;
 };
 

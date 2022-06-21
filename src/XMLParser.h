@@ -6,11 +6,24 @@
 
 class XMLParser {
 private:
+    /**
+     * @brief filename
+     * Name of the file to parse.
+     */
     std::string filename;
 public:
-    std::string toString();
-
+    /**
+     * @brief XMLParser
+     * Constructor.
+     * @param filename
+     */
     explicit XMLParser(const std::string &filename);
+
+    /**
+     * @brief toString
+     * @return
+     */
+    std::string toString();
 };
 
 

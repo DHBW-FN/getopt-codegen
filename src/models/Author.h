@@ -21,8 +21,20 @@ public:
     void setEmail(const string &email);
 
 private:
+    /**
+     * @brief name
+     * Name of the author.
+     */
     string name;
+    /**
+     * @brief phone
+     * Phone number of the author.
+     */
     string phone;
+    /**
+     * @brief email
+     * Email of the author.
+     */
     string email;
 };
 
