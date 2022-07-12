@@ -42,9 +42,9 @@ public:
 
     void startDocument() override;
     void endDocument() override;
-    void startElement(const XMLCh* const name, AttributeList& attributes) override;
-    void endElement(const XMLCh* const name) override;
-    void characters(const XMLCh* const chars, const XMLSize_t length) override;
+    void startElement(const XMLCh* name, AttributeList& attributes) override;
+    void endElement(const XMLCh* name) override;
+    void characters(const XMLCh* chars, XMLSize_t length) override;
 };
 
 
