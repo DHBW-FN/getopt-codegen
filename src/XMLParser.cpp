@@ -66,14 +66,15 @@ void XMLParser::parse() {
     //Terminate muss immer am Schluss stehen
     XMLPlatformUtils::Terminate();
 
-//    cout << getOptSetup->getSignPerLine() << endl;
-//    cout << getOptSetup->getAuthor().getName() << endl;
-//    cout << getOptSetup->getAuthor().getPhone() << endl;
-//    cout << getOptSetup->getAuthor().getMail() << endl;
-//    cout << getOptSetup->getHeaderFileName() << endl;
-//    cout << getOptSetup->getSourceFileName() << endl;
-//    cout << getOptSetup->getNamespaceName() << endl;
-//    cout << getOptSetup->getClassName() << endl;
+    cout << getOptSetup->getSignPerLine() << endl;
+    cout << getOptSetup->getAuthor().getName() << endl;
+    cout << getOptSetup->getAuthor().getPhone() << endl;
+    cout << getOptSetup->getAuthor().getMail() << endl;
+    cout << getOptSetup->getHeaderFileName() << endl;
+    cout << getOptSetup->getSourceFileName() << endl;
+    cout << getOptSetup->getNamespaceName() << endl;
+    cout << getOptSetup->getClassName() << endl;
+    cout << "Options: " << getOptSetup->getOptions()[0].getDescription() << endl;
 }
 
 void XMLParser::startDocument() {
@@ -115,6 +116,9 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
         sm->handleEvent(Event::OPTIONSSTART);
     }  else if (!XMLString::compareString(name, u"Option")) {
         sm->handleEvent(Event::OPTIONSTART);
+        auto option = new Option();
+        option->parseAttributes(attributes);
+        getOptSetup->addOption(*option);
     }
 }
 
