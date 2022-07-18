@@ -113,19 +113,16 @@ void Option::parseAttributes(AttributeList &attributes) {
             setLongOpt(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"Description")) {
             setDescription(std::string(XMLString::transcode(attributes.getValue(i))));
-//        } else if (!XMLString::compareString(attributes.getName(i), u"Exclusions")) {
-//            std::string exclusionsValue = std::string(XMLString::transcode(attributes.getValue(i)));
-//            setExclusions(exclusionsValue);
+        } else if (!XMLString::compareString(attributes.getName(i), u"Exclusion")) {
+            setExclusions(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"ConnectToInternalMethod")) {
             setConnectToInternalMethod(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"ConnectToExternalMethod")) {
             setConnectToExternalMethod(std::string(XMLString::transcode(attributes.getValue(i))));
-        } /*else if (!XMLString::compareString(attributes.getName(i), u"HasArguments")) {
-            std::string hasArgumentsValue = std::string(XMLString::transcode(attributes.getValue(i)));
-            setHasArguments(hasArgumentsValue);
+        } else if (!XMLString::compareString(attributes.getName(i), u"HasArguments")) {
+            setHasArguments(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"ConvertTo")) {
-            std::string convertToValue = std::string(XMLString::transcode(attributes.getValue(i)));
-            setConvertTo(convertToValue);
-        }*/
+            setConvertTo(std::string(XMLString::transcode(attributes.getValue(i))));
+        }
     }
 }
