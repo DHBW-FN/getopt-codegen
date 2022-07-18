@@ -2,6 +2,7 @@
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <boost/algorithm/string.hpp>
+#include <xercesc/util/XMLString.hpp>
 
 // Constructor
 Option::Option() = default;
@@ -97,5 +98,34 @@ void Option::setConvertTo(std::string &convertTo) {
         Option::convertTo = ConvertToOptions::BOOLEAN;
     } else {
         throw std::runtime_error("Invalid value for convertTo");
+    }
+}
+
+// Helpers
+
+void Option::parseAttributes(AttributeList &attributes) {
+    for (unsigned int i = 0; i < attributes.getLength(); i++) {
+        if (!XMLString::compareString(attributes.getName(i), u"Ref")) {
+            setRef(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"ShortOpt")) {
+            setShortOpt(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"LongOpt")) {
+            setLongOpt(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"Description")) {
+            setDescription(std::string(XMLString::transcode(attributes.getValue(i))));
+//        } else if (!XMLString::compareString(attributes.getName(i), u"Exclusions")) {
+//            std::string exclusionsValue = std::string(XMLString::transcode(attributes.getValue(i)));
+//            setExclusions(exclusionsValue);
+        } else if (!XMLString::compareString(attributes.getName(i), u"ConnectToInternalMethod")) {
+            setConnectToInternalMethod(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"ConnectToExternalMethod")) {
+            setConnectToExternalMethod(std::string(XMLString::transcode(attributes.getValue(i))));
+        } /*else if (!XMLString::compareString(attributes.getName(i), u"HasArguments")) {
+            std::string hasArgumentsValue = std::string(XMLString::transcode(attributes.getValue(i)));
+            setHasArguments(hasArgumentsValue);
+        } else if (!XMLString::compareString(attributes.getName(i), u"ConvertTo")) {
+            std::string convertToValue = std::string(XMLString::transcode(attributes.getValue(i)));
+            setConvertTo(convertToValue);
+        }*/
     }
 }
