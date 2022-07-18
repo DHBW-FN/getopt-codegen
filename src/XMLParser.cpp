@@ -65,19 +65,6 @@ void XMLParser::parse() {
     delete parser;
     //Terminate muss immer am Schluss stehen
     XMLPlatformUtils::Terminate();
-
-//    cout << getOptSetup->getSignPerLine() << endl;
-//    cout << getOptSetup->getAuthor().getName() << endl;
-//    cout << getOptSetup->getAuthor().getPhone() << endl;
-//    cout << getOptSetup->getAuthor().getMail() << endl;
-//    cout << getOptSetup->getHeaderFileName() << endl;
-//    cout << getOptSetup->getSourceFileName() << endl;
-//    cout << getOptSetup->getNamespaceName() << endl;
-//    cout << getOptSetup->getClassName() << endl;
-//    cout << "Options: " << getOptSetup->getOptions()[0].getDescription() << endl;
-//    for (int i = 0; i < getOptSetup->getOptions()[0].getExclusions().size(); ++i) {
-//        cout << getOptSetup->getOptions()[0].getExclusions()[i] << endl;
-//    }
 }
 
 void XMLParser::startDocument() {
