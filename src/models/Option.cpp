@@ -63,7 +63,7 @@ void Option::setDescription(const std::string &description) {
     Option::description = description;
 }
 
-void Option::setExclusions(std::string &exclusions) {
+void Option::setExclusions(const std::string &exclusions) {
     std::vector<std::string> excl;
     boost::split(excl, exclusions, boost::is_any_of(","));
     for (auto &excl : excl) {
@@ -79,7 +79,7 @@ void Option::setConnectToExternalMethod(const std::string &connectToExternalMeth
     Option::connectToExternalMethod = connectToExternalMethod;
 }
 
-void Option::setHasArguments(std::string &hasArguments) {
+void Option::setHasArguments(const std::string &hasArguments) {
     if (boost::iequals(hasArguments, "optional")) {
         Option::hasArguments = HasArguments::OPTIONAL;
     } else if (boost::iequals(hasArguments, "required")) {
@@ -89,12 +89,12 @@ void Option::setHasArguments(std::string &hasArguments) {
     }
 }
 
-void Option::setConvertTo(std::string &convertTo) {
-    if (boost::iequals(convertTo, "string")) {
+void Option::setConvertTo(const std::string &convertTo) {
+    if (boost::iequals(convertTo, "String")) {
         Option::convertTo = ConvertToOptions::STRING;
-    } else if (boost::iequals(convertTo, "int")) {
+    } else if (boost::iequals(convertTo, "Integer")) {
         Option::convertTo = ConvertToOptions::INTEGER;
-    } else if (boost::iequals(convertTo, "bool")) {
+    } else if (boost::iequals(convertTo, "Boolean")) {
         Option::convertTo = ConvertToOptions::BOOLEAN;
     } else {
         throw std::runtime_error("Invalid value for convertTo");
