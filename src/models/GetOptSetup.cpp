@@ -1,11 +1,16 @@
+#include <xercesc/util/XMLString.hpp>
+#include <boost/lexical_cast.hpp>
 #include "GetOptSetup.h"
-
 
 // Constructors
 GetOptSetup::GetOptSetup() = default;
 
 
 // Getters
+const int &GetOptSetup::getSignPerLine() const {
+    return signPerLine;
+}
+
 const Author &GetOptSetup::getAuthor() const {
     return author;
 }
@@ -40,6 +45,10 @@ const vector<Option> &GetOptSetup::getOptions() const {
 
 
 // Setters
+void GetOptSetup::setSignPerLine(const string &signPerLine) {
+    GetOptSetup::signPerLine = boost::lexical_cast<int>(signPerLine);
+}
+
 void GetOptSetup::setAuthor(const Author &author) {
     GetOptSetup::author = author;
 }
@@ -83,4 +92,13 @@ void GetOptSetup::addSampleUsage(const string &sampleUsage) {
 
 void GetOptSetup::addOption(const Option &option) {
     GetOptSetup::options.push_back(option);
+}
+
+// Helpers
+void GetOptSetup::parseAttributes(AttributeList &attributes) {
+    for (unsigned int i = 0; i < attributes.getLength(); i++) {
+        if (!XMLString::compareString(attributes.getName(i), u"SignPerLine")) {
+            setSignPerLine(std::string(XMLString::transcode(attributes.getValue(i))));
+        }
+    }
 }

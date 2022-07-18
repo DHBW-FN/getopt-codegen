@@ -3,6 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <xercesc/util/XercesDefs.hpp>
+#include <xercesc/sax/AttributeList.hpp>
+
+XERCES_CPP_NAMESPACE_USE
 
 enum class ConvertToOptions {
     STRING,
@@ -36,12 +40,15 @@ public:
     void setShortOpt(const std::string &shortOpt);
     void setLongOpt(const std::string &longOpt);
     void setDescription(const std::string &description);
-    void setExclusions(std::string &exclusions);
+    void setExclusions(const std::string &exclusions);
     void setConnectToInternalMethod(const std::string &connectToInternalMethod);
     void setConnectToExternalMethod(const std::string &connectToExternalMethod);
-    void setHasArguments(std::string &hasArguments);
-    void setConvertTo(std::string &convertTo);
+    void setHasArguments(const std::string &hasArguments);
+    void setConvertTo(const std::string &convertTo);
 
+    // Helpers
+    char* toString();
+    void parseAttributes(AttributeList &attributes);
 private:
     /**
      * @brief ref: Value between 0 and 63

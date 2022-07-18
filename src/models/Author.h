@@ -2,7 +2,10 @@
 #define CODEGENERATOR_AUTHOR_H
 
 #include <string>
+#include <xercesc/util/XercesDefs.hpp>
+#include <xercesc/sax/AttributeList.hpp>
 
+XERCES_CPP_NAMESPACE_USE
 using namespace std;
 
 class Author {
@@ -13,12 +16,16 @@ public:
     // Getters
     const string &getName() const;
     const string &getPhone() const;
-    const string &getEmail() const;
+    const string &getMail() const;
 
     // Setters
     void setName(const string &name);
     void setPhone(const string &phone);
-    void setEmail(const string &email);
+    void setMail(const string &email);
+
+    // Helpers
+    string toString();
+    void parseAttributes(AttributeList &attributes);
 
 private:
     /**
@@ -35,7 +42,7 @@ private:
      * @brief email
      * Email of the author.
      */
-    string email;
+    string mail;
 };
 
 
