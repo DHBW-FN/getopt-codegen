@@ -69,7 +69,6 @@ void XMLParser::parse() {
 
 void XMLParser::startDocument() {
     cout << "Start Document" << endl;
-    sm.setState(State::START);
 }
 
 void XMLParser::endDocument() {
@@ -77,14 +76,67 @@ void XMLParser::endDocument() {
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {
-    cout << "Start-Element: " << converter.to_bytes(name) << endl;
+//    cout << "Start-Element: " << converter.to_bytes(name) << endl;
+
+    if (!XMLString::compareString(name, u"GetOptSetup")) {
+        sm->handleEvent(Event::GETOPTSETUPSTART);
+        getOptSetup->parseAttributes(attributes);
+    } else if (!XMLString::compareString(name, u"Author")) {
+        sm->handleEvent(Event::AUTHORSTART);
+    } else if (!XMLString::compareString(name, u"HeaderFileName")) {
+        sm->handleEvent(Event::HEADERFILENAMESTART);
+    } else if (!XMLString::compareString(name, u"SourceFileName")) {
+        sm->handleEvent(Event::SOURCEFILENAMESTART);
+    } else if (!XMLString::compareString(name, u"NameSpace")) {
+        sm->handleEvent(Event::NAMESPACESTART);
+    } else if (!XMLString::compareString(name, u"ClassName")) {
+        sm->handleEvent(Event::CLASSNAMESTART);
+    } else if (!XMLString::compareString(name, u"OverAllDescription")) {
+        sm->handleEvent(Event::OVERALLDESCRIPTIONSTART);
+    } else if (!XMLString::compareString(name, u"Block")) {
+        sm->handleEvent(Event::BLOCKSTART);
+    } else if (!XMLString::compareString(name, u"SampleUsage")) {
+        sm->handleEvent(Event::SAMPLEUSAGESTART);
+    } else if (!XMLString::compareString(name, u"Sample")) {
+        sm->handleEvent(Event::SAMPLESTART);
+    } else if (!XMLString::compareString(name, u"Options")) {
+        sm->handleEvent(Event::OPTIONSSTART);
+    }  else if (!XMLString::compareString(name, u"Option")) {
+        sm->handleEvent(Event::OPTIONSTART);
+    }
 }
 
 void XMLParser::endElement(const XMLCh *const name) {
-    cout << "End-Element: " << converter.to_bytes(name) << endl;
+//    cout << "End-Element: " << converter.to_bytes(name) << endl;
+
+    if (!XMLString::compareString(name, u"GetOptSetup")) {
+        sm->handleEvent(Event::GETOPTSETUPEND);
+    } else if (!XMLString::compareString(name, u"Author")) {
+        sm->handleEvent(Event::AUTHOREND);
+    } else if (!XMLString::compareString(name, u"HeaderFileName")) {
+        sm->handleEvent(Event::HEADERFILENAMEEND);
+    } else if (!XMLString::compareString(name, u"SourceFileName")) {
+        sm->handleEvent(Event::SOURCEFILENAMEEND);
+    } else if (!XMLString::compareString(name, u"NameSpace")) {
+        sm->handleEvent(Event::NAMESPACEEND);
+    } else if (!XMLString::compareString(name, u"ClassName")) {
+        sm->handleEvent(Event::CLASSNAMEEND);
+    } else if (!XMLString::compareString(name, u"OverAllDescription")) {
+        sm->handleEvent(Event::OVERALLDESCRIPTIONEND);
+    } else if (!XMLString::compareString(name, u"Block")) {
+        sm->handleEvent(Event::BLOCKEND);
+    } else if (!XMLString::compareString(name, u"SampleUsage")) {
+        sm->handleEvent(Event::SAMPLEUSAGEEND);
+    } else if (!XMLString::compareString(name, u"Sample")) {
+        sm->handleEvent(Event::SAMPLEEND);
+    } else if (!XMLString::compareString(name, u"Options")) {
+        sm->handleEvent(Event::OPTIONSEND);
+    }  else if (!XMLString::compareString(name, u"Option")) {
+        sm->handleEvent(Event::OPTIONEND);
+    }
 }
 
 void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
-    cout << "Characters (" << length << "):" << converter.to_bytes(chars, chars + length) << endl;
+//    cout << "Characters (" << length << "):" << converter.to_bytes(chars, chars + length) << endl;
 }
 

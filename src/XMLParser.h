@@ -21,7 +21,9 @@ private:
      */
     std::string filename;
 
-    StateMachine sm = StateMachine();
+    StateMachine *sm = new StateMachine();
+
+    GetOptSetup *getOptSetup = new GetOptSetup();
 
     wstring_convert<codecvt_utf8_utf16<char16_t>,char16_t> converter;
 public:
