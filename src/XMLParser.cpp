@@ -83,6 +83,8 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
         getOptSetup->parseAttributes(attributes);
     } else if (!XMLString::compareString(name, u"Author")) {
         sm->handleEvent(Event::AUTHORSTART);
+        auto author = new Author();
+        author->parseAttributes(attributes);
     } else if (!XMLString::compareString(name, u"HeaderFileName")) {
         sm->handleEvent(Event::HEADERFILENAMESTART);
     } else if (!XMLString::compareString(name, u"SourceFileName")) {
