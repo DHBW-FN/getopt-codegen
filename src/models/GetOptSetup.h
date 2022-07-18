@@ -5,6 +5,10 @@
 #include "Author.h"
 #include "Option.h"
 #include <vector>
+#include <xercesc/util/XercesDefs.hpp>
+#include <xercesc/sax/AttributeList.hpp>
+
+XERCES_CPP_NAMESPACE_USE
 
 class GetOptSetup {
 public:
@@ -12,6 +16,7 @@ public:
     GetOptSetup();
 
     // Getters
+    const int &getSignPerLine() const;
     const Author &getAuthor() const;
     const string &getHeaderFileName() const;
     const string &getSourceFileName() const;
@@ -22,6 +27,7 @@ public:
     const vector<Option> &getOptions() const;
 
     // Setters
+    void setSignPerLine(const int &signPerLine);
     void setAuthor(const Author &author);
     void setHeaderFileName(const string &headerFileName);
     void setSourceFileName(const string &sourceFileName);
@@ -36,7 +42,15 @@ public:
     void addSampleUsage(const string &sampleUsage);
     void addOption(const Option &option);
 
+    // Helpers
+    char* toString();
+    void parseAttributes(AttributeList &attributes);
 private:
+    /**
+     * @brief signPerLine
+     * Amount of signs per line.
+     */
+    int signPerLine;
     /**
      * @brief author
      * Author of the program.
