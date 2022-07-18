@@ -75,9 +75,9 @@ void XMLParser::parse() {
 //    cout << getOptSetup->getNamespaceName() << endl;
 //    cout << getOptSetup->getClassName() << endl;
 //    cout << "Options: " << getOptSetup->getOptions()[0].getDescription() << endl;
-    for (int i = 0; i < getOptSetup->getOptions()[0].getExclusions().size(); ++i) {
-        cout << getOptSetup->getOptions()[0].getExclusions()[i] << endl;
-    }
+//    for (int i = 0; i < getOptSetup->getOptions()[0].getExclusions().size(); ++i) {
+//        cout << getOptSetup->getOptions()[0].getExclusions()[i] << endl;
+//    }
 }
 
 void XMLParser::startDocument() {
@@ -193,5 +193,9 @@ void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
         case State::END:
             break;
     }
+}
+
+GetOptSetup *XMLParser::getGetOptSetup() const {
+    return getOptSetup;
 }
 

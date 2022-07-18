@@ -47,6 +47,12 @@ public:
     void startElement(const XMLCh* name, AttributeList& attributes) override;
     void endElement(const XMLCh* name) override;
     void characters(const XMLCh* chars, XMLSize_t length) override;
+
+    /**
+     * @brief getGetOptSetup
+     * @return
+     */
+    GetOptSetup *getGetOptSetup() const;
 };
 
 
