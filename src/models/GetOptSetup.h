@@ -27,7 +27,7 @@ public:
     const vector<Option> &getOptions() const;
 
     // Setters
-    void setSignPerLine(const int &signPerLine);
+    void setSignPerLine(const string &signPerLine);
     void setAuthor(const Author &author);
     void setHeaderFileName(const string &headerFileName);
     void setSourceFileName(const string &sourceFileName);

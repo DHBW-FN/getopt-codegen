@@ -1,4 +1,5 @@
 #include <xercesc/util/XMLString.hpp>
+#include <boost/lexical_cast.hpp>
 #include "GetOptSetup.h"
 
 // Constructors
@@ -44,8 +45,8 @@ const vector<Option> &GetOptSetup::getOptions() const {
 
 
 // Setters
-void GetOptSetup::setSignPerLine(const int &signPerLine) {
-    this->signPerLine = signPerLine;
+void GetOptSetup::setSignPerLine(const string &signPerLine) {
+    GetOptSetup::signPerLine = boost::lexical_cast<int>(signPerLine);
 }
 
 void GetOptSetup::setAuthor(const Author &author) {
@@ -97,7 +98,7 @@ void GetOptSetup::addOption(const Option &option) {
 void GetOptSetup::parseAttributes(AttributeList &attributes) {
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"SignPerLine")) {
-            setSignPerLine(XMLString::parseInt(attributes.getValue(i)));
+            setSignPerLine(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
 }
