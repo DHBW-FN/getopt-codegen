@@ -65,6 +65,15 @@ void XMLParser::parse() {
     delete parser;
     //Terminate muss immer am Schluss stehen
     XMLPlatformUtils::Terminate();
+
+//    cout << getOptSetup->getSignPerLine() << endl;
+//    cout << getOptSetup->getAuthor().getName() << endl;
+//    cout << getOptSetup->getAuthor().getPhone() << endl;
+//    cout << getOptSetup->getAuthor().getMail() << endl;
+//    cout << getOptSetup->getHeaderFileName() << endl;
+//    cout << getOptSetup->getSourceFileName() << endl;
+//    cout << getOptSetup->getNamespaceName() << endl;
+//    cout << getOptSetup->getClassName() << endl;
 }
 
 void XMLParser::startDocument() {
@@ -85,6 +94,7 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
         sm->handleEvent(Event::AUTHORSTART);
         auto author = new Author();
         author->parseAttributes(attributes);
+        getOptSetup->setAuthor(*author);
     } else if (!XMLString::compareString(name, u"HeaderFileName")) {
         sm->handleEvent(Event::HEADERFILENAMESTART);
     } else if (!XMLString::compareString(name, u"SourceFileName")) {
@@ -140,5 +150,41 @@ void XMLParser::endElement(const XMLCh *const name) {
 
 void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
 //    cout << "Characters (" << length << "):" << converter.to_bytes(chars, chars + length) << endl;
+    switch (sm->getState()) {
+        case State::START:
+            break;
+        case State::GETOPTSETUP:
+            break;
+        case State::AUTHOR:
+            break;
+        case State::HEADERFILENAME:
+            getOptSetup->setHeaderFileName(std::string(XMLString::transcode(chars)));
+            break;
+        case State::SOURCEFILENAME:
+            getOptSetup->setSourceFileName(std::string(XMLString::transcode(chars)));
+            break;
+        case State::NAMESPACE:
+            getOptSetup->setNamespaceName(std::string(XMLString::transcode(chars)));
+            break;
+        case State::CLASSNAME:
+            getOptSetup->setClassName(std::string(XMLString::transcode(chars)));
+            break;
+        case State::OVERALLDESCRIPTION:
+            break;
+        case State::BLOCK:
+            getOptSetup->addOverAllDescription(std::string(XMLString::transcode(chars)));
+            break;
+        case State::SAMPLEUSAGE:
+            break;
+        case State::SAMPLE:
+            getOptSetup->addSampleUsage(std::string(XMLString::transcode(chars)));
+            break;
+        case State::OPTIONS:
+            break;
+        case State::OPTION:
+            break;
+        case State::END:
+            break;
+    }
 }
 
