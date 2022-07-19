@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
 
         switch (c) {
             case 0:
+                // LongOpts
                 if (strcmp("help", long_options[option_index].name) == 0) {
                     args.help = true;
                 } else if (strcmp("version", long_options[option_index].name) == 0) {
@@ -51,6 +52,7 @@ int main(int argc, char* argv[]) {
                 printf("\n");
                 break;
 
+            // ShortOpts
             case 'h':
                 args.help = true;
                 break;
@@ -63,6 +65,7 @@ int main(int argc, char* argv[]) {
                 printf("?? getopt returned character code 0%o ??\n", c);
         }
 
+        // Check if getopt was set and execute functions if no exclusion
         if (args.help && !(args.version)) {
             printHelp();
         }
