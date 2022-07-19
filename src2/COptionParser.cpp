@@ -1,6 +1,6 @@
 //https://gist.github.com/avances123/2406651
 #include "COptionParser.h"
-#include <string.h>
+#include <cstring>
 
 namespace DHBW {
     void printHelp() {
@@ -64,14 +64,6 @@ int main(int argc, char* argv[]) {
             default:
                 printf("?? getopt returned character code 0%o ??\n", c);
         }
-
-        // Check if getopt was set and execute functions if no exclusion
-        if (args.help && !(args.version)) {
-            printHelp();
-        }
-        if (args.version && !(args.help)) {
-            printVersion();
-        }
     }
 
     if (optind < argc) {
@@ -79,6 +71,14 @@ int main(int argc, char* argv[]) {
         while (optind < argc)
             printf("%s ", argv[optind++]);
         printf("\n");
+    }
+
+    // Check if getopt was set and execute functions if no exclusion
+    if (args.help && !(args.version)) {
+        printHelp();
+    }
+    if (args.version && !(args.help)) {
+        printVersion();
     }
 
     exit(EXIT_SUCCESS);
