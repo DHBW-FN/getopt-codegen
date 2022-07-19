@@ -17,7 +17,13 @@ int main(int argc, char* argv[]) {
     int c;
     int digit_optind = 0;
 
+    struct Args {
+        bool help = false;
+        bool version = false;
+    } args;
+
     while (true) {
+
         int this_option_optind = optind ? optind : 1;
         int option_index = 0;
         static struct option long_options[] = {
@@ -34,9 +40,9 @@ int main(int argc, char* argv[]) {
         switch (c) {
             case 0:
                 if (strcmp("help", long_options[option_index].name) == 0) {
-                    printHelp();
+                    args.help = true;
                 } else if (strcmp("version", long_options[option_index].name) == 0) {
-                    printVersion();
+                    args.version = true;
                 }
 
                 // Check if called with arguments
@@ -46,18 +52,22 @@ int main(int argc, char* argv[]) {
                 break;
 
             case 'h':
-                for (int i = 0; i <= argc; ++i) {
-                    printf("%s\n", argv[i]);
-                }
-                printHelp();
+                args.help = true;
                 break;
 
             case 'v':
-                printVersion();
+                args.version = true;
                 break;
 
             default:
                 printf("?? getopt returned character code 0%o ??\n", c);
+        }
+
+        if (args.help && !(args.version)) {
+            printHelp();
+        }
+        if (args.version && !(args.help)) {
+            printVersion();
         }
     }
 
