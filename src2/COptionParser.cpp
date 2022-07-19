@@ -3,24 +3,33 @@
 #include <cstring>
 
 namespace DHBW {
-    void printHelp() {
+    void COptionParser::parse(Args args) {
+        // Check if getopt was set and execute functions if no exclusion
+        if (args.help && !(args.version)) {
+            printHelp();
+        }
+
+        if (args.version && !(args.help)) {
+            printVersion();
+        }
+    }
+
+    void COptionParser::printHelp() {
         printf("printHelp() called\n");
     }
 
-    void printVersion() {
+    void COptionParser::printVersion() {
         printf("printVersion() called\n");
     }
 }
+
 int main(int argc, char* argv[]) {
     using namespace DHBW;
 
     int c;
     int digit_optind = 0;
 
-    struct Args {
-        bool help = false;
-        bool version = false;
-    } args;
+    Args args;
 
     while (true) {
 
@@ -73,13 +82,9 @@ int main(int argc, char* argv[]) {
         printf("\n");
     }
 
-    // Check if getopt was set and execute functions if no exclusion
-    if (args.help && !(args.version)) {
-        printHelp();
-    }
-    if (args.version && !(args.help)) {
-        printVersion();
-    }
+    // Initialize parser and parse arguments
+    COptionParser parser;
+    parser.parse(args);
 
     exit(EXIT_SUCCESS);
 }

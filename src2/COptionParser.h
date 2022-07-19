@@ -5,9 +5,20 @@
 #include <cstdio>     /* for printf */
 #include <cstdlib>    /* for exit */
 
+struct Args {
+    bool help = false;
+    bool version = false;
+};
+
 namespace DHBW {
 
     class COptionParser {
+    private:
+    protected:
+        virtual void printHelp();
+        virtual void printVersion();
+    public:
+        void parse(Args args);
     };
 }
 
