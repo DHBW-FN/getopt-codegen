@@ -26,12 +26,12 @@ namespace DHBW {
 int main(int argc, char* argv[]) {
     using namespace DHBW;
 
-    int c;
     int digit_optind = 0;
 
     Args args;
 
     while (true) {
+        int c;
 
         int this_option_optind = optind ? optind : 1;
         int option_index = 0;
