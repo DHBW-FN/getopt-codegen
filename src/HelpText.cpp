@@ -8,8 +8,7 @@ HelpText::~HelpText() = default;
 
 /**
  * @brief concatenate the description strings to one string
- * @param description
- * @return all description strings as a string, space separated.
+ * @brief and add to printHelpText
  */
 void HelpText::parseDescription()
 {
@@ -109,6 +108,7 @@ string HelpText::concatParams(int i)
 
 /**
  * @brief concatenate the options to one string
+ * @brief and add to printHelpText
  * call the getLength() Method. Get concatenated params
  * by calling concatParams function with i as iterator.
  * write strings to buffer with a spacing using set()
@@ -140,7 +140,6 @@ void HelpText::parseOption()
         // check if description isn't empty
         if (!getOptSetup->getOptions()[i].getDescription().empty())
         {
-
             // subtract the length of the params and the shift
             // to get the new signPerLine for the options
             // needs to be less because of the Params and the shift
@@ -159,7 +158,7 @@ void HelpText::parseOption()
 
 /**
  * @brief concatenate usage strings to one string
- * @param usage
+ * @brief and add to printHelpText
  * @return all usage strings as a string with line break.
  */
 void HelpText::parseUsage()
@@ -173,7 +172,7 @@ void HelpText::parseUsage()
 
 /**
  * @brief concatenate the author information to one string
- * @return information about author as a string.
+ * @brief and add to printHelpText
  */
 void HelpText::parseAuthor()
 {
@@ -181,7 +180,7 @@ void HelpText::parseAuthor()
 }
 
 /**
- * @brief concatenate everything together
+ * @brief add function wrapper and call parse methods
  * @return getHelp() Function with message as string
  */
 string HelpText::parseHelpMessage()

@@ -10,7 +10,7 @@ using namespace boost;
 
 class Justify
 {
-public:
+private:
     string JoinALineWithSpace(
             vector<string>& words,
             int start, int end,
@@ -29,6 +29,7 @@ public:
 
     string returnJustifiedText(vector<string>& result);
 
+public:
     string justifyTheText(string str, int L, bool isOption, int optionShift);
 };
 

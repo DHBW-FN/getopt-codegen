@@ -10,13 +10,6 @@ using namespace std;
 
 class HelpText
 {
-private:
-    string printHelpText;
-    int optionParamLength = 0;
-    int shift = 5;
-    Justify justify;
-    GetOptSetup *getOptSetup;
-
 public:
     HelpText(GetOptSetup *getOptSetup);
     ~HelpText();
@@ -29,6 +22,33 @@ public:
 
     string concatParams(int i);
     void getLength();
+private:
+    /**
+     * @brief printHelp Text
+     * stores the string for the printHelp method.
+     */
+    string printHelpText;
+    /**
+     * @brief Length of longest Parameter
+     * Stores the length of the longest
+     * parameter in options.
+     */
+    int optionParamLength = 0;
+    /**
+     * @brief shift
+     * extra shift / space can be defined
+     * for the space between parameters
+     * and description in options.
+     */
+    const int shift = 5;
+    /**
+     * @brief Justify object
+     */
+    Justify justify;
+    /**
+     * @brief GetOptSetup object
+     */
+    GetOptSetup *getOptSetup;
 };
 
 #endif //CODEGENERATOR_HELPTEXT_H
