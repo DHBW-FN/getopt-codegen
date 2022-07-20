@@ -5,21 +5,31 @@
 namespace DHBW {
     void COptionParser::parse(Args args) {
         // Check if getopt was set and execute functions if no exclusion
+        //TO DO: print wrong combination of options
         if (args.help && !(args.version)) {
             printHelp();
+            return;
         }
 
         if (args.version && !(args.help)) {
             printVersion();
+            return;
         }
+
+        perror("Darfst du nicht!\n");
+        exit(1);
     }
 
     void COptionParser::printHelp() {
-        printf("printHelp() called\n");
+        printf("hallo");
     }
 
     void COptionParser::printVersion() {
-        printf("printVersion() called\n");
+    }
+
+    //immer wenn connectToInternalMethod() aufgerufen wird, muss diese Funktion aufgerufen werden
+    //natürlich mit dem entsprechenden Methodennamen
+    void COptionParser::ParseXml() {
     }
 }
 
@@ -40,8 +50,7 @@ int main(int argc, char* argv[]) {
                 {0,         0,                 0,  0 }
         };
 
-        c = getopt_long(argc, argv, "hv",
-                        long_options, &option_index);
+        c = getopt_long(argc, argv, "hv", long_options, &option_index);
         if (c == -1) {
             break;
         }
@@ -51,7 +60,8 @@ int main(int argc, char* argv[]) {
                 // LongOpts
                 if (strcmp("help", long_options[option_index].name) == 0) {
                     args.help = true;
-                } else if (strcmp("version", long_options[option_index].name) == 0) {
+                }
+                if (strcmp("version", long_options[option_index].name) == 0) {
                     args.version = true;
                 }
 
