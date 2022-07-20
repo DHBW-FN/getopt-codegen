@@ -9,12 +9,24 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
         printf("Header file is nullptr\n");
+        if(getOptSetup->getHeaderFileName().empty() || getOptSetup->getSourceFileName().empty()){
+            perror("Both the Header-Filename and the Source-Filename must be set.");
+            exit(1);
+        }
         setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
     }
     return headerFile;
 }
 
 FILE *SourceCodeWriter::getSourceFile() {
+    if (sourceFile == nullptr) {
+        printf("Source file is nullptr\n");
+        if(getOptSetup->getHeaderFileName().empty() || getOptSetup->getSourceFileName().empty()){
+            perror("Both the Header-Filename and the Source-Filename must be set.");
+            exit(1);
+        }
+        setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
+    }
     return sourceFile;
 }
 
