@@ -11,6 +11,14 @@ add_executable(
         ${Model_Files}
 )
 
+file(GLOB Source_Files2 src2/*.cpp)
+add_executable(
+        COptionParser
+        ${Source_Files2}
+)
+
+
+
 find_package (Boost REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
