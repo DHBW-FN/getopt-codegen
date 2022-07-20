@@ -179,33 +179,24 @@ vector<string> Justify::JustifyText(
     return result;
 }
 
-// Function to insert words
-// of sentence
+/**
+ * @brief separates a string in single words
+ * @param str string to parse
+ * @return vector with splitted words
+ */
 vector<string> Justify::splitWords(string str)
 {
 
     vector<string> words;
-    string a = "";
-    for (int i = 0; str[i]; i++) {
 
-        // Add char to string a
-        // to get the word
-        if (str[i] != ' ') {
-            a += str[i];
-        }
-
-            // If a space occurs
-            // split the words and
-            // add it to vector
-        else {
-            words.push_back(a);
-            a = "";
-        }
+    // Tokenizer separates string to words
+    char_separator<char> sep(" ");
+    tokenizer<boost::char_separator<char> > tok(str, sep);
+    for (auto it=tok.begin(); it!=tok.end(); ++it)
+    {
+        // push words to vector
+        words.push_back(*it);
     }
-
-    // Push_back the last word
-    // of sentence
-    words.push_back(a);
 
     // Return the vector of
     // words extracted from

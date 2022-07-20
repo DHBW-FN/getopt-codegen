@@ -1,8 +1,12 @@
 #ifndef CODEGENERATOR_JUSTIFY_H
 #define CODEGENERATOR_JUSTIFY_H
 #include "bits/stdc++.h"
+#include <iostream>
+#include <boost/tokenizer.hpp>
+#include <string>
 
 using namespace std;
+using namespace boost;
 
 class Justify
 {

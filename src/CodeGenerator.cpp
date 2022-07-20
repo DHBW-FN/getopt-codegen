@@ -24,7 +24,7 @@ int main() {
 //        perror("Error while creating file!");
 //        return 1;
 //    }
-
+//
 //    fprintf(file, "%s", printHelpText.c_str());
 //
 //    fclose(file);

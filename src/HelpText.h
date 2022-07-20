@@ -23,9 +23,9 @@ public:
     ~HelpText();
 
     string parseHelpMessage();
-    string parseDescription();
-    string parseUsage();
-    string parseAuthor();
+    void parseDescription();
+    void parseUsage();
+    void parseAuthor();
     void parseOption();
 
     string concatParams(int i);

@@ -7,6 +7,30 @@ HelpText::HelpText(GetOptSetup *getOptSetup)
 HelpText::~HelpText() = default;
 
 /**
+ * @brief concatenate the description strings to one string
+ * @param description
+ * @return all description strings as a string, space separated.
+ */
+void HelpText::parseDescription()
+{
+    string new_description;
+
+    // Add empty space in front of every string
+    for (int i = 0; i < getOptSetup->getOverAllDescriptions().size(); i++)
+    {
+        if (i > 0) {
+            new_description.append(" ");
+        }
+
+        // concatenate strings
+        new_description.append(getOptSetup->getOverAllDescriptions()[i]);
+    }
+
+    // justify and add to printHelpText
+    printHelpText.append("Description:\\n" + justify.justifyTheText(new_description, getOptSetup->getSignPerLine(), false, 0) + "\\n");
+}
+
+/**
  * @brief get the length of longest parameter in options
  * Calculate the length of the longest parameter in options.
  * Is used to know how much spacing should be used
@@ -86,66 +110,6 @@ string HelpText::concatParams(int i)
 }
 
 /**
- * @brief concatenate the description strings to one string
- * @param description
- * @return all description strings as a string, space separated.
- */
-string HelpText::parseDescription()
-{
-    string new_description;
-    // Add empty space in front of every string
-    for (int i = 0; i < getOptSetup->getOverAllDescriptions().size(); i++)
-    {
-        if (i > 0) {
-            new_description.append(" ");
-        }
-        new_description.append(getOptSetup->getOverAllDescriptions()[i]);
-    }
-
-    // concatenate the strings into one string
-    for (int i = 0; i < getOptSetup->getOverAllDescriptions().size(); i++)
-    {
-        new_description.append(getOptSetup->getOverAllDescriptions()[i]);
-    }
-    return new_description;
-}
-
-/**
- * @brief concatenate usage strings to one string
- * @param usage
- * @return all usage strings as a string with line break.
- */
-string HelpText::parseUsage()
-{
-    string new_usage;
-
-    for (int i = 0; i < getOptSetup->getSampleUsages().size(); i++) {
-        new_usage.append(getOptSetup->getSampleUsages()[i]);
-
-        // append line break at the end of usage string
-        // except for the last one
-        if (i < getOptSetup->getSampleUsages().size() - 1)
-        {
-            new_usage.append("\\n");
-        }
-    }
-
-    return new_usage;
-}
-
-/**
- * @brief concatenate the author information to one string
- * @return information about author as a string.
- */
-string HelpText::parseAuthor()
-{
-    string new_author;
-    new_author.append(getOptSetup->getAuthor().getName() + ", " + getOptSetup->getAuthor().getMail());
-
-    return new_author;
-}
-
-/**
  * @brief concatenate the options to one string
  * call the getLength() Method. Get concatenated params
  * by calling concatParams function with i as iterator.
@@ -171,6 +135,7 @@ void HelpText::parseOption()
 
     for (int i = 0; i < getOptSetup->getOptions().size(); i++)
     {
+        // get the concatenated params
         string opts = concatParams(i);
         buffer << std::left << std::setw(optionParamLength + shift) << opts;
 
@@ -191,8 +156,40 @@ void HelpText::parseOption()
         }
     }
     buffer << "\\n";
-    optionsText = buffer.str();
+    printHelpText.append(buffer.str());
 }
+
+/**
+ * @brief concatenate usage strings to one string
+ * @param usage
+ * @return all usage strings as a string with line break.
+ */
+void HelpText::parseUsage()
+{
+    string new_usage;
+    for (int i = 0; i < getOptSetup->getSampleUsages().size(); i++) {
+        new_usage.append(getOptSetup->getSampleUsages()[i] + "\\n");
+
+//        // append line break at the end of usage string
+//        // except for the last one
+//        if (i < getOptSetup->getSampleUsages().size() - 1)
+//        {
+//            new_usage.append("\\n");
+//        }
+    }
+    printHelpText.append("Usage\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
+}
+
+/**
+ * @brief concatenate the author information to one string
+ * @return information about author as a string.
+ */
+void HelpText::parseAuthor()
+{
+    printHelpText.append("Author:\\n" + justify.justifyTheText(getOptSetup->getAuthor().getName() + ", " + getOptSetup->getAuthor().getMail(), getOptSetup->getSignPerLine(), false, 0));
+}
+
+
 
 /**
  * @brief concatenate everything together
@@ -203,35 +200,17 @@ string HelpText::parseHelpMessage()
     // add function beginning to string
     printHelpText.append("void printHelp(){puts(\"");
 
-    // parse the description
-    string buffer_description = parseDescription();
-    buffer_description = justify.justifyTheText(buffer_description, getOptSetup->getSignPerLine(), false, 0);
+    // parse the description and add text to string
+    parseDescription();
 
-    // add description to string
-    printHelpText.append("Description:\\n");
-    printHelpText.append(buffer_description + "\\n");
-
-    // parse the option
+    // parse the option and add text to string
     parseOption();
 
-    // add option to string
-    printHelpText.append(optionsText);
+    // parse the usage and add text to string
+    parseUsage();
 
-    // parse the usage
-    string buffer_usage = parseUsage();
-    buffer_usage = justify.justifyTheText(buffer_usage, getOptSetup->getSignPerLine(), false, 0);
-
-    // add usage to string
-    printHelpText.append("Usage:\\n");
-    printHelpText.append(buffer_usage);
-
-    // parse the author
-    string buffer_author = parseAuthor();
-    buffer_author = justify.justifyTheText(buffer_author, getOptSetup->getSignPerLine(), false, 0);
-
-    // add author to string
-    printHelpText.append("Author:\\n");
-    printHelpText.append(buffer_author);
+    // parse the author and add text to string
+    parseAuthor();
 
     // add function ending to string
     printHelpText.append(R"(");})");
