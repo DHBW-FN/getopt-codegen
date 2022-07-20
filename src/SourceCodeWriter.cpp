@@ -21,7 +21,7 @@ FILE *SourceCodeWriter::getHeaderFile() {
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
         printf("Source file is nullptr\n");
-        if(getOptSetup->getHeaderFileName().empty() || getOptSetup->getSourceFileName().empty()){
+        if(getOptSetup->getSourceFileName().empty() || getOptSetup->getSourceFileName().empty()){
             perror("Both the Header-Filename and the Source-Filename must be set.");
             exit(1);
         }
