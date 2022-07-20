@@ -31,6 +31,10 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
     this->sourceFile = sourceFile;
 }
 
+/*
+ * ALL HELPER FUNCTIONS HERE!!!
+ */
+
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
 }
