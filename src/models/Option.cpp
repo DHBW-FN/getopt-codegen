@@ -44,6 +44,10 @@ ConvertToOptions Option::getConvertTo() const {
     return convertTo;
 }
 
+std::string Option::getDefaultValue() const {
+    return defaultValue;
+}
+
 
 // Setters
 
@@ -101,6 +105,10 @@ void Option::setConvertTo(const std::string &convertTo) {
     }
 }
 
+void Option::setDefaultValue(const std::string &defaultValue) {
+    Option::defaultValue = defaultValue;
+}
+
 // Helpers
 
 void Option::parseAttributes(AttributeList &attributes) {
@@ -123,6 +131,8 @@ void Option::parseAttributes(AttributeList &attributes) {
             setHasArguments(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"ConvertTo")) {
             setConvertTo(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"DefaultValue")) {
+            setDefaultValue(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
 }
