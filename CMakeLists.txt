@@ -5,28 +5,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB Source_Files src/*.cpp)
 file(GLOB Model_Files src/models/*.cpp)
+
 add_executable(
         CodeGenerator
         ${Source_Files}
         ${Model_Files}
 )
 
-find_package (Boost REQUIRED)
+find_package(Boost)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(CodeGenerator ${Boost_LIBRARIES})
 endif()
 
-if(WIN32)
-    add_definitions(-DBOOST_THREAD_USE_LIB)
-    target_link_libraries(CodeGenerator wsock32 ws2_32)
-endif()
-
-find_package (XercesC REQUIRED)
+target_link_libraries(CodeGenerator xerces-c)
 
 include_directories(src)
-
-include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${XercesC_INCLUDE_DIR})
-
-target_link_libraries(CodeGenerator ${XercesC_LIBRARIES} ${Boost_LIBRARIES})
