@@ -15,6 +15,7 @@ enum class ConvertToOptions {
 };
 
 enum class HasArguments {
+    None,
     OPTIONAL,
     REQUIRED
 };
