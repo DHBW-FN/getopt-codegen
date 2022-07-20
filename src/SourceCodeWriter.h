@@ -24,6 +24,9 @@ public:
 
     // Helpers
     void writeFile();
+
+    // Write code functions
+
 };
 
 
