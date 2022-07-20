@@ -15,6 +15,7 @@ enum class ConvertToOptions {
 };
 
 enum class HasArguments {
+    None,
     OPTIONAL,
     REQUIRED
 };
@@ -34,6 +35,7 @@ public:
     const std::string &getConnectToExternalMethod() const;
     HasArguments isHasArguments() const;
     ConvertToOptions getConvertTo() const;
+    std::string getDefaultValue() const;
 
     // Setters
     void setRef(const std::string &ref);
@@ -45,6 +47,7 @@ public:
     void setConnectToExternalMethod(const std::string &connectToExternalMethod);
     void setHasArguments(const std::string &hasArguments);
     void setConvertTo(const std::string &convertTo);
+    void setDefaultValue(const std::string &defaultValue);
 
     // Helpers
     char* toString();
@@ -100,6 +103,11 @@ private:
      * Type the argument should be converted to.
      */
     ConvertToOptions convertTo = ConvertToOptions::STRING;
+    /**
+     * @brief defaultValue
+     * Default value of the option.
+     */
+    std::string defaultValue;
 };
 
 
