@@ -12,7 +12,6 @@ class HelpText
 {
 private:
     string printHelpText;
-    string optionsText;
     int optionParamLength = 0;
     int shift = 5;
     Justify justify;

@@ -21,11 +21,9 @@ void HelpText::parseDescription()
         if (i > 0) {
             new_description.append(" ");
         }
-
         // concatenate strings
         new_description.append(getOptSetup->getOverAllDescriptions()[i]);
     }
-
     // justify and add to printHelpText
     printHelpText.append("Description:\\n" + justify.justifyTheText(new_description, getOptSetup->getSignPerLine(), false, 0) + "\\n");
 }
@@ -169,13 +167,6 @@ void HelpText::parseUsage()
     string new_usage;
     for (int i = 0; i < getOptSetup->getSampleUsages().size(); i++) {
         new_usage.append(getOptSetup->getSampleUsages()[i] + "\\n");
-
-//        // append line break at the end of usage string
-//        // except for the last one
-//        if (i < getOptSetup->getSampleUsages().size() - 1)
-//        {
-//            new_usage.append("\\n");
-//        }
     }
     printHelpText.append("Usage\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
 }
@@ -188,8 +179,6 @@ void HelpText::parseAuthor()
 {
     printHelpText.append("Author:\\n" + justify.justifyTheText(getOptSetup->getAuthor().getName() + ", " + getOptSetup->getAuthor().getMail(), getOptSetup->getSignPerLine(), false, 0));
 }
-
-
 
 /**
  * @brief concatenate everything together
