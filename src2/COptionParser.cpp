@@ -1,36 +1,60 @@
 //https://gist.github.com/avances123/2406651
+
+//Start: include + define
 #include "COptionParser.h"
 #include <cstring>
+//End: include + define
 
+//Start: namespace
 namespace DHBW {
+//End: namespace
+
+//Start: COptionParser
     void COptionParser::parse(Args args) {
+//End: COptionParser
         // Check if getopt was set and execute functions if no exclusion
         //TO DO: print wrong combination of options
+
+//Start: one block of --> exclusion
         if (args.help && !(args.version)) {
             printHelp();
             return;
         }
+//End: one block of --> exclusion
 
+//Start: one block of --> exclusion
         if (args.version && !(args.help)) {
             printVersion();
             return;
         }
+//End: one block of --> exclusion
 
+//Start: endOfExclusion (muss eh noch verändert werden, um die entsprechenden exclusions auszugeben)
         perror("Darfst du nicht!\n");
         exit(1);
+//End: endOfExclusion
+
+//EndOfCOptionParser
     }
 
+//wenn ich es richtig verstanden habe wird das immer bei connectToInternalMethod eingefügt
+//Start: one block of --> connectToInternalMethod
     void COptionParser::printHelp() {
         printf("hallo");
     }
+//End: connectToInternalMethod
 
+//Start: one block of --> connectToInternalMethod
     void COptionParser::printVersion() {
     }
+//End: connectToInternalMethod
 
     //immer wenn connectToInternalMethod() aufgerufen wird, muss diese Funktion aufgerufen werden
     //natürlich mit dem entsprechenden Methodennamen
     void COptionParser::ParseXml() {
     }
+
+//End of namespace
 }
 
 int main(int argc, char* argv[]) {
