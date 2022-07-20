@@ -9,8 +9,8 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
         printf("Header file is nullptr\n");
-        if(getOptSetup->getHeaderFileName().empty() || getOptSetup->getSourceFileName().empty()){
-            perror("Both the Header-Filename and the Source-Filename must be set.");
+        if(getOptSetup->getHeaderFileName().empty()){
+            perror("The Header-Filename must be set.");
             exit(1);
         }
         setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
@@ -21,8 +21,8 @@ FILE *SourceCodeWriter::getHeaderFile() {
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
         printf("Source file is nullptr\n");
-        if(getOptSetup->getSourceFileName().empty() || getOptSetup->getSourceFileName().empty()){
-            perror("Both the Header-Filename and the Source-Filename must be set.");
+        if(getOptSetup->getSourceFileName().empty()){
+            perror("The Source-Filename must be set.");
             exit(1);
         }
         setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
