@@ -25,9 +25,9 @@ public:
 
     // Helpers
     void writeFile();
+    static string getValueTypeByOption(Option &option);
 
     // Write code functions
-
     /**
      * @brief
      * Writes definitions and includes into Header-File
@@ -39,6 +39,18 @@ public:
      * Writes includes into Source-File
      */
     void sourceFileIncludes();
+
+    /**
+     * @brief
+     * Generate Header-File declaration of the function that will handle Options-parsing
+     */
+    void createHeaderParsingFunction();
+
+    /**
+     * @brief
+     * Generate implementation of the function that will handle Options-parsing
+     */
+    void createSourceParsingFunction();
 
     /**
      * @brief
@@ -57,6 +69,50 @@ public:
      * Writes Class into namespace in Header-File
      */
     void headerFileClass();
+
+    /**
+     * @brief
+     * Writes exclusion check and execution of getOpts into Source-File
+     */
+    void sourceFileParse();
+
+    /**
+     * @brief
+     * Determines the name the Args-Struct will have for any given Option
+     * @param option
+     * @return
+     */
+    static string determineArgsName(const Option& option);
+
+    /**
+     * @brief
+     * Creates struct args for header
+     */
+    void createHeaderStructArgs();
+
+    /**
+     * @brief
+     * Generates the declaration of the unknownOption-function
+     */
+    void createHeaderUnknownOption();
+
+    /**
+     * @brief
+     * Generates the implementation of the unknownOption-function
+     */
+    void createSourceUnknownOption();
+
+    /**
+     * @brief
+     * Generates the declaration of all Getters in the Header-File
+     */
+    void createHeaderGetter();
+
+    /**
+     * @brief
+     * Generates the implementation of all Getters in the Header-File
+     */
+    void createSourceGetter();
 };
 
 
