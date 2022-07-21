@@ -2,23 +2,46 @@
 #define CODEGENERATOR_COPTIONPARSER_H
 
 #include <getopt.h>
+#include <string>
 #include <cstdio>     /* for printf */
 #include <cstdlib>    /* for exit */
 
 struct Args {
-    bool help = false;
-    bool version = false;
+    struct {
+        bool isSet = false;
+    } help;
+
+    struct {
+        bool isSet = false;
+    } version;
+
+    // Important: Name priority Interface > LongOpt > ShortOpt and remove the "-" from the name
+    struct {
+        bool isSet = false;
+        // Only add value if Arguments is Required or Optional
+        std::string value;
+    } outpath;
 };
 
 namespace DHBW {
 
     class COptionParser {
     private:
+        Args args;
+
+        std::string outpathValue;
     protected:
         virtual void printHelp();
         virtual void printVersion();
     public:
         void parse(Args args);
+
+        // Getter
+        std::string getValueOfOutputPath() const;
+        bool isSetOutputPath() const;
+
+        // Helper
+        void parseOptions(int argc, char* argv[]);
     };
 }
 
