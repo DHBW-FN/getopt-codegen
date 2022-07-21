@@ -50,12 +50,6 @@ public:
      * @brief
      * Writes <classname>::parse() into Source-File
      */
-    void sourceFileParse();
-
-    /**
-     * @brief
-     * Writes <classname>::parse() into Source-File
-     */
     void headerFileNamespace();
 };
 
