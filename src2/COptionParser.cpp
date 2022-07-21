@@ -5,18 +5,33 @@
 namespace DHBW {
     void COptionParser::parse(Args args) {
         // Check if getopt was set and execute functions if no exclusion
-        //TO DO: print wrong combination of options
-        if (args.help && !(args.version)) {
+        if (args.help) {
+            if (args.version) {
+                perror ("--help and --version cannot be used together.");
+                exit(1);
+            }
+
+            // More exclusions here in other if statements
+
+            // Main functionality here
             printHelp();
             return;
         }
 
-        if (args.version && !(args.help)) {
+        if (args.version) {
+            if (args.help) {
+                perror ("--version and --help cannot be used together.");
+                exit(1);
+            }
+
+            // More exclusions here in other if statements
+
+            // Main functionality here
             printVersion();
             return;
         }
 
-        perror("Darfst du nicht!\n");
+        perror("No known option was set.");
         exit(1);
     }
 
@@ -25,11 +40,6 @@ namespace DHBW {
     }
 
     void COptionParser::printVersion() {
-    }
-
-    //immer wenn connectToInternalMethod() aufgerufen wird, muss diese Funktion aufgerufen werden
-    //natürlich mit dem entsprechenden Methodennamen
-    void COptionParser::ParseXml() {
     }
 }
 
