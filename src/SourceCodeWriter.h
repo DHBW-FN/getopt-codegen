@@ -48,7 +48,7 @@ public:
 
     /**
      * @brief
-     * Writes <classname>::parse() into Source-File
+     * Writes namespace into Header-File
      */
     void headerFileNamespace();
 };
