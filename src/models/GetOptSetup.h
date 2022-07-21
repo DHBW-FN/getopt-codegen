@@ -50,7 +50,7 @@ private:
      * @brief signPerLine
      * Amount of signs per line.
      */
-    int signPerLine;
+    int signPerLine = 79;
     /**
      * @brief author
      * Author of the program.
