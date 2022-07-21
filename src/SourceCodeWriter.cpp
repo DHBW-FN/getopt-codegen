@@ -45,15 +45,25 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  */
 
 void SourceCodeWriter::headerFileIncludes() {
-    int subStringPosition = getOptSetup->getHeaderFileName().find('.');
-    string defineString = getOptSetup->getHeaderFileName().substr(0, subStringPosition);
+    printf("Writing includes into header file\n");
+    // Define static and always used includes here
+    string includes[] = { "getopt.h", "iostream"};
+
+    string defineString = getGetOptSetup()->getHeaderFileName()
+            .substr(0, getGetOptSetup()->getHeaderFileName().find('.'));
     boost::to_upper(defineString);
-    fprintf(getHeaderFile(), "#ifndef %s_H\n#define %s_H\n\n#include <getopt.h>\n#include <iostream>\n"
-                             "#include <string>\n\n", defineString.c_str(), defineString.c_str());
+    fprintf(getHeaderFile(), "#ifndef %s_H\n#define %s_H\n\n", defineString.c_str(), defineString.c_str());
+    for (auto &include : includes) {
+        fprintf(getHeaderFile(), "#include <%s>\n", include.c_str());
+    }
+
+    fprintf(getHeaderFile(), "\n");
 
     //Here further generation-Methods
 
-    fprintf(getHeaderFile(), "#endif //%s_H", defineString.c_str());
+
+    // Close header file
+    fprintf(getHeaderFile(), "\n#endif //%s_H", defineString.c_str());
 }
 
 void SourceCodeWriter::sourceFileIncludes() {
