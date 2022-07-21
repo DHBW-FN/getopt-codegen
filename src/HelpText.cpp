@@ -128,7 +128,7 @@ void HelpText::parseOption()
 
     // concatenate the options
     std::stringstream buffer;
-    buffer << std::left << std::setw(optionParamLength + shift) << "Arguments";
+    buffer << std::left << std::setw(optionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
     for (int i = 0; i < getOptSetup->getOptions().size(); i++)
@@ -167,7 +167,7 @@ void HelpText::parseUsage()
     for (int i = 0; i < getOptSetup->getSampleUsages().size(); i++) {
         new_usage.append(getOptSetup->getSampleUsages()[i] + "\\n");
     }
-    printHelpText.append("Usage\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
+    printHelpText.append("Usage:\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
 }
 
 /**

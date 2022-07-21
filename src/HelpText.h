@@ -11,7 +11,7 @@ using namespace std;
 class HelpText
 {
 public:
-    HelpText(GetOptSetup *getOptSetup);
+    explicit HelpText(GetOptSetup *getOptSetup);
     ~HelpText();
 
     string parseHelpMessage();

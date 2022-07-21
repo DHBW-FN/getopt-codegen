@@ -11,7 +11,7 @@ using namespace boost;
 class Justify
 {
 private:
-    string JoinALineWithSpace(
+    static string JoinALineWithSpace(
             vector<string>& words,
             int start, int end,
             int num_spaces,
@@ -19,18 +19,18 @@ private:
             int curr_line,
             int optionShift);
 
-    vector<string> JustifyText(
+    static vector<string> JustifyText(
             vector<string>& words,
             int L,
             bool isOption,
             int optionShift);
 
-    vector<string> splitWords(string str);
+    static vector<string> splitWords(const string& str);
 
-    string returnJustifiedText(vector<string>& result);
+    static string returnJustifiedText(vector<string>& result);
 
 public:
-    string justifyTheText(string str, int L, bool isOption, int optionShift);
+    string justifyTheText(const string& str, int L, bool isOption, int optionShift);
 };
 
 

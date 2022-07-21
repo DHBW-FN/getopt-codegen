@@ -94,7 +94,7 @@ vector<string> Justify::JustifyText(
 
         int lookahead_line_length
                 = curr_line_length
-                  + words[i].size()
+                  + (int)words[i].size()
                   + (num_words_curr_line - 1);
 
         // If by including the words length becomes L,
@@ -156,7 +156,7 @@ vector<string> Justify::JustifyText(
 
             // Current line length set
             // to current word length
-            curr_line_length = words[i].size();
+            curr_line_length = (int)words[i].size();
             curr_line += 1;
         }
 
@@ -164,7 +164,7 @@ vector<string> Justify::JustifyText(
             // add the word to current line length
         else {
             curr_line_length
-                    += words[i].size();
+                    += (int)words[i].size();
         }
     }
 
@@ -174,7 +174,7 @@ vector<string> Justify::JustifyText(
                 = JoinALineWithSpace(
                         words,
                         curr_line_start,
-                        words.size() - 1,
+                        (int)words.size() - 1,
                         num_words_curr_line - 1,
                         isOption,
                         curr_line,
@@ -199,7 +199,7 @@ vector<string> Justify::JustifyText(
  * @param str string to parse
  * @return vector with splitted words
  */
-vector<string> Justify::splitWords(string str)
+vector<string> Justify::splitWords(const string& str)
 {
 
     vector<string> words;
@@ -242,19 +242,19 @@ string Justify::returnJustifiedText(vector<string>& result)
  * @param optionShift shift that needs to be added to aline lines
  * @return justified text as a string
  */
-string Justify::justifyTheText(string str, int L, bool isOption, int optionShift)
+string Justify::justifyTheText(const string& str, int L, bool isOption, int optionShift)
 {
 
     vector<string> words;
 
     // Inserting words from
     // given string
-    words = splitWords(str);
+    words = this->splitWords(str);
 
     // Function call to
     // justify the text
     vector<string> result
-            = JustifyText(words, L, isOption, optionShift);
+            = this->JustifyText(words, L, isOption, optionShift);
 
     // Return the justified
     // text

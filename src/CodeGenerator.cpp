@@ -10,12 +10,12 @@ int main() {
 
     string printHelpText;
 
-    HelpText* help = nullptr;
-    help = new HelpText(parser.getGetOptSetup());
-
-    printHelpText = help->parseHelpMessage();
-
-    cout << printHelpText << endl;
+//    HelpText* help = nullptr;
+//    help = new HelpText(parser.getGetOptSetup());
+//
+//    printHelpText = help->parseHelpMessage();
+//
+//    cout << printHelpText << endl;
 
 //    FILE *file;
 //
