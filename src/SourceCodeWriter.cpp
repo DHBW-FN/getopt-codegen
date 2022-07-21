@@ -9,6 +9,16 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
     this->getOptSetup = getOptSetup;
 }
 
+SourceCodeWriter::~SourceCodeWriter() {
+    printf("Destructor called.\n");
+    if(this->headerFile != nullptr){
+        fclose(this->headerFile);
+    }
+    if(this->sourceFile != nullptr){
+        fclose(this->sourceFile);
+    }
+}
+
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
