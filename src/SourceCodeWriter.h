@@ -27,7 +27,6 @@ public:
     void writeFile();
 
     // Write code functions
-
     /**
      * @brief
      * Writes definitions and includes into Header-File
@@ -39,6 +38,18 @@ public:
      * Writes includes into Source-File
      */
     void sourceFileIncludes();
+
+    /**
+     * @brief
+     * Generate Header-File declaration of the function that will handle Options-parsing
+     */
+    void createHeaderParsingFunction();
+
+    /**
+     * @brief
+     * Generate implementation of the function that will handle Options-parsing
+     */
+    void createSourceParsingFunction();
 
     /**
      * @brief
