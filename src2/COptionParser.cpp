@@ -1,7 +1,6 @@
 //https://gist.github.com/avances123/2406651
 #include "COptionParser.h"
 #include <cstring>
-#include <string>
 
 namespace DHBW {
     void COptionParser::parse(Args args) {
