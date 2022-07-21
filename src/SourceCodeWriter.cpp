@@ -75,7 +75,6 @@ void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "\n");
 }
 
-
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
 
