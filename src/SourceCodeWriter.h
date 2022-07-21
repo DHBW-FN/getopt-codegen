@@ -12,6 +12,7 @@ private:
 public:
     // Constructor
     explicit SourceCodeWriter(GetOptSetup *getOptSetup);
+    ~SourceCodeWriter();
 
     // Getter
     GetOptSetup *getGetOptSetup() const;
