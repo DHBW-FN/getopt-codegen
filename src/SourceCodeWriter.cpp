@@ -1,4 +1,5 @@
 #include "SourceCodeWriter.h"
+#include <boost/algorithm/string.hpp>
 
 // Constructor
 SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
@@ -53,6 +54,40 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * ALL HELPER FUNCTIONS HERE!!!
  */
 
+void SourceCodeWriter::headerFileIncludes() {
+    printf("Writing includes into header file\n");
+    // Define static and always used includes here
+    string includes[] = { "getopt.h", "iostream"};
+
+    string defineString = getGetOptSetup()->getHeaderFileName()
+            .substr(0, getGetOptSetup()->getHeaderFileName().find('.'));
+    boost::to_upper(defineString);
+    fprintf(getHeaderFile(), "#ifndef %s_H\n#define %s_H\n\n", defineString.c_str(), defineString.c_str());
+    for (auto &include : includes) {
+        fprintf(getHeaderFile(), "#include <%s>\n", include.c_str());
+    }
+
+    fprintf(getHeaderFile(), "\n");
+
+    //Here further generation-Methods
+
+
+    // Close header file
+    fprintf(getHeaderFile(), "\n#endif //%s_H", defineString.c_str());
+}
+
+void SourceCodeWriter::sourceFileIncludes() {
+    fprintf(getSourceFile(), "#include \"%s\"\n\n", getGetOptSetup()->getHeaderFileName().c_str());
+
+    //Here further generation-Methods
+
+    // Close source file includes
+    fprintf(getSourceFile(), "\n");
+}
+
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
+
+    headerFileIncludes();
+    sourceFileIncludes();
 }
