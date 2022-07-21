@@ -81,13 +81,17 @@ void SourceCodeWriter::headerFileIncludes() {
 
 void SourceCodeWriter::headerFileNamespace(){
     //start of namespace
-    fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+    if(!getGetOptSetup()->getNamespaceName().empty()){
+        fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+    }
 
     //put all elements inside namespace here
     headerFileClass();
 
     //end of namespace
-    fprintf(getHeaderFile(), "}\n");
+    if(!getGetOptSetup()->getNamespaceName().empty()){
+        fprintf(getHeaderFile(), "}\n");
+    }
 }
 
 void SourceCodeWriter::headerFileClass(){
@@ -119,12 +123,16 @@ void SourceCodeWriter::sourceFileIncludes() {
 
 void SourceCodeWriter::sourceFileNamespace(){
     //start of namespace
-    fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+    if(!getGetOptSetup()->getNamespaceName().empty()){
+        fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+    }
 
     //put all elements inside namespace here
 
     //end of namespace
-    fprintf(getSourceFile(), "}\n");
+    if(!getGetOptSetup()->getNamespaceName().empty()){
+        fprintf(getSourceFile(), "}\n");
+    }
 }
 
 void SourceCodeWriter::writeFile() {
