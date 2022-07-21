@@ -42,11 +42,6 @@ namespace DHBW {
 
     void COptionParser::printVersion() {
     }
-
-    //immer wenn connectToInternalMethod() aufgerufen wird, muss diese Funktion aufgerufen werden
-    //natürlich mit dem entsprechenden Methodennamen
-    void COptionParser::ParseXml() {
-    }
 }
 
 int main(int argc, char* argv[]) {
