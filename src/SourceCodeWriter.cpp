@@ -54,6 +54,8 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * ALL HELPER FUNCTIONS HERE!!!
  */
 
+
+//from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
     printf("Writing includes into header file\n");
     // Define static and always used includes here
@@ -77,6 +79,17 @@ void SourceCodeWriter::headerFileIncludes() {
     fprintf(getHeaderFile(), "\n#endif //%s_H", defineString.c_str());
 }
 
+void SourceCodeWriter::headerFileNamespace(){
+    //start of namespace
+    fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+
+    //put all elements inside namespace here
+
+    //end of namespace
+    fprintf(getHeaderFile(), "}\n");
+}
+
+//from here on are all the sourceFiles
 void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "#include \"%s\"\n\n", getGetOptSetup()->getHeaderFileName().c_str());
 
@@ -91,30 +104,9 @@ void SourceCodeWriter::sourceFileNamespace(){
     fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
 
     //put all elements inside namespace here
-    sourceFileParse();
 
     //end of namespace
     fprintf(getSourceFile(), "}\n");
-}
-
-void SourceCodeWriter::sourceFileParse(){
-    //start of parse
-    fprintf(getSourceFile(), "void %s::parse(Args args) {\n\n", getGetOptSetup()->getClassName().c_str());
-
-    //put all elements inside parse here
-
-    //end of parse
-    fprintf(getSourceFile(), "}\n");
-}
-
-void SourceCodeWriter::headerFileNamespace(){
-    //start of namespace
-    fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
-
-    //put all elements inside namespace here
-
-    //end of namespace
-    fprintf(getHeaderFile(), "}\n");
 }
 
 void SourceCodeWriter::writeFile() {
