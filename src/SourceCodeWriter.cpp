@@ -54,6 +54,8 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * ALL HELPER FUNCTIONS HERE!!!
  */
 
+
+//from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
     printf("Writing includes into header file\n");
     // Define static and always used includes here
@@ -70,12 +72,42 @@ void SourceCodeWriter::headerFileIncludes() {
     fprintf(getHeaderFile(), "\n");
 
     //Here further generation-Methods
-
+    //struct method missing
+    headerFileNamespace();
 
     // Close header file
     fprintf(getHeaderFile(), "\n#endif //%s_H", defineString.c_str());
 }
 
+void SourceCodeWriter::headerFileNamespace(){
+    //start of namespace
+    fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+
+    //put all elements inside namespace here
+    headerFileClass();
+
+    //end of namespace
+    fprintf(getHeaderFile(), "}\n");
+}
+
+void SourceCodeWriter::headerFileClass(){
+    //start of class
+    fprintf(getHeaderFile(), "class %s {\n\n", getGetOptSetup()->getClassName().c_str());
+
+    fprintf(getHeaderFile(), "private:\n\n");
+    //put all elements inside class -> private here
+
+    fprintf(getHeaderFile(), "protected:\n\n");
+    //put all elements inside class -> protected here
+
+    fprintf(getHeaderFile(), "public:\n\n");
+    //put all elements inside class -> public here
+
+    //end of class
+    fprintf(getHeaderFile(), "}\n");
+}
+
+//from here on are all the sourceFiles
 void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "#include \"%s\"\n\n", getGetOptSetup()->getHeaderFileName().c_str());
 
@@ -85,9 +117,23 @@ void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "\n");
 }
 
+void SourceCodeWriter::sourceFileNamespace(){
+    //start of namespace
+    fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+
+    //put all elements inside namespace here
+
+    //end of namespace
+    fprintf(getSourceFile(), "}\n");
+}
+
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
 
+    //Write header files --> put methods here
     headerFileIncludes();
+
+    //Write source files --> put methods here
     sourceFileIncludes();
+    sourceFileNamespace();
 }

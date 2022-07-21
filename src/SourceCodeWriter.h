@@ -39,6 +39,24 @@ public:
      * Writes includes into Source-File
      */
     void sourceFileIncludes();
+
+    /**
+     * @brief
+     * Writes namespace into Source-File
+     */
+    void sourceFileNamespace();
+
+    /**
+     * @brief
+     * Writes namespace into Header-File
+     */
+    void headerFileNamespace();
+
+    /**
+     * @brief
+     * Writes Class into namespace in Header-File
+     */
+    void headerFileClass();
 };
 
 
