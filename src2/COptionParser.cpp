@@ -6,26 +6,34 @@
 namespace DHBW {
     void COptionParser::parse(Args args) {
         // Check if getopt was set and execute functions if no exclusion
-        if (args.help && !args.version) {
+        if (args.help) {
+            if (args.version) {
+                perror ("--help and --version cannot be used together.");
+                exit(1);
+            }
+
+            // More exclusions here in other if statements
+
+            // Main functionality here
             printHelp();
             return;
         }
 
-        if (!args.help && args.version) {
+        if (args.version) {
+            if (args.help) {
+                perror ("--version and --help cannot be used together.");
+                exit(1);
+            }
+
+            // More exclusions here in other if statements
+
+            // Main functionality here
             printVersion();
             return;
         }
 
-        std::string error = "The combination of: ";
-        if (args.help) {
-            error += "-h ";
-        }
-
-        if (args.version) {
-            error += "-v ";
-        }
-        error += "is not allowed.\n";
-        printf("%s", error.c_str());
+        perror("No known option was set.");
+        exit(1);
     }
 
     void COptionParser::printHelp() {
