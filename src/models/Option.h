@@ -15,6 +15,7 @@ enum class ConvertToOptions {
 };
 
 enum class HasArguments {
+    None,
     OPTIONAL,
     REQUIRED
 };
@@ -34,6 +35,8 @@ public:
     const std::string &getConnectToExternalMethod() const;
     HasArguments isHasArguments() const;
     ConvertToOptions getConvertTo() const;
+    std::string getDefaultValue() const;
+    std::string getInterface() const;
 
     // Setters
     void setRef(const std::string &ref);
@@ -45,6 +48,8 @@ public:
     void setConnectToExternalMethod(const std::string &connectToExternalMethod);
     void setHasArguments(const std::string &hasArguments);
     void setConvertTo(const std::string &convertTo);
+    void setDefaultValue(const std::string &defaultValue);
+    void setInterface(const std::string &interface);
 
     // Helpers
     char* toString();
@@ -60,7 +65,7 @@ private:
      * Short option.
      * Example: -h
      */
-    char shortOpt;
+    char shortOpt = '\0';
     /**
      * @brief longOpt
      * Long option.
@@ -94,12 +99,22 @@ private:
      * @brief hasArguments
      * True if the option has arguments.
      */
-    HasArguments hasArguments{};
+    HasArguments hasArguments = HasArguments::None;
     /**
      * @brief convertTo
      * Type the argument should be converted to.
      */
     ConvertToOptions convertTo = ConvertToOptions::STRING;
+    /**
+     * @brief defaultValue
+     * Default value of the option.
+     */
+    std::string defaultValue;
+    /**
+     * @brief interface
+     * Interface of the option.
+     */
+    std::string interface;
 };
 
 
