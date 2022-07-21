@@ -63,7 +63,7 @@ private:
      * Short option.
      * Example: -h
      */
-    char shortOpt;
+    char shortOpt = '\0';
     /**
      * @brief longOpt
      * Long option.
@@ -97,7 +97,7 @@ private:
      * @brief hasArguments
      * True if the option has arguments.
      */
-    HasArguments hasArguments{};
+    HasArguments hasArguments = HasArguments::None;
     /**
      * @brief convertTo
      * Type the argument should be converted to.
