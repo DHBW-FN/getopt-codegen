@@ -142,6 +142,8 @@ void Option::parseAttributes(AttributeList &attributes) {
             setConvertTo(std::string(XMLString::transcode(attributes.getValue(i))));
         } else if (!XMLString::compareString(attributes.getName(i), u"DefaultValue")) {
             setDefaultValue(std::string(XMLString::transcode(attributes.getValue(i))));
+        } else if (!XMLString::compareString(attributes.getName(i), u"Interface")) {
+            setInterface(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
 }
