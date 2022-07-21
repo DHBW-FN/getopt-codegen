@@ -85,9 +85,23 @@ void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "\n");
 }
 
+void SourceCodeWriter::sourceFileNamespace(){
+    //start of namespace
+    fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
+
+    //put all elements inside namespace here
+
+    //end of namespace
+    fprintf(getSourceFile(), "}\n");
+}
+
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
 
+    //Write header files --> put methods here
     headerFileIncludes();
+
+    //Write source files --> put methods here
     sourceFileIncludes();
+    sourceFileNamespace();
 }
