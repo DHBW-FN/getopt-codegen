@@ -6,27 +6,22 @@
 namespace DHBW {
     void COptionParser::parse(Args args) {
         // Check if getopt was set and execute functions if no exclusion
-
-        bool state[2];
-        state[0] = args.help;
-        state[1] = args.version;
-
-        if (state[0] && !state[1]) {
+        if (args.help && !args.version) {
             printHelp();
             return;
         }
 
-        if (!state[0] && state[1]) {
+        if (!args.help && args.version) {
             printVersion();
             return;
         }
 
         std::string error = "The combination of: ";
-        if (state[0]) {
+        if (args.help) {
             error += "-h ";
         }
 
-        if (state[1]) {
+        if (args.version) {
             error += "-v ";
         }
         error += "is not allowed.\n";
