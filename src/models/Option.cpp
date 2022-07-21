@@ -48,6 +48,11 @@ std::string Option::getDefaultValue() const {
     return defaultValue;
 }
 
+std::string Option::getInterface() const {
+    return interface;
+}
+
+
 
 // Setters
 
@@ -107,6 +112,10 @@ void Option::setConvertTo(const std::string &convertTo) {
 
 void Option::setDefaultValue(const std::string &defaultValue) {
     Option::defaultValue = defaultValue;
+}
+
+void Option::setInterface(const std::string &interface) {
+    Option::interface = interface;
 }
 
 // Helpers

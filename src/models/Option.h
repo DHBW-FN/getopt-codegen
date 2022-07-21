@@ -36,6 +36,7 @@ public:
     HasArguments isHasArguments() const;
     ConvertToOptions getConvertTo() const;
     std::string getDefaultValue() const;
+    std::string getInterface() const;
 
     // Setters
     void setRef(const std::string &ref);
@@ -48,6 +49,7 @@ public:
     void setHasArguments(const std::string &hasArguments);
     void setConvertTo(const std::string &convertTo);
     void setDefaultValue(const std::string &defaultValue);
+    void setInterface(const std::string &interface);
 
     // Helpers
     char* toString();
@@ -108,6 +110,11 @@ private:
      * Default value of the option.
      */
     std::string defaultValue;
+    /**
+     * @brief interface
+     * Interface of the option.
+     */
+    std::string interface;
 };
 
 
