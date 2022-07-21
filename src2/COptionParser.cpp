@@ -1,23 +1,36 @@
 //https://gist.github.com/avances123/2406651
 #include "COptionParser.h"
 #include <cstring>
+#include <string>
 
 namespace DHBW {
     void COptionParser::parse(Args args) {
         // Check if getopt was set and execute functions if no exclusion
-        //TO DO: print wrong combination of options
-        if (args.help && !(args.version)) {
+
+        bool state[2];
+        state[0] = args.help;
+        state[1] = args.version;
+
+        if (state[0] && !state[1]) {
             printHelp();
             return;
         }
 
-        if (args.version && !(args.help)) {
+        if (!state[0] && state[1]) {
             printVersion();
             return;
         }
 
-        perror("Darfst du nicht!\n");
-        exit(1);
+        std::string error = "The combination of: ";
+        if (state[0]) {
+            error += "-h ";
+        }
+
+        if (state[1]) {
+            error += "-v ";
+        }
+        error += "is not allowed.\n";
+        printf("%s", error.c_str());
     }
 
     void COptionParser::printHelp() {
