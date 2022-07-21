@@ -68,6 +68,11 @@ void SourceCodeWriter::headerFileIncludes() {
 
 void SourceCodeWriter::sourceFileIncludes() {
     fprintf(getSourceFile(), "#include \"%s\"\n\n", getGetOptSetup()->getHeaderFileName().c_str());
+
+    //Here further generation-Methods
+
+    // Close source file includes
+    fprintf(getSourceFile(), "\n");
 }
 
 
