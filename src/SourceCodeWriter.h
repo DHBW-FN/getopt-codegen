@@ -51,6 +51,12 @@ public:
      * Writes namespace into Header-File
      */
     void headerFileNamespace();
+
+    /**
+     * @brief
+     * Writes Class into namespace in Header-File
+     */
+    void headerFileClass();
 };
 
 

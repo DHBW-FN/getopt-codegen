@@ -84,8 +84,26 @@ void SourceCodeWriter::headerFileNamespace(){
     fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
 
     //put all elements inside namespace here
+    headerFileClass();
 
     //end of namespace
+    fprintf(getHeaderFile(), "}\n");
+}
+
+void SourceCodeWriter::headerFileClass(){
+    //start of class
+    fprintf(getHeaderFile(), "class %s {\n\n", getGetOptSetup()->getClassName().c_str());
+
+    fprintf(getHeaderFile(), "private:\n\n");
+    //put all elements inside class -> private here
+
+    fprintf(getHeaderFile(), "protected:\n\n");
+    //put all elements inside class -> protected here
+
+    fprintf(getHeaderFile(), "public:\n\n");
+    //put all elements inside class -> public here
+
+    //end of class
     fprintf(getHeaderFile(), "}\n");
 }
 
