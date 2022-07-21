@@ -45,6 +45,18 @@ public:
      * Writes namespace into Source-File
      */
     void sourceFileNamespace();
+
+    /**
+     * @brief
+     * Writes <classname>::parse() into Source-File
+     */
+    void sourceFileParse();
+
+    /**
+     * @brief
+     * Writes <classname>::parse() into Source-File
+     */
+    void headerFileNamespace();
 };
 
 
