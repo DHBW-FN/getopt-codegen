@@ -27,6 +27,17 @@ public:
 
     // Write code functions
 
+    /**
+     * @brief
+     * Writes definitions and includes into Header-File
+     */
+    void headerFileIncludes();
+
+    /**
+     * @brief
+     * Writes includes into Source-File
+     */
+    void sourceFileIncludes();
 };
 
 
