@@ -123,7 +123,7 @@ void StateMachine::handleEvent(Event event) {
         case State::BLOCK:
             switch (event) {
                 case Event::BLOCKEND:
-                    currentState = State::GETOPTSETUP;
+                    currentState = State::OVERALLDESCRIPTION;
                     break;
                 default:
                     break;
@@ -144,7 +144,7 @@ void StateMachine::handleEvent(Event event) {
         case State::SAMPLE:
             switch (event) {
                 case Event::SAMPLEEND:
-                    currentState = State::GETOPTSETUP;
+                    currentState = State::SAMPLEUSAGE;
                     break;
                 default:
                     break;
