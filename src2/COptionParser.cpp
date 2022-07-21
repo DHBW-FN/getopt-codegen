@@ -6,11 +6,11 @@
 namespace DHBW {
     // Getter
     std::string COptionParser::getValueOfOutputPath() const {
-        return outpathValue;
+        return outputPathValue;
     }
 
     bool COptionParser::isSetOutputPath() const {
-        return args.outpath.isSet;
+        return args.outputPath.isSet;
     }
 
     void COptionParser::parse(Args args) {
@@ -41,11 +41,11 @@ namespace DHBW {
             return;
         }
 
-        if (args.outpath.isSet) {
+        if (args.outputPath.isSet) {
             // More exclusions here in other if statements
 
             // Main functionality here
-            outpathValue = args.outpath.value;
+            outputPathValue = args.outputPath.value;
             return;
         }
 
@@ -93,9 +93,9 @@ namespace DHBW {
                         args.version.isSet = true;
                     }
                     if (strcmp("out-path", long_options[option_index].name) == 0) {
-                        args.outpath.isSet = true;
+                        args.outputPath.isSet = true;
                         // Only add value if Arguments is Required or Optional
-                        args.outpath.value = optarg;
+                        args.outputPath.value = optarg;
                     }
                     break;
 

@@ -20,7 +20,7 @@ struct Args {
         bool isSet = false;
         // Only add value if Arguments is Required or Optional
         std::string value;
-    } outpath;
+    } outputPath;
 };
 
 namespace DHBW {
@@ -29,7 +29,7 @@ namespace DHBW {
     private:
         Args args;
 
-        std::string outpathValue;
+        std::string outputPathValue;
     protected:
         virtual void printHelp();
         virtual void printVersion();
