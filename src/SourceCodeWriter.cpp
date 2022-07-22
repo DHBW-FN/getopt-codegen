@@ -128,8 +128,22 @@ void SourceCodeWriter::headerFileClass() {
 
     // Values for the options
     for (Option option: getGetOptSetup()->getOptions()) {
-        if (option.isHasArguments() != HasArguments::None) {
-            fprintf(getHeaderFile(), "%s %sValue;\n", getValueTypeByOption(option).c_str(), determineArgsName(option).c_str());
+        if (option.isHasArguments() != HasArguments::NONE) {
+            fprintf(getHeaderFile(), "%s %sValue", getValueTypeByOption(option).c_str(), determineArgsName(option).c_str());
+            if (option.isHasArguments() == HasArguments::OPTIONAL && !option.getDefaultValue().empty()) {
+                switch (option.getConvertTo()) {
+                    case ConvertToOptions::STRING:
+                        fprintf(getHeaderFile(), " = \"%s\"", option.getDefaultValue().c_str());
+                        break;
+                    case ConvertToOptions::INTEGER:
+                    case ConvertToOptions::BOOLEAN:
+                        fprintf(getHeaderFile(), " = %s", option.getDefaultValue().c_str());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            fprintf(getHeaderFile(), ";\n");
         }
     }
 
@@ -154,7 +168,7 @@ void SourceCodeWriter::createHeaderStructArgs() {
     for (auto &option: getGetOptSetup()->getOptions()) {
         fprintf(getHeaderFile(), "struct {\n");
         fprintf(getHeaderFile(), "bool isSet = false;\n");
-        if (option.isHasArguments() != HasArguments::None) {
+        if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getHeaderFile(), "std::string value;\n");
         }
         fprintf(getHeaderFile(), "} %s;\n", determineArgsName(option).c_str());
@@ -220,7 +234,7 @@ void SourceCodeWriter::sourceFileParse() {
 
         //TODO insert handle getOpt
         //TODO set values if not empty - needs helper function for argName and convertTo helper function
-        if (option.isHasArguments() != HasArguments::None) {
+        if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
             fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
@@ -394,7 +408,7 @@ void SourceCodeWriter::createHeaderGetter() {
         capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
         if (!option.getInterface().empty()) {
             fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
-            if (option.isHasArguments() != HasArguments::None) {
+            if (option.isHasArguments() != HasArguments::NONE) {
                 fprintf(getHeaderFile(), "%s getValueOf%s() const;\n",
                         getValueTypeByOption(option).c_str(), capitalizedArgsName.c_str());
             }
@@ -413,7 +427,7 @@ void SourceCodeWriter::createSourceGetter() {
             fprintf(getSourceFile(), "bool %s::isSet%s() const {\nreturn args.%s.isSet;\n}\n",
                     getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
                     determineArgsName(option).c_str());
-            if (option.isHasArguments() != HasArguments::None) {
+            if (option.isHasArguments() != HasArguments::NONE) {
                 fprintf(getSourceFile(), "%s %s::getValueOf%s() const{\nreturn %sValue;\n}\n",
                         getValueTypeByOption(option).c_str(), getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
                         determineArgsName(option).c_str());
