@@ -145,7 +145,7 @@ void SourceCodeWriter::createHeaderParsingFunction() {
 
 void SourceCodeWriter::createSourceParsingFunction() {
     vector<Option> options = getGetOptSetup()->getOptions();
-    fprintf(getSourceFile(), "void %s::parseOptions(int argc, char **argv){\nArgs args = Args();\n"
+    fprintf(getSourceFile(), "void %s::parseOptions(int argc, char **argv){\nargs = Args();\n"
                              "opterr = 0; int opt;\nstatic struct option long_options[] = {\n",
             getGetOptSetup()->getClassName().c_str());
 
