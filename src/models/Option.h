@@ -52,14 +52,13 @@ public:
     void setInterface(const std::string &interface);
 
     // Helpers
-    char* toString();
     void parseAttributes(AttributeList &attributes);
 private:
     /**
      * @brief ref: Value between 0 and 63
      * Reference to the option.
      */
-    int ref;
+    int ref{};
     /**
      * @brief shortOpt
      * Short option.

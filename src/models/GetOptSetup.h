@@ -43,7 +43,6 @@ public:
     void addOption(const Option &option);
 
     // Helpers
-    char* toString();
     void parseAttributes(AttributeList &attributes);
 private:
     /**

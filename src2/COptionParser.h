@@ -34,7 +34,7 @@ namespace DHBW {
         virtual void printHelp();
         virtual void printVersion();
     public:
-        void parse(Args args);
+        void parse();
 
         // Getter
         std::string getValueOfOutputPath() const;
