@@ -242,15 +242,29 @@ std::string SourceCodeWriter::determineArgsName(const Option& option) {
     std::string argsName;
     if (!option.getInterface().empty()) {
         argsName = option.getInterface();
-        argsName[0] = tolower(argsName[0]);
-        return argsName;
-    } else if (!option.getLongOpt().empty())
-        return option.getLongOpt();
-    else if (option.getShortOpt() != '\0')
-        return to_string(option.getShortOpt());
+    } else if (!option.getLongOpt().empty()) {
+        argsName = option.getLongOpt();
+    } else if (!isblank(option.getShortOpt())) {
+        argsName = option.getShortOpt();
+    }
 
-    perror("Every option must at least have either a LongOpt or a ShortOpt.");
-    exit(1);
+    argsName[0] = tolower(argsName[0], locale());
+
+    // Removing all invalid characters from the name
+    vector<char> invalidChars = {' ', '-', '.', ':'};
+    for (auto &invalidChar: invalidChars) {
+        while (argsName.find(invalidChar) != std::string::npos) {
+            argsName[argsName.find(invalidChar) + 1] = toupper(argsName[argsName.find(invalidChar) + 1], locale());
+            argsName.erase(argsName.find(invalidChar), 1);
+        }
+    }
+
+    if (argsName.empty()) {
+        perror("Every option must at least have either an Interface, a LongOpt or a ShortOpt.");
+        exit(1);
+    }
+
+    return argsName;
 }
 
 void SourceCodeWriter::writeFile() {
