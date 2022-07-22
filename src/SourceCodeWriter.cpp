@@ -77,7 +77,7 @@ string SourceCodeWriter::convertParam(Option &option)
     }
     else
     {
-        return "optarg";
+        return "optarg;";
     }
 }
 
@@ -95,16 +95,16 @@ string SourceCodeWriter::convertParamValue(Option &option)
         // value of ConvertTo
         if (option.getConvertTo() == ConvertToOptions::INTEGER)
         {
-            return "int value";
+            return "int value;";
         }
         else if (option.getConvertTo() == ConvertToOptions::BOOLEAN)
         {
-            return "bool value";
+            return "bool value;";
         }
     }
     else
     {
-        return "std::string value";
+        return "std::string value;";
     }
 }
 
