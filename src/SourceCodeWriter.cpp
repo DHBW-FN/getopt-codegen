@@ -97,15 +97,18 @@ void SourceCodeWriter::headerFileNamespace(){
 
 void SourceCodeWriter::headerFileClass(){
     //start of class
-    fprintf(getHeaderFile(), "class %s {\n\n", getGetOptSetup()->getClassName().c_str());
+    fprintf(getHeaderFile(), "class %s {\n", getGetOptSetup()->getClassName().c_str());
 
-    fprintf(getHeaderFile(), "private:\n\n");
+    fprintf(getHeaderFile(), "private:\n");
     //put all elements inside class -> private here
+    fprintf(getHeaderFile(), "Args args;\n");
 
-    fprintf(getHeaderFile(), "protected:\n\n");
+    fprintf(getHeaderFile(), "\n");
+    fprintf(getHeaderFile(), "protected:\n");
     //put all elements inside class -> protected here
 
-    fprintf(getHeaderFile(), "public:\n\n");
+    fprintf(getHeaderFile(), "\n");
+    fprintf(getHeaderFile(), "public:\n");
     //put all elements inside class -> public here
 
     //end of class
