@@ -141,6 +141,7 @@ void SourceCodeWriter::headerFileClass() {
     fprintf(getHeaderFile(), "public:\n");
     //put all elements inside class -> public here
     fprintf(getHeaderFile(), "void parse();\n");
+    createHeaderGetter();
     createHeaderParsingFunction();
     createHeaderUnknownOption();
 
@@ -150,7 +151,7 @@ void SourceCodeWriter::headerFileClass() {
 
 void SourceCodeWriter::createHeaderStructArgs() {
     fprintf(getHeaderFile(), "struct Args {\n");
-    for (auto &option : getGetOptSetup()->getOptions()) {
+    for (auto &option: getGetOptSetup()->getOptions()) {
         fprintf(getHeaderFile(), "struct {\n");
         fprintf(getHeaderFile(), "bool isSet = false;\n");
         if (option.isHasArguments() != HasArguments::None) {
@@ -176,6 +177,7 @@ void SourceCodeWriter::sourceFileNamespace() {
     if (!getGetOptSetup()->getNamespaceName().empty()) {
         fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
     }
+    createSourceGetter();
 
     //put all elements inside namespace here
     sourceFileParse();
@@ -308,7 +310,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                                          "perror(\"There was no argument passed for the option \\\"%s\\\" "
                                          "which requires one.\");\n"
                                          "exit(1);\n}\nargs.%s.value = optarg;\n",
-                                         bothOpts.c_str(), determineArgsName(option).c_str());
+                        bothOpts.c_str(), determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
                 fprintf(getSourceFile(), "if(optarg != nullptr)\nargs.%s.value = optarg;",
@@ -384,6 +386,45 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
     }
 
     return argsName;
+}
+
+void SourceCodeWriter::createHeaderGetter() {
+    for (Option option: getGetOptSetup()->getOptions()) {
+        string capitalizedArgsName = determineArgsName(option);
+        capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
+        if (!option.getInterface().empty()) {
+            fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
+            if (option.isHasArguments() != HasArguments::None) {
+                fprintf(getHeaderFile(), "%s getValueOf%s() const;\n",
+                        getValueTypeByOption(option).c_str(), capitalizedArgsName.c_str());
+            }
+        } else if (option.getInterface().empty() && option.getConnectToInternalMethod().empty()
+                   && option.getConnectToExternalMethod().empty()) {
+            fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
+        }
+    }
+}
+
+void SourceCodeWriter::createSourceGetter() {
+    for (Option option: getGetOptSetup()->getOptions()) {
+        string capitalizedArgsName = determineArgsName(option);
+        capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
+        if (!option.getInterface().empty()) {
+            fprintf(getSourceFile(), "bool %s::isSet%s() const {\nreturn args.%s.isSet;\n}\n",
+                    getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
+                    determineArgsName(option).c_str());
+            if (option.isHasArguments() != HasArguments::None) {
+                fprintf(getSourceFile(), "%s %s::getValueOf%s() const{\nreturn %sValue;\n}\n",
+                        getValueTypeByOption(option).c_str(), getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
+                        determineArgsName(option).c_str());
+            }
+        } else if (option.getInterface().empty() && option.getConnectToInternalMethod().empty()
+                   && option.getConnectToExternalMethod().empty()) {
+            fprintf(getSourceFile(), "bool %s::isSet%s() const {\nreturn args.%s.isSet;\n}\n",
+                    getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
+                    determineArgsName(option).c_str());
+        }
+    }
 }
 
 void SourceCodeWriter::writeFile() {
