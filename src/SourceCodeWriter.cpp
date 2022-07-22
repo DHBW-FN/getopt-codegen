@@ -157,7 +157,7 @@ void SourceCodeWriter::sourceFileParse() {
         //exclusions
         fprintf(getSourceFile(), "}\n");
     }
-    fprintf(getSourceFile(), "}\n");
+    fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
 }
 
 void SourceCodeWriter::writeFile() {
