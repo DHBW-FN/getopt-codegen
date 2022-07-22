@@ -68,11 +68,11 @@ string SourceCodeWriter::convertParam(Option &option)
         // value of ConvertTo
         if (option.getConvertTo() == ConvertToOptions::INTEGER)
         {
-            return "boost::lexical_cast<int>(optarg)";
+            return "try { boost::lexical_cast<int>(optarg); } \ncatch (const boost::bad_lexical_cast &e) { std::cerr << e.what() << endl; exit(EXIT_FAILURE); }";
         }
         else if (option.getConvertTo() == ConvertToOptions::BOOLEAN)
         {
-            return "boost::lexical_cast<bool>(optarg)";
+            return "try { boost::lexical_cast<bool>(optarg); } \ncatch (const boost::bad_lexical_cast &e) { std::cerr << e.what() << endl; exit(EXIT_FAILURE); }";
         }
     }
     else
