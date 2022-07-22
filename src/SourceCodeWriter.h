@@ -25,6 +25,8 @@ public:
 
     // Helpers
     void writeFile();
+    string convertParam(Option &option);
+    string convertParamValue(Option &option);
 
     // Write code functions
 
