@@ -140,7 +140,7 @@ void SourceCodeWriter::sourceFileNamespace() {
 }
 
 void SourceCodeWriter::createHeaderParsingFunction() {
-    fprintf(getHeaderFile(), "void parseOptions(int argc, char **argv);");
+    fprintf(getHeaderFile(), "void parseOptions(int argc, char **argv);\n");
 }
 
 void SourceCodeWriter::createSourceParsingFunction() {
