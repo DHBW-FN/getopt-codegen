@@ -366,7 +366,7 @@ void SourceCodeWriter::createHeaderGetter() {
 }
 
 void SourceCodeWriter::createSourceGetter() {
-    for (auto &option: getGetOptSetup()->getOptions()) {
+    for (Option option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
         capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
         if (!option.getInterface().empty()) {
@@ -374,20 +374,8 @@ void SourceCodeWriter::createSourceGetter() {
                     getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
                     determineArgsName(option).c_str());
             if (option.isHasArguments() != HasArguments::None) {
-                std::string type;
-                switch (option.getConvertTo()) {
-                    case ConvertToOptions::INTEGER:
-                        type = "int";
-                        break;
-                    case ConvertToOptions::BOOLEAN:
-                        type = "bool";
-                        break;
-                    case ConvertToOptions::STRING:
-                        type = "std::string";
-                        break;
-                }
                 fprintf(getSourceFile(), "%s %s::getValueOf%s() const{\nreturn %sValue;\n}\n",
-                        type.c_str(), getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
+                        getValueTypeByOption(option).c_str(), getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
                         determineArgsName(option).c_str());
             }
         } else if (option.getInterface().empty() && option.getConnectToInternalMethod().empty()
