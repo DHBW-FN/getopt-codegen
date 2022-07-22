@@ -13,7 +13,7 @@ namespace DHBW {
         return args.outputPath.isSet;
     }
 
-    void COptionParser::parse(Args args) {
+    void COptionParser::parse() {
         // Check if getopt was set and execute functions if no exclusion
         if (args.help.isSet) {
             if (args.version.isSet) {
@@ -121,7 +121,7 @@ namespace DHBW {
         }
 
         // Parse the arguments
-        parse(args);
+        parse();
 
         exit(EXIT_SUCCESS);
     }
