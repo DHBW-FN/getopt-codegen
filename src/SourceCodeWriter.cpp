@@ -137,26 +137,34 @@ void SourceCodeWriter::sourceFileNamespace(){
 }
 
 void SourceCodeWriter::sourceFileParse() {
+    //TODO replace next line with actual code
+    std::string optionName = "help";
+    std::string option2Name = "version";
+
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
     for (auto &option : getGetOptSetup()->getOptions()) {
-        //TODO replace next line with actual code
-        std::string optionName = "help";
-        std::string option2Name = "version";
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
-        for (auto &exclusion : option.getExclusions()) {
-            // Iterate over options again and compare exclusion with ref
-            for (auto &option2 : getGetOptSetup()->getOptions()) {
-                if (option2.getRef() == exclusion) {
-                    fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
-                    fprintf(getSourceFile(), "    perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
-                    fprintf(getSourceFile(), "    exit(1);\n");
-                    fprintf(getSourceFile(), "}\n");
+
+        // exclusions
+        if (!option.getExclusions().empty()) {
+            for (auto &exclusion : option.getExclusions()) {
+                // Iterate over options again and compare exclusion with ref
+                for (auto &option2 : getGetOptSetup()->getOptions()) {
+                    if (option2.getRef() == exclusion) {
+                        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
+                        fprintf(getSourceFile(), "    perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                        fprintf(getSourceFile(), "    exit(1);\n");
+                        fprintf(getSourceFile(), "}\n");
+                    }
                 }
             }
         }
-        //exclusions
-        fprintf(getSourceFile(), "}\n");
+
+        //TODO insert handle getOpt
+        fprintf(getSourceFile(), "printf(\"getOpt called\");\n");
+        fprintf(getSourceFile(), "return;\n}\n");
     }
+
     fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
 }
 
