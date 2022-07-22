@@ -108,7 +108,7 @@ void SourceCodeWriter::headerFileClass() {
     //put all elements inside class -> public here
     createHeaderParsingFunction();
     //end of class
-    fprintf(getHeaderFile(), "}\n");
+    fprintf(getHeaderFile(), "};\n");
 }
 
 //from here on are all the sourceFiles
