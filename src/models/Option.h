@@ -15,7 +15,7 @@ enum class ConvertToOptions {
 };
 
 enum class HasArguments {
-    None,
+    NONE,
     OPTIONAL,
     REQUIRED
 };
@@ -98,7 +98,7 @@ private:
      * @brief hasArguments
      * True if the option has arguments.
      */
-    HasArguments hasArguments = HasArguments::None;
+    HasArguments hasArguments = HasArguments::NONE;
     /**
      * @brief convertTo
      * Type the argument should be converted to.
