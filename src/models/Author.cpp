@@ -1,7 +1,3 @@
-//
-// Created by tobig on 6/10/2022.
-//
-
 #include <xercesc/util/XMLString.hpp>
 #include "Author.h"
 
@@ -24,16 +20,16 @@ const string &Author::getMail() const {
 
 
 // Setters
-void Author::setName(const string &name) {
-    Author::name = name;
+void Author::setName(const string &_name) {
+    Author::name = _name;
 }
 
-void Author::setPhone(const string &phone) {
-    Author::phone = phone;
+void Author::setPhone(const string &_phone) {
+    Author::phone = _phone;
 }
 
-void Author::setMail(const string &mail) {
-    Author::mail = mail;
+void Author::setMail(const string &_mail) {
+    Author::mail = _mail;
 }
 
 
