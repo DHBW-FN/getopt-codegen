@@ -116,8 +116,6 @@ void SourceCodeWriter::headerFileClass(){
 }
 
 void SourceCodeWriter::createHeaderStructArgs() {
-    std::string argsName = "help";
-
     fprintf(getHeaderFile(), "struct Args {\n");
     for (auto &option : getGetOptSetup()->getOptions()) {
         fprintf(getHeaderFile(), "struct {\n");
