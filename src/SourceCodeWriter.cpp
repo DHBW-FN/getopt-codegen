@@ -82,7 +82,7 @@ string SourceCodeWriter::getValueTypeByOption(Option &option)
 void SourceCodeWriter::headerFileIncludes() {
     printf("Writing includes into header file\n");
     // Define static and always used includes here
-    string includes[] = {"getopt.h", "iostream"};
+    string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
     string defineString = getGetOptSetup()->getHeaderFileName()
             .substr(0, getGetOptSetup()->getHeaderFileName().find('.'));
@@ -140,6 +140,7 @@ void SourceCodeWriter::headerFileClass() {
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "public:\n");
     //put all elements inside class -> public here
+    fprintf(getHeaderFile(), "void parse();\n");
     createHeaderParsingFunction();
     createHeaderUnknownOption();
 
@@ -176,12 +177,12 @@ void SourceCodeWriter::sourceFileNamespace() {
         fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
     }
 
+    //put all elements inside namespace here
+    sourceFileParse();
     createSourceParsingFunction();
     createSourceUnknownOption();
 
     //Hier kommt der Help-Text dazu
-
-    //put all elements inside namespace here
 
     //end of namespace
     if (!getGetOptSetup()->getNamespaceName().empty()) {
@@ -191,6 +192,45 @@ void SourceCodeWriter::sourceFileNamespace() {
 
 void SourceCodeWriter::createHeaderParsingFunction() {
     fprintf(getHeaderFile(), "void parseOptions(int argc, char **argv);\n");
+}
+
+void SourceCodeWriter::sourceFileParse() {
+    fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
+    for (auto &option : getGetOptSetup()->getOptions()) {
+        std::string optionName = determineArgsName(option);
+        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
+
+        // exclusions
+        if (!option.getExclusions().empty()) {
+            for (auto &exclusion : option.getExclusions()) {
+                // Iterate over options again and compare exclusion with ref
+                for (auto &option2 : getGetOptSetup()->getOptions()) {
+                    std::string option2Name = determineArgsName(option2);
+                    if (option2.getRef() == exclusion) {
+                        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
+                        fprintf(getSourceFile(), "perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                        fprintf(getSourceFile(), "exit(1);\n");
+                        fprintf(getSourceFile(), "}\n");
+                    }
+                }
+            }
+        }
+
+        //TODO insert handle getOpt
+        //TODO set values if not empty - needs helper function for argName and convertTo helper function
+        if (option.isHasArguments() != HasArguments::None) {
+            fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
+            //TODO This might not work this way, check back later
+            fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+            fprintf(getSourceFile(), "}\n");
+        }
+        // Implement what getopts do here
+
+
+        fprintf(getSourceFile(), "return;\n}\n");
+    }
+
+    fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
 }
 
 void SourceCodeWriter::createSourceParsingFunction() {
@@ -297,7 +337,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                              "while (optind < argc)\nprintf(\"%s \", argv[optind++]);\nprintf(\"\\n\");\n}\n", "%s");
 
     //Call parse-function
-    fprintf(getSourceFile(), "parse(args);\n\n");
+    fprintf(getSourceFile(), "parse();\n\n");
 
     //If nothing went wrong -> EXIT_SUCCESS
     fprintf(getSourceFile(), "exit(EXIT_SUCCESS);\n");

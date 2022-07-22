@@ -2,6 +2,7 @@
 #include "COptionParser.h"
 #include <cstring>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 
 namespace DHBW {
     // Getter
@@ -13,7 +14,7 @@ namespace DHBW {
         return args.outputPath.isSet;
     }
 
-    void COptionParser::parse(Args args) {
+    void COptionParser::parse() {
         // Check if getopt was set and execute functions if no exclusion
         if (args.help.isSet) {
             if (args.version.isSet) {
@@ -45,7 +46,7 @@ namespace DHBW {
             // More exclusions here in other if statements
 
             // Main functionality here
-            outputPathValue = args.outputPath.value;
+            outputPathValue = boost::lexical_cast<typeof outputPathValue>(args.outputPath.value);
             return;
         }
 
@@ -121,7 +122,7 @@ namespace DHBW {
         }
 
         // Parse the arguments
-        parse(args);
+        parse();
 
         exit(EXIT_SUCCESS);
     }

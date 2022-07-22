@@ -72,6 +72,12 @@ public:
 
     /**
      * @brief
+     * Writes exclusion check and execution of getOpts into Source-File
+     */
+    void sourceFileParse();
+
+    /**
+     * @brief
      * Determines the name the Args-Struct will have for any given Option
      * @param option
      * @return
