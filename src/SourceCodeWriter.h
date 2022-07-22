@@ -94,6 +94,18 @@ public:
      * Generates the implementation of the unknownOption-function
      */
     void createSourceUnknownOption();
+
+    /**
+     * @brief
+     * Generates the declaration of all Getters in the Header-File
+     */
+    void createHeaderGetter();
+
+    /**
+     * @brief
+     * Generates the implementation of all Getters in the Header-File
+     */
+    void createSourceGetter();
 };
 
 
