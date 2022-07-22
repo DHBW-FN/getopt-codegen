@@ -7,6 +7,11 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
         perror("Both the Header-Filename and the Sourcefilename must be set.");
         exit(1);
     }
+
+    if(getOptSetup->getClassName().empty()){
+        perror("The Class-Name must be set. ");
+        exit(1);
+    }
     this->getOptSetup = getOptSetup;
 }
 
