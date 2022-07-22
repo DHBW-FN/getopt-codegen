@@ -349,26 +349,14 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
 }
 
 void SourceCodeWriter::createHeaderGetter() {
-    for (auto &option: getGetOptSetup()->getOptions()) {
+    for (Option option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
         capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
         if (!option.getInterface().empty()) {
             fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
             if (option.isHasArguments() != HasArguments::None) {
-                std::string type;
-                switch (option.getConvertTo()) {
-                    case ConvertToOptions::INTEGER:
-                        type = "int";
-                        break;
-                    case ConvertToOptions::BOOLEAN:
-                        type = "bool";
-                        break;
-                    case ConvertToOptions::STRING:
-                        type = "std::string";
-                        break;
-                }
                 fprintf(getHeaderFile(), "%s getValueOf%s() const;\n",
-                        type.c_str(), capitalizedArgsName.c_str());
+                        getValueTypeByOption(option).c_str(), capitalizedArgsName.c_str());
             }
         } else if (option.getInterface().empty() && option.getConnectToInternalMethod().empty()
                    && option.getConnectToExternalMethod().empty()) {
