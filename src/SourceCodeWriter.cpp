@@ -161,6 +161,7 @@ void SourceCodeWriter::sourceFileParse() {
         }
 
         //TODO insert handle getOpt
+        //TODO set values if not empty - needs helper function for argName and convertTo helper function
         fprintf(getSourceFile(), "printf(\"getOpt %s called\");\n", optionName.c_str());
         fprintf(getSourceFile(), "return;\n}\n");
     }
