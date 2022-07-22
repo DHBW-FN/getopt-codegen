@@ -75,7 +75,7 @@ public:
      * @param option
      * @return
      */
-    string determineArgsName(Option option);
+    static string determineArgsName(const Option& option);
 };
 
 

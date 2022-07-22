@@ -254,8 +254,8 @@ void SourceCodeWriter::createSourceParsingFunction() {
     fprintf(getSourceFile(), "}\n");
 }
 
-string SourceCodeWriter::determineArgsName(Option option) {
-    string argsName;
+std::string SourceCodeWriter::determineArgsName(const Option& option) {
+    std::string argsName;
     if (!option.getInterface().empty()) {
         argsName = option.getInterface();
         argsName[0] = tolower(argsName[0]);
