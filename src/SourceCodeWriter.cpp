@@ -212,6 +212,22 @@ void SourceCodeWriter::createSourceParsingFunction() {
         else
             fprintf(getSourceFile(), "case %i:\n", longOptsWithoutShortOpt++);
 
+        switch (option.isHasArguments()) {
+            case HasArguments::REQUIRED:
+                fprintf(getSourceFile(), "if(optarg == nullptr){\n"
+                                         "perror(\"There was no argument passed for the option \\\"%s\\\" "
+                                         "which requires one.\");\n"
+                                         "exit(1);\n}", bothOpts.c_str());
+                break;
+            case HasArguments::OPTIONAL:
+                break;
+            default:
+                fprintf(getSourceFile(), "if(optarg != nullptr){\n"
+                                         "perror(\"There was an argument passed for the option \\\"%s\\\" "
+                                         "which does not accept one.\");\nexit(1);}\n", bothOpts.c_str());
+                break;
+        }
+
         fprintf(getSourceFile(), "args.%s.isSet = true;", determineArgsName(option).c_str());
 
         //Close case
