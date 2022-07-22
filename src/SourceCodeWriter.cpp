@@ -59,6 +59,24 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * ALL HELPER FUNCTIONS HERE!!!
  */
 
+/**
+ * @brief get string of the type of the option
+ * @param option a single option object
+ * @return string with correct value type
+ */
+string SourceCodeWriter::getValueTypeByOption(Option &option)
+{
+    switch (option.getConvertTo()) {
+        case ConvertToOptions::STRING:
+            return "std::string";
+        case ConvertToOptions::INTEGER:
+            return "int";
+        case ConvertToOptions::BOOLEAN:
+            return "bool";
+        default:
+            return "";
+    }
+}
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
@@ -107,6 +125,25 @@ void SourceCodeWriter::headerFileClass() {
     fprintf(getHeaderFile(), "private:\n");
     //put all elements inside class -> private here
     fprintf(getHeaderFile(), "Args args;\n");
+
+    // Values for the options
+    for (auto &option: getGetOptSetup()->getOptions()) {
+        if (option.isHasArguments() != HasArguments::None) {
+            std::string type;
+            switch (option.getConvertTo()) {
+                case ConvertToOptions::STRING:
+                    type = "std::string";
+                    break;
+                case ConvertToOptions::INTEGER:
+                    type = "int";
+                    break;
+                case ConvertToOptions::BOOLEAN:
+                    type = "bool";
+                    break;
+            }
+            fprintf(getHeaderFile(), "%s %sValue;\n", type.c_str(), determineArgsName(option).c_str());
+        }
+    }
 
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "protected:\n");
