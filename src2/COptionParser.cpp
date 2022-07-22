@@ -2,6 +2,7 @@
 #include "COptionParser.h"
 #include <cstring>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 
 namespace DHBW {
     // Getter
@@ -45,7 +46,7 @@ namespace DHBW {
             // More exclusions here in other if statements
 
             // Main functionality here
-            outputPathValue = args.outputPath.value;
+            outputPathValue = boost::lexical_cast<typeof outputPathValue>(args.outputPath.value);
             return;
         }
 
