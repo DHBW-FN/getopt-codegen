@@ -312,7 +312,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                              "while (optind < argc)\nprintf(\"%s \", argv[optind++]);\nprintf(\"\\n\");\n}\n", "%s");
 
     //Call parse-function
-    fprintf(getSourceFile(), "parse(args);\n\n");
+    fprintf(getSourceFile(), "parse();\n\n");
 
     //If nothing went wrong -> EXIT_SUCCESS
     fprintf(getSourceFile(), "exit(EXIT_SUCCESS);\n");
