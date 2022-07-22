@@ -76,6 +76,18 @@ public:
      * @return
      */
     static string determineArgsName(const Option& option);
+
+    /**
+     * @brief
+     * Generates the declaration of the unknownOption-function
+     */
+    void createHeaderUnknownOption();
+
+    /**
+     * @brief
+     * Generates the implementation of the unknownOption-function
+     */
+    void createSourceUnknownOption();
 };
 
 

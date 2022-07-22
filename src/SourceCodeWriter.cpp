@@ -8,7 +8,7 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
         exit(1);
     }
 
-    if(getOptSetup->getClassName().empty()){
+    if (getOptSetup->getClassName().empty()) {
         perror("The Class-Name must be set. ");
         exit(1);
     }
@@ -112,6 +112,7 @@ void SourceCodeWriter::headerFileClass() {
     fprintf(getHeaderFile(), "public:\n\n");
     //put all elements inside class -> public here
     createHeaderParsingFunction();
+    createHeaderUnknownOption();
     //end of class
     fprintf(getHeaderFile(), "};\n");
 }
@@ -133,6 +134,7 @@ void SourceCodeWriter::sourceFileNamespace() {
     }
 
     createSourceParsingFunction();
+    createSourceUnknownOption();
 
     //Hier kommt der Help-Text dazu
 
@@ -222,9 +224,12 @@ void SourceCodeWriter::createSourceParsingFunction() {
                 fprintf(getSourceFile(), "if(optarg == nullptr){\n"
                                          "perror(\"There was no argument passed for the option \\\"%s\\\" "
                                          "which requires one.\");\n"
-                                         "exit(1);\n}", bothOpts.c_str());
+                                         "exit(1);\n}\nargs.%s.value = optarg;\n",
+                                         bothOpts.c_str(), determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
+                fprintf(getSourceFile(), "if(optarg != nullptr)\nargs.%s.value = optarg;",
+                        determineArgsName(option).c_str());
                 break;
             default:
                 fprintf(getSourceFile(), "if(optarg != nullptr){\n"
@@ -240,8 +245,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
     };
 
     //Close switch-case
-    fprintf(getSourceFile(), "case '?':\ndefault:\nif(isprint(optopt))\nunknownOption(optopt);\n"
-                             "else\nunknownOption(std::to_string(optopt));\nbreak;}\n");
+    fprintf(getSourceFile(), "case '?':\ndefault:\nunknownOption(std::to_string(optopt));\nbreak;}\n");
     //Close while loop
     fprintf(getSourceFile(), "}\n");
 
@@ -259,7 +263,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
     fprintf(getSourceFile(), "}\n");
 }
 
-std::string SourceCodeWriter::determineArgsName(const Option& option) {
+std::string SourceCodeWriter::determineArgsName(const Option &option) {
     std::string argsName;
     if (!option.getInterface().empty()) {
         argsName = option.getInterface();
@@ -286,6 +290,16 @@ std::string SourceCodeWriter::determineArgsName(const Option& option) {
     }
 
     return argsName;
+}
+
+void SourceCodeWriter::createHeaderUnknownOption() {
+    fprintf(getHeaderFile(), "virtual void unknownOption(const std::string &unknownOption);\n\n");
+}
+
+void SourceCodeWriter::createSourceUnknownOption() {
+    fprintf(getSourceFile(), "void %s::unknownOption(const std::string &unknownOption){\n"
+                             "perror(\"GetOpt encountered an unknown option.\");\n"
+                             "exit(1);\n}\n", getGetOptSetup()->getClassName().c_str());
 }
 
 void SourceCodeWriter::writeFile() {
