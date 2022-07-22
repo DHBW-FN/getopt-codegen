@@ -60,59 +60,23 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  */
 
 /**
- * @brief change type of arg to ConvertTo value
- * @param option a single option object
- * @return string to convert optarg respectively
- */
-string SourceCodeWriter::convertParam(Option &option)
-{
-    // Check if ConvertTo option is STRING
-    if (option.getConvertTo() != ConvertToOptions::STRING)
-    {
-        // If it's not STRING change return string depending on
-        // value of ConvertTo
-        if (option.getConvertTo() == ConvertToOptions::INTEGER)
-        {
-            return "try { boost::lexical_cast<int>(optarg); } \ncatch (const boost::bad_lexical_cast &e) { std::cerr << e.what() << endl; exit(EXIT_FAILURE); }";
-        }
-        else if (option.getConvertTo() == ConvertToOptions::BOOLEAN)
-        {
-            return "try { boost::lexical_cast<bool>(optarg); } \ncatch (const boost::bad_lexical_cast &e) { std::cerr << e.what() << endl; exit(EXIT_FAILURE); }";
-        }
-    }
-    else
-    {
-        return "optarg;";
-    }
-}
-
-/**
- * @brief change type of value to ConvertTo value
+ * @brief get string of the type of the option
  * @param option a single option object
  * @return string with correct value type
  */
-string SourceCodeWriter::convertParamValue(Option &option)
+string SourceCodeWriter::getValueTypeByOption(Option &option)
 {
-    // Check if ConvertTo option is STRING
-    if (option.getConvertTo() != ConvertToOptions::STRING)
-    {
-        // If it's not STRING change return string depending on
-        // value of ConvertTo
-        if (option.getConvertTo() == ConvertToOptions::INTEGER)
-        {
-            return "int value;";
-        }
-        else if (option.getConvertTo() == ConvertToOptions::BOOLEAN)
-        {
-            return "bool value;";
-        }
-    }
-    else
-    {
-        return "std::string value;";
+    switch (option.getConvertTo()) {
+        case ConvertToOptions::STRING:
+            return "std::string";
+        case ConvertToOptions::INTEGER:
+            return "int";
+        case ConvertToOptions::BOOLEAN:
+            return "bool";
+        default:
+            return "";
     }
 }
-
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
