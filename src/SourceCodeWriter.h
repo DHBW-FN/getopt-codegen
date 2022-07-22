@@ -60,6 +60,14 @@ public:
 
     /**
      * @brief
+     * Determines the name the Args-Struct will have for any given Option
+     * @param option
+     * @return
+     */
+    static string determineArgsName(const Option& option);
+
+    /**
+     * @brief
      * Creates struct args for header
      */
     void createHeaderStructArgs();

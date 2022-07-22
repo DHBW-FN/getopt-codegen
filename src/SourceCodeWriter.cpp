@@ -125,7 +125,7 @@ void SourceCodeWriter::createHeaderStructArgs() {
         if (option.isHasArguments() != HasArguments::None) {
             fprintf(getHeaderFile(), "std::string value;\n");
         }
-        fprintf(getHeaderFile(), "} %s;\n", argsName.c_str());
+        fprintf(getHeaderFile(), "} %s;\n", determineArgsName(option).c_str());
     }
     fprintf(getHeaderFile(), "};\n\n");
 }
@@ -152,6 +152,35 @@ void SourceCodeWriter::sourceFileNamespace(){
     if(!getGetOptSetup()->getNamespaceName().empty()){
         fprintf(getSourceFile(), "}\n");
     }
+}
+
+std::string SourceCodeWriter::determineArgsName(const Option& option) {
+    std::string argsName;
+    if (!option.getInterface().empty()) {
+        argsName = option.getInterface();
+    } else if (!option.getLongOpt().empty()) {
+        argsName = option.getLongOpt();
+    } else if (!isblank(option.getShortOpt())) {
+        argsName = option.getShortOpt();
+    }
+
+    argsName[0] = tolower(argsName[0], locale());
+
+    // Removing all invalid characters from the name
+    vector<char> invalidChars = {' ', '-', '.', ':'};
+    for (auto &invalidChar: invalidChars) {
+        while (argsName.find(invalidChar) != std::string::npos) {
+            argsName[argsName.find(invalidChar) + 1] = toupper(argsName[argsName.find(invalidChar) + 1], locale());
+            argsName.erase(argsName.find(invalidChar), 1);
+        }
+    }
+
+    if (argsName.empty()) {
+        perror("Every option must at least have either an Interface, a LongOpt or a ShortOpt.");
+        exit(1);
+    }
+
+    return argsName;
 }
 
 void SourceCodeWriter::writeFile() {
