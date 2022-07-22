@@ -14,9 +14,9 @@ void HelpText::parseDescription()
 {
     string new_description;
 
-    // Add empty space in front of every string
     for (int i = 0; i < getOptSetup->getOverAllDescriptions().size(); i++)
     {
+        // Add empty space in front of every string except the first
         if (i > 0) {
             new_description.append(" ");
         }
@@ -43,14 +43,14 @@ void HelpText::getLength()
 
         if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
         {
-            // for e. g. -h
+            // for e.g. -h
             paramLength += 2;
         }
 
         // check if longOpt and shortOpt aren't empty
         if (!getOptSetup->getOptions()[i].getLongOpt().empty() && getOptSetup->getOptions()[i].getShortOpt() != '\0')
         {
-            // for , --
+            // for e.g. , --
             paramLength += 4;
             paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
         }
@@ -58,7 +58,7 @@ void HelpText::getLength()
             // check if only longOpt isn't empty
         else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
         {
-            // for --
+            // for e.g. --
             paramLength += 2;
             paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
         }

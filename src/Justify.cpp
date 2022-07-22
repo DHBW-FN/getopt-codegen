@@ -50,7 +50,7 @@ string Justify::JoinALineWithSpace(
         line += words[end];
         line.append(num_spaces, ' ');
     }
-    else if (isOption && curr_line > 1)
+    else if (curr_line > 1)
     {
         line += words[end];
         line.insert(0, optionShift, ' ');

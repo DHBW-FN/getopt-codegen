@@ -15,6 +15,8 @@ public:
     ~HelpText();
 
     string parseHelpMessage();
+
+private:
     void parseDescription();
     void parseUsage();
     void parseAuthor();
@@ -22,7 +24,6 @@ public:
 
     string concatParams(int i);
     void getLength();
-private:
     /**
      * @brief printHelp Text
      * stores the string for the printHelp method.
