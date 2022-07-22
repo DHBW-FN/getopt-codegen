@@ -64,7 +64,7 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
 void SourceCodeWriter::headerFileIncludes() {
     printf("Writing includes into header file\n");
     // Define static and always used includes here
-    string includes[] = {"getopt.h", "iostream"};
+    string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
     string defineString = getGetOptSetup()->getHeaderFileName()
             .substr(0, getGetOptSetup()->getHeaderFileName().find('.'));
@@ -170,12 +170,9 @@ void SourceCodeWriter::createHeaderParsingFunction() {
 }
 
 void SourceCodeWriter::sourceFileParse() {
-    //TODO replace next line with actual code
-    std::string optionName = "help";
-    std::string option2Name = "version";
-
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
     for (auto &option : getGetOptSetup()->getOptions()) {
+        std::string optionName = determineArgsName(option);
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
 
         // exclusions
@@ -183,6 +180,7 @@ void SourceCodeWriter::sourceFileParse() {
             for (auto &exclusion : option.getExclusions()) {
                 // Iterate over options again and compare exclusion with ref
                 for (auto &option2 : getGetOptSetup()->getOptions()) {
+                    std::string option2Name = determineArgsName(option2);
                     if (option2.getRef() == exclusion) {
                         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
                         fprintf(getSourceFile(), "perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
@@ -195,8 +193,14 @@ void SourceCodeWriter::sourceFileParse() {
 
         //TODO insert handle getOpt
         //TODO set values if not empty - needs helper function for argName and convertTo helper function
+        if (option.isHasArguments() != HasArguments::None) {
+            fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
+            //TODO This might not work this way, check back later
+            fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+        }
+        // Implement what getopts do here
 
-        fprintf(getSourceFile(), "printf(\"getOpt %s called\");\n", optionName.c_str());
+
         fprintf(getSourceFile(), "return;\n}\n");
     }
 
