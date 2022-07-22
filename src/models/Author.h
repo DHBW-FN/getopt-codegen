@@ -24,7 +24,6 @@ public:
     void setMail(const string &email);
 
     // Helpers
-    string toString();
     void parseAttributes(AttributeList &attributes);
 
 private:
