@@ -123,7 +123,7 @@ void SourceCodeWriter::headerFileClass() {
                     type = "bool";
                     break;
             }
-            fprintf(getHeaderFile(), "%s %s;\n", type.c_str(), determineArgsName(option).c_str());
+            fprintf(getHeaderFile(), "%s %sValue;\n", type.c_str(), determineArgsName(option).c_str());
         }
     }
 
