@@ -59,12 +59,12 @@ private:
      * @brief headerFileName
      * Name of the header file.
      */
-    string headerFileName;
+    string headerFileName = "getOptGen.h";
     /**
      * @brief sourceFileName
      * Name of the source file.
      */
-    string sourceFileName;
+    string sourceFileName = "getOptGen.cpp";
     /**
      * @brief namespaceName
      * Name of the namespace.
