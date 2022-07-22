@@ -57,6 +57,12 @@ public:
      * Writes Class into namespace in Header-File
      */
     void headerFileClass();
+
+    /**
+     * @brief
+     * Writes exclusion check and execution of getOpts into Source-File
+     */
+    void sourceFileParse();
 };
 
 

@@ -101,10 +101,11 @@ void SourceCodeWriter::headerFileClass(){
     fprintf(getHeaderFile(), "private:\n\n");
     //put all elements inside class -> private here
 
-    fprintf(getHeaderFile(), "protected:\n\n");
+    fprintf(getHeaderFile(), "\nprotected:\n\n");
     //put all elements inside class -> protected here
 
-    fprintf(getHeaderFile(), "public:\n\n");
+    fprintf(getHeaderFile(), "\npublic:\n");
+    fprintf(getHeaderFile(), "void parse();\n");
     //put all elements inside class -> public here
 
     //end of class
@@ -128,11 +129,36 @@ void SourceCodeWriter::sourceFileNamespace(){
     }
 
     //put all elements inside namespace here
+    sourceFileParse();
 
     //end of namespace
     if(!getGetOptSetup()->getNamespaceName().empty()){
         fprintf(getSourceFile(), "}\n");
     }
+}
+
+void SourceCodeWriter::sourceFileParse() {
+    fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
+    for (auto &option : getGetOptSetup()->getOptions()) {
+        //TODO replace next line with actual code
+        std::string optionName = "help";
+        std::string option2Name = "version";
+        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
+        for (auto &exclusion : option.getExclusions()) {
+            // Iterate over options again and compare exclusion with ref
+            for (auto &option2 : getGetOptSetup()->getOptions()) {
+                if (option2.getRef() == exclusion) {
+                    fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
+                    fprintf(getSourceFile(), "    perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                    fprintf(getSourceFile(), "    exit(1);\n");
+                    fprintf(getSourceFile(), "}\n");
+                }
+            }
+        }
+        //exclusions
+        fprintf(getSourceFile(), "}\n");
+    }
+    fprintf(getSourceFile(), "}\n");
 }
 
 void SourceCodeWriter::writeFile() {
