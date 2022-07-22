@@ -79,6 +79,12 @@ public:
 
     /**
      * @brief
+     * Creates struct args for header
+     */
+    void createHeaderStructArgs();
+
+    /**
+     * @brief
      * Generates the declaration of the unknownOption-function
      */
     void createHeaderUnknownOption();

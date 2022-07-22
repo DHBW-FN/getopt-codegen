@@ -91,6 +91,7 @@ void SourceCodeWriter::headerFileNamespace() {
     }
 
     //put all elements inside namespace here
+    createHeaderStructArgs();
     headerFileClass();
 
     //end of namespace
@@ -101,20 +102,37 @@ void SourceCodeWriter::headerFileNamespace() {
 
 void SourceCodeWriter::headerFileClass() {
     //start of class
-    fprintf(getHeaderFile(), "class %s {\n\n", getGetOptSetup()->getClassName().c_str());
+    fprintf(getHeaderFile(), "class %s {\n", getGetOptSetup()->getClassName().c_str());
 
-    fprintf(getHeaderFile(), "private:\n\n");
+    fprintf(getHeaderFile(), "private:\n");
     //put all elements inside class -> private here
+    fprintf(getHeaderFile(), "Args args;\n");
 
-    fprintf(getHeaderFile(), "protected:\n\n");
+    fprintf(getHeaderFile(), "\n");
+    fprintf(getHeaderFile(), "protected:\n");
     //put all elements inside class -> protected here
 
-    fprintf(getHeaderFile(), "public:\n\n");
+    fprintf(getHeaderFile(), "\n");
+    fprintf(getHeaderFile(), "public:\n");
     //put all elements inside class -> public here
     createHeaderParsingFunction();
     createHeaderUnknownOption();
+
     //end of class
     fprintf(getHeaderFile(), "};\n");
+}
+
+void SourceCodeWriter::createHeaderStructArgs() {
+    fprintf(getHeaderFile(), "struct Args {\n");
+    for (auto &option : getGetOptSetup()->getOptions()) {
+        fprintf(getHeaderFile(), "struct {\n");
+        fprintf(getHeaderFile(), "bool isSet = false;\n");
+        if (option.isHasArguments() != HasArguments::None) {
+            fprintf(getHeaderFile(), "std::string value;\n");
+        }
+        fprintf(getHeaderFile(), "} %s;\n", determineArgsName(option).c_str());
+    }
+    fprintf(getHeaderFile(), "};\n\n");
 }
 
 //from here on are all the sourceFiles
@@ -263,6 +281,17 @@ void SourceCodeWriter::createSourceParsingFunction() {
     fprintf(getSourceFile(), "}\n");
 }
 
+void SourceCodeWriter::createHeaderUnknownOption() {
+    fprintf(getHeaderFile(), "virtual void unknownOption(const std::string &unknownOption);\n\n");
+}
+
+void SourceCodeWriter::createSourceUnknownOption() {
+    fprintf(getSourceFile(), "void %s::unknownOption(const std::string &unknownOption){\n"
+                             "perror(\"GetOpt encountered an unknown option.\");\n"
+                             "exit(1);\n}\n", getGetOptSetup()->getClassName().c_str());
+}
+
+// Helper functions
 std::string SourceCodeWriter::determineArgsName(const Option &option) {
     std::string argsName;
     if (!option.getInterface().empty()) {
@@ -290,16 +319,6 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
     }
 
     return argsName;
-}
-
-void SourceCodeWriter::createHeaderUnknownOption() {
-    fprintf(getHeaderFile(), "virtual void unknownOption(const std::string &unknownOption);\n\n");
-}
-
-void SourceCodeWriter::createSourceUnknownOption() {
-    fprintf(getSourceFile(), "void %s::unknownOption(const std::string &unknownOption){\n"
-                             "perror(\"GetOpt encountered an unknown option.\");\n"
-                             "exit(1);\n}\n", getGetOptSetup()->getClassName().c_str());
 }
 
 void SourceCodeWriter::writeFile() {
