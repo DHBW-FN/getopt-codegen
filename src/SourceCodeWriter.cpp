@@ -161,7 +161,7 @@ void SourceCodeWriter::sourceFileParse() {
         }
 
         //TODO insert handle getOpt
-        fprintf(getSourceFile(), "printf(\"getOpt called\");\n");
+        fprintf(getSourceFile(), "printf(\"getOpt %s called\");\n", optionName.c_str());
         fprintf(getSourceFile(), "return;\n}\n");
     }
 
