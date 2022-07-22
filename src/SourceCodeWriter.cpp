@@ -185,8 +185,8 @@ void SourceCodeWriter::sourceFileParse() {
                 for (auto &option2 : getGetOptSetup()->getOptions()) {
                     if (option2.getRef() == exclusion) {
                         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
-                        fprintf(getSourceFile(), "    perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
-                        fprintf(getSourceFile(), "    exit(1);\n");
+                        fprintf(getSourceFile(), "perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                        fprintf(getSourceFile(), "exit(1);\n");
                         fprintf(getSourceFile(), "}\n");
                     }
                 }
@@ -195,6 +195,7 @@ void SourceCodeWriter::sourceFileParse() {
 
         //TODO insert handle getOpt
         //TODO set values if not empty - needs helper function for argName and convertTo helper function
+
         fprintf(getSourceFile(), "printf(\"getOpt %s called\");\n", optionName.c_str());
         fprintf(getSourceFile(), "return;\n}\n");
     }
