@@ -57,6 +57,12 @@ public:
      * Writes Class into namespace in Header-File
      */
     void headerFileClass();
+
+    /**
+     * @brief
+     * Creates struct args for header
+     */
+    void createHeaderStructArgs();
 };
 
 

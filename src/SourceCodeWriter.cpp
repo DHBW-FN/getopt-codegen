@@ -86,6 +86,7 @@ void SourceCodeWriter::headerFileNamespace(){
     }
 
     //put all elements inside namespace here
+    createHeaderStructArgs();
     headerFileClass();
 
     //end of namespace
@@ -109,6 +110,21 @@ void SourceCodeWriter::headerFileClass(){
 
     //end of class
     fprintf(getHeaderFile(), "};\n");
+}
+
+void SourceCodeWriter::createHeaderStructArgs() {
+    std::string argsName = "help";
+
+    fprintf(getHeaderFile(), "struct Args {\n");
+    for (auto &option : getGetOptSetup()->getOptions()) {
+        fprintf(getHeaderFile(), "struct {\n");
+        fprintf(getHeaderFile(), "bool isSet = false;\n");
+        if (option.isHasArguments() != HasArguments::None) {
+            fprintf(getHeaderFile(), "std::string value;\n");
+        }
+        fprintf(getHeaderFile(), "} %s;\n", argsName.c_str());
+    }
+    fprintf(getHeaderFile(), "};\n\n");
 }
 
 //from here on are all the sourceFiles
