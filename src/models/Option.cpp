@@ -3,6 +3,7 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <xercesc/util/XMLString.hpp>
+#include <iostream>
 
 // Constructor
 Option::Option() = default;
@@ -57,7 +58,12 @@ std::string Option::getInterface() const {
 // Setters
 
 void Option::setRef(const std::string &ref) {
-    Option::ref = boost::lexical_cast<int>(ref);
+    int _ref = boost::lexical_cast<int>(ref);
+    if (_ref < 1 || _ref > 63) {
+        std::cerr << "Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    Option::ref = _ref;
 }
 
 void Option::setShortOpt(const std::string &shortOpt) {
