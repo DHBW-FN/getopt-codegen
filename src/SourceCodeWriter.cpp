@@ -129,6 +129,7 @@ void SourceCodeWriter::sourceFileNamespace(){
     }
 
     //put all elements inside namespace here
+    sourceFileParse();
 
     //end of namespace
     if(!getGetOptSetup()->getNamespaceName().empty()){
