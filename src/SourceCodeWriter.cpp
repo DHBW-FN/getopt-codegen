@@ -1,6 +1,5 @@
 #include "SourceCodeWriter.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 
 // Constructor
 SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
@@ -132,7 +131,6 @@ void SourceCodeWriter::headerFileClass() {
         if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getHeaderFile(), "%s %sValue", getValueTypeByOption(option).c_str(), determineArgsName(option).c_str());
             if (option.isHasArguments() == HasArguments::OPTIONAL && !option.getDefaultValue().empty()) {
-//                fprintf(getHeaderFile(), " = boost::lexical_cast<%s>(\"%s\")", getValueTypeByOption(option).c_str(), option.getDefaultValue().c_str());
                 switch (option.getConvertTo()) {
                     case ConvertToOptions::STRING:
                         fprintf(getHeaderFile(), " = \"%s\"", option.getDefaultValue().c_str());
