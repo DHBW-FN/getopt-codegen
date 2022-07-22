@@ -343,10 +343,9 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
 }
 
 void SourceCodeWriter::createHeaderGetter() {
-    vector<Option> options = getGetOptSetup()->getOptions();
-    for (auto &option: options) {
+    for (auto &option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
-        capitalizedArgsName[0] = toupper(capitalizedArgsName[0]);
+        capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
         if (!option.getInterface().empty()) {
             fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
             if (option.isHasArguments() != HasArguments::None) {
@@ -373,10 +372,9 @@ void SourceCodeWriter::createHeaderGetter() {
 }
 
 void SourceCodeWriter::createSourceGetter() {
-    vector<Option> options = getGetOptSetup()->getOptions();
-    for (auto &option: options) {
+    for (auto &option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
-        capitalizedArgsName[0] = toupper(capitalizedArgsName[0]);
+        capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
         if (!option.getInterface().empty()) {
             fprintf(getSourceFile(), "bool %s::isSet%s() const {\nreturn args.%s.isSet;\n}\n",
                     getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
