@@ -169,6 +169,39 @@ void SourceCodeWriter::createHeaderParsingFunction() {
     fprintf(getHeaderFile(), "void parseOptions(int argc, char **argv);\n");
 }
 
+void SourceCodeWriter::sourceFileParse() {
+    //TODO replace next line with actual code
+    std::string optionName = "help";
+    std::string option2Name = "version";
+
+    fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
+    for (auto &option : getGetOptSetup()->getOptions()) {
+        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
+
+        // exclusions
+        if (!option.getExclusions().empty()) {
+            for (auto &exclusion : option.getExclusions()) {
+                // Iterate over options again and compare exclusion with ref
+                for (auto &option2 : getGetOptSetup()->getOptions()) {
+                    if (option2.getRef() == exclusion) {
+                        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
+                        fprintf(getSourceFile(), "    perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                        fprintf(getSourceFile(), "    exit(1);\n");
+                        fprintf(getSourceFile(), "}\n");
+                    }
+                }
+            }
+        }
+
+        //TODO insert handle getOpt
+        //TODO set values if not empty - needs helper function for argName and convertTo helper function
+        fprintf(getSourceFile(), "printf(\"getOpt %s called\");\n", optionName.c_str());
+        fprintf(getSourceFile(), "return;\n}\n");
+    }
+
+    fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
+}
+
 void SourceCodeWriter::createSourceParsingFunction() {
     vector<Option> options = getGetOptSetup()->getOptions();
     fprintf(getSourceFile(), "void %s::parseOptions(int argc, char **argv){\nargs = Args();\n"
