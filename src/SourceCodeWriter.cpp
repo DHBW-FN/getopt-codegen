@@ -197,6 +197,7 @@ void SourceCodeWriter::sourceFileParse() {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
             fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+            fprintf(getSourceFile(), "}\n");
         }
         // Implement what getopts do here
 
