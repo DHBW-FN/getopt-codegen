@@ -59,6 +59,24 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * ALL HELPER FUNCTIONS HERE!!!
  */
 
+/**
+ * @brief get string of the type of the option
+ * @param option a single option object
+ * @return string with correct value type
+ */
+string SourceCodeWriter::getValueTypeByOption(Option &option)
+{
+    switch (option.getConvertTo()) {
+        case ConvertToOptions::STRING:
+            return "std::string";
+        case ConvertToOptions::INTEGER:
+            return "int";
+        case ConvertToOptions::BOOLEAN:
+            return "bool";
+        default:
+            return "";
+    }
+}
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {

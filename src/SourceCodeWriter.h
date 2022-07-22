@@ -25,6 +25,7 @@ public:
 
     // Helpers
     void writeFile();
+    static string getValueTypeByOption(Option &option);
 
     // Write code functions
     /**
