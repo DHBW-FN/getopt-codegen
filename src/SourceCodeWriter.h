@@ -68,6 +68,14 @@ public:
      * Writes Class into namespace in Header-File
      */
     void headerFileClass();
+
+    /**
+     * @brief
+     * Determines the name the Args-Struct will have for any given Option
+     * @param option
+     * @return
+     */
+    string determineArgsName(Option option);
 };
 
 
