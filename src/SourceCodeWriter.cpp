@@ -147,6 +147,7 @@ void SourceCodeWriter::headerFileClass() {
         }
     }
 
+    createHeaderPrintVersion();
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "protected:\n");
     //put all elements inside class -> protected here
@@ -193,7 +194,7 @@ void SourceCodeWriter::sourceFileNamespace() {
         fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
     }
     createSourceGetter();
-
+    createSourcePrintVersion();
     //put all elements inside namespace here
     sourceFileParse();
     createSourceParsingFunction();
@@ -454,7 +455,6 @@ void SourceCodeWriter::createSourceGetter() {
                     determineArgsName(option).c_str());
         }
     }
-    fprintf(getSourceFile(), "void %s::printVersion() {\nprintf(\"version: 1.0.0\");\n}\n", getGetOptSetup()->getClassName().c_str());
 }
 
 void SourceCodeWriter::createExternalFunctions() {
@@ -472,6 +472,16 @@ void SourceCodeWriter::createExternalFunctions() {
     }
 }
 
+void SourceCodeWriter::createHeaderPrintVersion() {
+    fprintf(getHeaderFile(), "virtual void printVersion();\n\n");
+
+}
+
+void SourceCodeWriter::createSourcePrintVersion() {
+    fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\");\n}\n",
+            getGetOptSetup()->getClassName().c_str());
+
+}
 
 void SourceCodeWriter::writeFile() {
 //    printf("Writing file...\n");
@@ -483,3 +493,4 @@ void SourceCodeWriter::writeFile() {
     sourceFileIncludes();
     sourceFileNamespace();
 }
+

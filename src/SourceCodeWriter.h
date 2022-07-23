@@ -1,5 +1,5 @@
 /*
- * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Niklas Holl
  */
 
 #ifndef CODEGENERATOR_SOURCECODEWRITER_H
@@ -125,6 +125,18 @@ public:
      * Generates the declaration of every virtual function in the Header-File
      */
     void createExternalFunctions();
+
+    /**
+     * @brief
+     * Generates the declaration of the printVersion function in the Header-File
+     */
+     void createHeaderPrintVersion();
+
+     /**
+      * @brief
+      * Generates the implementation of the printVersion function in the Source-File
+      */
+     void createSourcePrintVersion();
 
 };
 
