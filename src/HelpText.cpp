@@ -49,34 +49,38 @@ bool compareOptions(const Option &a, const Option &b) {
  * @param i iteration counter to determine which option is parsed
  * @return concatenated opts as string
  */
-string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
+vector<string> HelpText::concatParams(const vector<Option>& options)
 {
-    string opts;
+    vector<string> opts;
 
-    // check if shortOpt isn't empty
-    if (sortedOpts[i].getShortOpt() != '\0')
-    {
-        // for e.g. -h
-        opts += '-';
-        opts += sortedOpts[i].getShortOpt();
-        // check if longOpt isn't empty
-        if (!sortedOpts[i].getLongOpt().empty())
+    for (const auto & option : options) {
+        string opt;
+        // check if shortOpt isn't empty
+        if (option.getShortOpt() != '\0')
         {
-            // for e.g. , --help
-            opts.append(", --" + sortedOpts[i].getLongOpt());
+            // for e.g. -h
+            opt += '-';
+            opt += option.getShortOpt();
+            // check if longOpt isn't empty
+            if (!option.getLongOpt().empty())
+            {
+                // for e.g. , --help
+                opt.append(", --" + option.getLongOpt());
+            }
         }
-    }
 
-    // check if only longOpt isn't empty
-    else if (!sortedOpts[i].getLongOpt().empty())
-    {
-        // for e.g. --help
-        opts.append("--" + sortedOpts[i].getLongOpt());
-    }
+            // check if only longOpt isn't empty
+        else if (!option.getLongOpt().empty())
+        {
+            // for e.g. --help
+            opt.append("--" + option.getLongOpt());
+        }
 
-    // Find out the longest parameter length
-    if (opts.size() > maxOptionParamLength) {
-        maxOptionParamLength = (int) opts.length();
+        // Find out the longest parameter length
+        if (opt.size() > maxOptionParamLength) {
+            maxOptionParamLength = (int) opt.length();
+        }
+        opts.push_back(opt);
     }
     return opts;
 }
@@ -98,20 +102,22 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
  */
 void HelpText::parseOption()
 {
+    // sorting options
+    vector<Option> sortedOpts = getOptSetup->getOptions();
+    std::sort(sortedOpts.begin(), sortedOpts.end(), compareOptions);
+
+    // concatenate params
+    vector<string> opts = concatParams(sortedOpts);
+
     // concatenate the options
     std::stringstream buffer;
     buffer << std::left << std::setw(maxOptionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
-    // sorting options
-    vector<Option> sortedOpts = getOptSetup->getOptions();
-    std::sort(sortedOpts.begin(), sortedOpts.end(), compareOptions);
-
     for (int i = 0; i < sortedOpts.size(); i++)
     {
         // get the concatenated params
-        string opts = concatParams(sortedOpts, i);
-        buffer << std::left << std::setw(maxOptionParamLength + shift) << opts;
+        buffer << std::left << std::setw(maxOptionParamLength + shift) << opts[i];
 
         // check if description isn't empty
         if (!getOptSetup->getOptions()[i].getDescription().empty())

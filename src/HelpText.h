@@ -23,7 +23,7 @@ private:
     void parseAuthor();
     void parseOption();
 
-    string concatParams(const vector<Option>& sortedOpts, int i);
+    vector<string> concatParams(const vector<Option>& sortedOpts);
     /**
      * @brief printHelp Text
      * stores the string for the printHelp method.
