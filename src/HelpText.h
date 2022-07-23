@@ -22,9 +22,7 @@ private:
     void parseUsage();
     void parseAuthor();
     void parseOption();
-    vector<Option> parseOpts();
-    static vector<Option> sortShortOpts(vector<Option> optsVector);
-    static vector<Option> sortLongOpts(vector<Option> opts_vector);
+    vector<Option> sortOptions();
 
     static string concatParams(const vector<Option>& sortedOpts, int i);
     void getParamLength();

@@ -65,83 +65,29 @@ void HelpText::getParamLength()
     }
 }
 
-/**
- * @brief sort longOpts alphabetical
- * @param opts_vector vector of longOpts
- * @return sorted vector of longOpts
- */
-vector<Option> HelpText::sortLongOpts(vector<Option> opts_vector)
-{
-    // sort options by shortOpt
-    for (int i = 0; i < opts_vector.size(); i++)
-    {
-        for (int j = 0; j < opts_vector.size() - 1; j++)
-        {
-            if (opts_vector[j].getLongOpt() > opts_vector[j + 1].getLongOpt())
-            {
-                Option temp = opts_vector[j];
-                opts_vector[j] = opts_vector[j + 1];
-                opts_vector[j + 1] = temp;
-            }
-        }
+bool compareOptions(const Option &a, const Option &b) {
+    if (a.getShortOpt() != '\0' && b.getShortOpt() != '\0') {
+        return a.getShortOpt() < b.getShortOpt();
     }
-    return opts_vector;
-}
-
-/**
- * @brief sort shortOpts alphabetical
- * @param opts_vector vector of shortOpts
- * @return sorted vector of shortOpts
- */
-vector<Option> HelpText::sortShortOpts(vector<Option> opts_vector)
-{
-    // sort options by shortOpt
-    for (int i = 0; i < opts_vector.size(); i++)
-    {
-        for (int j = 0; j < opts_vector.size() - 1; j++)
-        {
-            if (opts_vector[j].getShortOpt() > opts_vector[j + 1].getShortOpt())
-            {
-                Option temp = opts_vector[j];
-                opts_vector[j] = opts_vector[j + 1];
-                opts_vector[j + 1] = temp;
-            }
-        }
+    else if (a.getShortOpt() != '\0') {
+        return true;
     }
-    return opts_vector;
+    else if (b.getShortOpt() != '\0') {
+        return false;
+    }
+    else {
+        return a.getLongOpt() < b.getLongOpt();
+    }
 }
 
 /**
  * @brief create new vector of sorted options
  * @return sorted options vector
  */
-vector<Option> HelpText::parseOpts()
+vector<Option> HelpText::sortOptions()
 {
-    vector<Option> opts_vector;
-
-    vector<Option> shortOpts_vector;
-    vector<Option> longOpts_vector;
-
-    for (const auto & i : getOptSetup->getOptions())
-    {
-        // check if shortOpt isn't empty
-        if (i.getShortOpt() != '\0')
-        {
-            shortOpts_vector.push_back(i);
-        }
-        // check if only longOpt isn't empty
-        else if (!i.getLongOpt().empty())
-        {
-            longOpts_vector.push_back(i);
-        }
-    }
-
-    shortOpts_vector = sortShortOpts(shortOpts_vector);
-    longOpts_vector = sortLongOpts(longOpts_vector);
-
-    opts_vector = shortOpts_vector;
-    opts_vector.insert(opts_vector.end(), longOpts_vector.begin(), longOpts_vector.end());
-
+    vector<Option> opts_vector = getOptSetup->getOptions();
+    std::sort(opts_vector.begin(), opts_vector.end(), compareOptions);
     return opts_vector;
 }
 
@@ -204,7 +150,7 @@ void HelpText::parseOption()
     buffer << std::left << std::setw(optionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
-    vector<Option> sortedOpts = parseOpts();
+    vector<Option> sortedOpts = sortOptions();
 
     for (int i = 0; i < getOptSetup->getOptions().size(); i++)
     {
