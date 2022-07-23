@@ -119,6 +119,13 @@ public:
      * Generates the implementation of all Getters in the Header-File
      */
     void createSourceGetter();
+
+    /**
+     * @brief
+     * Generates the declaration of every virtual function in the Header-File
+     */
+    void createExternalFunctions();
+
 };
 
 
