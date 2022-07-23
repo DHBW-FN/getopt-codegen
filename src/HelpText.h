@@ -27,7 +27,7 @@ private:
     static vector<Option> sortLongOpts(vector<Option> opts_vector);
 
     string concatParams(const vector<Option>& sortedOpts, int i);
-    void getLength();
+    void getParamLength();
     /**
      * @brief printHelp Text
      * stores the string for the printHelp method.

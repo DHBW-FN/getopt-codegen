@@ -33,7 +33,7 @@ void HelpText::parseDescription()
  * Is used to know how much spacing should be used
  * to format the options parameters and description.
  */
-void HelpText::getLength()
+void HelpText::getParamLength()
 {
     int paramLength;
 
@@ -41,32 +41,29 @@ void HelpText::getLength()
     {
         paramLength = 0;
 
-        if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        // check if longOpt and shortOpt aren't empty
+        if (!getOptSetup->getOptions()[i].getLongOpt().empty() && getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        {
+            // for e.g. -h, --
+            paramLength += 6;
+            paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
+        }
+        else if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
         {
             // for e.g. -h
             paramLength += 2;
         }
-
-        // check if longOpt and shortOpt aren't empty
-        if (!getOptSetup->getOptions()[i].getLongOpt().empty() && getOptSetup->getOptions()[i].getShortOpt() != '\0')
-        {
-            // for e.g. , --
-            paramLength += 4;
-            paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
-        }
-
-            // check if only longOpt isn't empty
+        // check if only longOpt isn't empty
         else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
         {
             // for e.g. --
             paramLength += 2;
             paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
         }
-    }
-
-    if (paramLength > optionParamLength)
-    {
-        optionParamLength = paramLength;
+        if (paramLength > optionParamLength)
+        {
+            optionParamLength = paramLength;
+        }
     }
 }
 
@@ -185,7 +182,7 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 /**
  * @brief concatenate the options to one string
  * @brief and add to printHelpText
- * call the getLength() Method. Get concatenated params
+ * call the getParamLength() Method. Get concatenated params
  * by calling concatParams function with i as iterator.
  * write strings to buffer with a spacing using set()
  * calculate a new signPerLine to space out the
@@ -200,7 +197,7 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 void HelpText::parseOption()
 {
     // calculate the length of the longest param
-    getLength();
+    getParamLength();
 
     // concatenate the options
     std::stringstream buffer;
