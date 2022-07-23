@@ -71,11 +71,11 @@ void XMLParser::parse() {
 }
 
 void XMLParser::startDocument() {
-    cout << "Start Document" << endl;
+//    cout << "Start Document" << endl;
 }
 
 void XMLParser::endDocument() {
-    cout << "End Document" << endl;
+//    cout << "End Document" << endl;
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {

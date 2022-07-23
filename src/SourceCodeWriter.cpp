@@ -84,7 +84,6 @@ string SourceCodeWriter::getValueTypeByOption(Option &option)
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
-    printf("Writing includes into header file\n");
     // Define static and always used includes here
     string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
@@ -443,7 +442,7 @@ void SourceCodeWriter::createSourceGetter() {
 }
 
 void SourceCodeWriter::writeFile() {
-    printf("Writing file...\n");
+//    printf("Writing file...\n");
 
     //Write header files --> put methods here
     headerFileIncludes();
