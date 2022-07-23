@@ -107,7 +107,7 @@ void HelpText::parseOption()
     vector<Option> sortedOpts = getOptSetup->getOptions();
     std::sort(sortedOpts.begin(), sortedOpts.end(), compareOptions);
 
-    for (int i = 0; i < getOptSetup->getOptions().size(); i++)
+    for (int i = 0; i < sortedOpts.size(); i++)
     {
         // get the concatenated params
         string opts = concatParams(sortedOpts, i);
