@@ -1,18 +1,19 @@
 #include "ExampleProgram.h"
+#include "generatedCode.h"
 
 /**
  * @brief Constructor, that generates a object of ExtendedGeneratedCode
  */
-ExampleProgram::ExampleProgram() {
-    this->extendedGeneratedCode = new ExtendedGeneratedCode();
+ExampleProgram::ExampleProgram(GC::GeneratedClass *generatedClass) {
+    this->generatedClass = generatedClass;
 }
 
 /**
- * @brief Getter for extendedGeneratedCode
+ * @brief Getter for generatedClass
  * @return object of class ExtendedGeneratedCode
  */
-ExtendedGeneratedCode *ExampleProgram::getExtendedGeneratedCode() {
-    return extendedGeneratedCode;
+GC::GeneratedClass *ExampleProgram::getExtendedGeneratedCode() {
+    return generatedClass;
 }
 
 
@@ -60,7 +61,7 @@ void checkOptional(ExampleProgram ep){
  * @param argv array of arguments
  */
 int main(int argc, char* argv[] ) {
-    ExampleProgram exampleProgram = ExampleProgram();
+    ExampleProgram exampleProgram = ExampleProgram(new ExtendedGeneratedCode());
     exampleProgram.getExtendedGeneratedCode()->parseOptions(argc, argv);
 
     checkExclusion(exampleProgram);

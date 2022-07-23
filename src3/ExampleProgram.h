@@ -6,14 +6,14 @@
 
 class ExampleProgram {
 private:
-    ExtendedGeneratedCode *extendedGeneratedCode;
+    GC::GeneratedClass *generatedClass = nullptr;
 protected:
 public:
     //Constructor
-    ExampleProgram();
+    explicit ExampleProgram(GC::GeneratedClass *generatedClass);
 
     //Getter
-    ExtendedGeneratedCode *getExtendedGeneratedCode();
+    GC::GeneratedClass *getExtendedGeneratedCode();
 };
 
 
