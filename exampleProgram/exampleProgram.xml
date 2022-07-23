@@ -4,7 +4,7 @@
     <HeaderFileName>generatedCode.h</HeaderFileName>
     <SourceFileName>generatedCode.cpp</SourceFileName>
     <NameSpace>GC</NameSpace>
-    <ClassName>generatedClass</ClassName>
+    <ClassName>GeneratedClass</ClassName>
     <OverAllDescription>
         <Block>Erstellt einen Rumpf zum einlesen von Argumente aus der Kommandozeile.</Block>
         <Block>Es kann sowohl mit innenliegenden Container wie externer Klassenanbindung eine Datenhaltung erfolgen.</Block>
