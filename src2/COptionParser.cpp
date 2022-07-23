@@ -1,7 +1,6 @@
 //https://gist.github.com/avances123/2406651
 #include "COptionParser.h"
 #include <cstring>
-#include <iostream>
 #include <boost/lexical_cast.hpp>
 
 namespace DHBW {
