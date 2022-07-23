@@ -232,9 +232,14 @@ void SourceCodeWriter::sourceFileParse() {
                 }
             }
         }
+        fprintf(getSourceFile(), "}\n");
+    }
 
-        //TODO insert handle getOpt
-        //TODO set values if not empty - needs helper function for argName and convertTo helper function
+    for (auto &option: getGetOptSetup()->getOptions()) {
+        std::string optionName = determineArgsName(option);
+        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
+
+        //Handle option
         if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
@@ -244,13 +249,25 @@ void SourceCodeWriter::sourceFileParse() {
             fprintf(getSourceFile(), "perror(\"%s is not convertible to %s.\");\n}\n", optionName.c_str(), getValueTypeByOption(option).c_str());
             fprintf(getSourceFile(), "}\n");
         }
-        // Implement what getopts do here
 
+        if (!option.getConnectToInternalMethod().empty()) {
+            fprintf(getSourceFile(), "%s(", option.getConnectToInternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
+        }
 
-        fprintf(getSourceFile(), "return;\n}\n");
+        if (!option.getConnectToExternalMethod().empty()) {
+            fprintf(getSourceFile(), "%s(", option.getConnectToExternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
+        }
+        fprintf(getSourceFile(), "}\n");
     }
-
-    fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
+    fprintf(getSourceFile(), "}\n");
 }
 
 void SourceCodeWriter::createSourceParsingFunction() {
