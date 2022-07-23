@@ -23,8 +23,7 @@ private:
     void parseAuthor();
     void parseOption();
 
-    static string concatParams(const vector<Option>& sortedOpts, int i);
-    static int getMaxParamLength(const vector<Option>& options);
+    string concatParams(const vector<Option>& sortedOpts, int i);
     /**
      * @brief printHelp Text
      * stores the string for the printHelp method.

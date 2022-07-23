@@ -27,46 +27,6 @@ void HelpText::parseDescription()
     printHelpText.append("Description:\\n" + justify.justifyTheText(new_description, getOptSetup->getSignPerLine(), false, 0) + "\\n");
 }
 
-/**
- * @brief get the length of longest parameter in options
- * Calculate the length of the longest parameter in options.
- * Is used to know how much spacing should be used
- * to format the options parameters and description.
- */
-int HelpText::getMaxParamLength(const vector<Option>& options)
-{
-    int maxLength = 0;
-    for (const auto & option : options)
-    {
-       int paramLength = 0;
-
-        // check if longOpt and shortOpt aren't empty
-        if (!option.getLongOpt().empty() && option.getShortOpt() != '\0')
-        {
-            // for e.g. -h, --
-            paramLength += 6;
-            paramLength += (int)option.getLongOpt().length();
-        }
-        else if (option.getShortOpt() != '\0')
-        {
-            // for e.g. -h
-            paramLength += 2;
-        }
-        // check if only longOpt isn't empty
-        else if (!option.getLongOpt().empty())
-        {
-            // for e.g. --
-            paramLength += 2;
-            paramLength += (int)option.getLongOpt().length();
-        }
-        if (paramLength > maxLength)
-        {
-            maxLength = paramLength;
-        }
-    }
-    return maxLength;
-}
-
 bool compareOptions(const Option &a, const Option &b) {
     if (a.getShortOpt() != '\0' && b.getShortOpt() != '\0') {
         return a.getShortOpt() < b.getShortOpt();
@@ -113,6 +73,11 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
         // for e.g. --help
         opts.append("--" + sortedOpts[i].getLongOpt());
     }
+
+    // Find out the longest parameter length
+    if (opts.size() > maxOptionParamLength) {
+        maxOptionParamLength = (int) opts.length();
+    }
     return opts;
 }
 
@@ -133,9 +98,6 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
  */
 void HelpText::parseOption()
 {
-    // calculate the length of the longest param
-    maxOptionParamLength = getMaxParamLength(getOptSetup->getOptions());
-
     // concatenate the options
     std::stringstream buffer;
     buffer << std::left << std::setw(maxOptionParamLength + shift) << "Parameters";
