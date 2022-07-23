@@ -8,10 +8,11 @@
 #include <iostream>
 
 int main() {
-    XMLParser parser("src3/exampleProgram.xml");
-    std::cout << parser.toString() << std::endl;
+    printf("Starting Codegenerator!\n");
+    XMLParser parser("example/Example.xml");
     parser.parse();
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.writeFile();
+    printf("Codegenerator finished!\n");
     return 0;
 }
