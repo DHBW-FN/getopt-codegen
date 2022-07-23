@@ -35,28 +35,28 @@ void HelpText::parseDescription()
  */
 void HelpText::getParamLength()
 {
-    for (const auto & i : getOptSetup->getOptions())
+    for (const auto & option : getOptSetup->getOptions())
     {
        int paramLength = 0;
 
         // check if longOpt and shortOpt aren't empty
-        if (!i.getLongOpt().empty() && i.getShortOpt() != '\0')
+        if (!option.getLongOpt().empty() && option.getShortOpt() != '\0')
         {
             // for e.g. -h, --
             paramLength += 6;
-            paramLength += (int)i.getLongOpt().length();
+            paramLength += (int)option.getLongOpt().length();
         }
-        else if (i.getShortOpt() != '\0')
+        else if (option.getShortOpt() != '\0')
         {
             // for e.g. -h
             paramLength += 2;
         }
         // check if only longOpt isn't empty
-        else if (!i.getLongOpt().empty())
+        else if (!option.getLongOpt().empty())
         {
             // for e.g. --
             paramLength += 2;
-            paramLength += (int)i.getLongOpt().length();
+            paramLength += (int)option.getLongOpt().length();
         }
         if (paramLength > optionParamLength)
         {
