@@ -26,7 +26,7 @@ private:
     static vector<Option> sortShortOpts(vector<Option> optsVector);
     static vector<Option> sortLongOpts(vector<Option> opts_vector);
 
-    string concatParams(const vector<Option>& sortedOpts, int i);
+    static string concatParams(const vector<Option>& sortedOpts, int i);
     void getParamLength();
     /**
      * @brief printHelp Text
