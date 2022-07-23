@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <GetOptSetup SignPerLine="79">
     <Author Name="Tobias Götz, Noel Kempter, Niklas Holl, Sebastian Wolf, Philipp Küst" Mail="goetz.tobias-it21@it.dhbw-ravensburg.de" />
-    <HeaderFileName>GeneratedCode.h</HeaderFileName>
-    <SourceFileName>GeneratedCode.cpp</SourceFileName>
+    <HeaderFileName>generatedCode.h</HeaderFileName>
+    <SourceFileName>generatedCode.cpp</SourceFileName>
     <NameSpace>GC</NameSpace>
     <ClassName>generatedClass</ClassName>
     <OverAllDescription>
