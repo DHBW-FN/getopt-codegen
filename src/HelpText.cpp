@@ -33,9 +33,10 @@ void HelpText::parseDescription()
  * Is used to know how much spacing should be used
  * to format the options parameters and description.
  */
-void HelpText::getParamLength()
+int HelpText::getMaxParamLength(const vector<Option>& options)
 {
-    for (const auto & option : getOptSetup->getOptions())
+    int maxLength = 0;
+    for (const auto & option : options)
     {
        int paramLength = 0;
 
@@ -58,11 +59,12 @@ void HelpText::getParamLength()
             paramLength += 2;
             paramLength += (int)option.getLongOpt().length();
         }
-        if (paramLength > optionParamLength)
+        if (paramLength > maxLength)
         {
-            optionParamLength = paramLength;
+            maxLength = paramLength;
         }
     }
+    return maxLength;
 }
 
 bool compareOptions(const Option &a, const Option &b) {
@@ -128,7 +130,7 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 /**
  * @brief concatenate the options to one string
  * @brief and add to printHelpText
- * call the getParamLength() Method. Get concatenated params
+ * call the getMaxParamLength() Method. Get concatenated params
  * by calling concatParams function with i as iterator.
  * write strings to buffer with a spacing using set()
  * calculate a new signPerLine to space out the
@@ -143,11 +145,11 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 void HelpText::parseOption()
 {
     // calculate the length of the longest param
-    getParamLength();
+    maxOptionParamLength = getMaxParamLength(getOptSetup->getOptions());
 
     // concatenate the options
     std::stringstream buffer;
-    buffer << std::left << std::setw(optionParamLength + shift) << "Parameters";
+    buffer << std::left << std::setw(maxOptionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
     vector<Option> sortedOpts = sortOptions();
@@ -156,7 +158,7 @@ void HelpText::parseOption()
     {
         // get the concatenated params
         string opts = concatParams(sortedOpts, i);
-        buffer << std::left << std::setw(optionParamLength + shift) << opts;
+        buffer << std::left << std::setw(maxOptionParamLength + shift) << opts;
 
         // check if description isn't empty
         if (!getOptSetup->getOptions()[i].getDescription().empty())
@@ -164,9 +166,9 @@ void HelpText::parseOption()
             // subtract the length of the params and the shift
             // to get the new signPerLine for the options
             // needs to be less because of the Params and the shift
-            int new_signPerLine = getOptSetup->getSignPerLine() - optionParamLength - shift;
+            int new_signPerLine = getOptSetup->getSignPerLine() - maxOptionParamLength - shift;
             // new shift for every description line after the first, to match the first line
-            int optionShift = optionParamLength + shift;
+            int optionShift = maxOptionParamLength + shift;
 
             // justify the description text
             string new_description = justify.justifyTheText(sortedOpts[i].getDescription(), new_signPerLine, true, optionShift);

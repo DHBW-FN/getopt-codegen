@@ -25,7 +25,7 @@ private:
     vector<Option> sortOptions();
 
     static string concatParams(const vector<Option>& sortedOpts, int i);
-    void getParamLength();
+    static int getMaxParamLength(const vector<Option>& options);
     /**
      * @brief printHelp Text
      * stores the string for the printHelp method.
@@ -36,7 +36,7 @@ private:
      * Stores the length of the longest
      * parameter in options.
      */
-    int optionParamLength = 0;
+    int maxOptionParamLength = 0;
     /**
      * @brief shift
      * extra shift / space can be defined
