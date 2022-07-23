@@ -140,8 +140,8 @@ void HelpText::parseOption()
 void HelpText::parseUsage()
 {
     string new_usage;
-    for (const auto & i : getOptSetup->getSampleUsages()) {
-        new_usage.append(i + "\\n");
+    for (const auto & sampleUsage : getOptSetup->getSampleUsages()) {
+        new_usage.append(sampleUsage + "\\n");
     }
     printHelpText.append("Usage:\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
 }
