@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GetOptSetup SignPerLine="79">
+    <Author Name="Tobias Götz, Noel Kempter, Niklas Holl, Sebastian Wolf, Philipp Küst" Mail="goetz.tobias-it21@it.dhbw-ravensburg.de" />
+    <HeaderFileName>GeneratedCode.h</HeaderFileName>
+    <SourceFileName>GeneratedCode.cpp</SourceFileName>
+    <NameSpace>GC</NameSpace>
+    <ClassName>generatedClass</ClassName>
+    <OverAllDescription>
+        <Block>Erstellt einen Rumpf zum einlesen von Argumente aus der Kommandozeile.</Block>
+        <Block>Es kann sowohl mit innenliegenden Container wie externer Klassenanbindung eine Datenhaltung erfolgen.</Block>
+        <Block>Sobald ein Methodenaufruf abstrakt ist, wird die Basisklasse abstrakt.</Block>
+        <Block>Fuer die Formatierung der generierten Dateien wird astyle verwendet.</Block>
+    </OverAllDescription>
+    <SampleUsage>
+        <Sample>getoptgen -h</Sample>
+    </SampleUsage>
+    <Options>
+        <!-- ReqFunc51 -->
+        <Option Ref="1" ShortOpt="h" LongOpt="help" ConnectToInternalMethod="printHelp" Description="Hilfe ausgeben" />
+        <!-- ReqFunc52 -->
+        <Option ShortOpt="v" Interface="Version" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus" />
+        <!-- ReqFunc53 -->
+        <Option LongOpt="ausschluss" Exclusion="1" ConnectToInternalMethod="printAusschluss" Description="Dies darf nicht mit help aufgerufen werden" />
+        <!-- ReqFunc54 -->
+        <Option LongOpt="arguments" HasArguments="Required" ConvertTo="Bool" Description="Dieses hat arguments required und Typwandlung bool" />
+        <!-- ReqFunc55 -->
+        <Option LongOpt="optional" HasArguments="Optional" ConvertTo="Integer" DefaultValue="50" Description="Argumente sind optional. Ohne Argument wird der Standartwert 50 genommen." />
+    </Options>
+</GetOptSetup>
