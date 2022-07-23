@@ -10,7 +10,7 @@
 
 class SourceCodeWriter {
 private:
-    GetOptSetup *getOptSetup;
+    GetOptSetup *getOptSetup = nullptr;
     FILE *headerFile = nullptr;
     FILE *sourceFile = nullptr;
 public:
