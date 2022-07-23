@@ -20,7 +20,7 @@
         <!-- ReqFunc52 -->
         <Option ShortOpt="v" Interface="Version" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus" />
         <!-- ReqFunc53 -->
-        <Option Ref="2" Exclusion="1" LongOpt="ausschluss" Description="Dies darf nicht mit help aufgerufen werden" />
+        <Option Ref="2" Exclusion="1" LongOpt="exclusion" Description="Dies darf nicht mit help aufgerufen werden" />
         <!-- ReqFunc54 -->
         <Option LongOpt="arguments" HasArguments="Required" ConvertTo="Boolean" Interface="Arguments" Description="Dieses hat arguments required und Typwandlung bool" />
         <!-- ReqFunc55 -->
