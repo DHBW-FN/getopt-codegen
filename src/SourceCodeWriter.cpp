@@ -247,11 +247,19 @@ void SourceCodeWriter::sourceFileParse() {
         }
 
         if (!option.getConnectToInternalMethod().empty()) {
-            fprintf(getSourceFile(), "%s();\n", option.getConnectToInternalMethod().c_str());
+            fprintf(getSourceFile(), "%s(", option.getConnectToInternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
         }
 
         if (!option.getConnectToExternalMethod().empty()) {
-            fprintf(getSourceFile(), "%s();\n", option.getConnectToExternalMethod().c_str());
+            fprintf(getSourceFile(), "%s(", option.getConnectToExternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
         }
         fprintf(getSourceFile(), "}\n");
     }
