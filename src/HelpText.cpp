@@ -37,28 +37,28 @@ void HelpText::getParamLength()
 {
     int paramLength;
 
-    for (int i = 0; i < getOptSetup->getOptions().size(); i++)
+    for (const auto & i : getOptSetup->getOptions())
     {
         paramLength = 0;
 
         // check if longOpt and shortOpt aren't empty
-        if (!getOptSetup->getOptions()[i].getLongOpt().empty() && getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        if (!i.getLongOpt().empty() && i.getShortOpt() != '\0')
         {
             // for e.g. -h, --
             paramLength += 6;
-            paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
+            paramLength += (int)i.getLongOpt().length();
         }
-        else if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        else if (i.getShortOpt() != '\0')
         {
             // for e.g. -h
             paramLength += 2;
         }
         // check if only longOpt isn't empty
-        else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
+        else if (!i.getLongOpt().empty())
         {
             // for e.g. --
             paramLength += 2;
-            paramLength += (int)getOptSetup->getOptions()[i].getLongOpt().length();
+            paramLength += (int)i.getLongOpt().length();
         }
         if (paramLength > optionParamLength)
         {
@@ -124,17 +124,17 @@ vector<Option> HelpText::parseOpts()
     vector<Option> shortOpts_vector;
     vector<Option> longOpts_vector;
 
-    for (int i = 0; i < getOptSetup->getOptions().size(); i++)
+    for (const auto & i : getOptSetup->getOptions())
     {
         // check if shortOpt isn't empty
-        if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        if (i.getShortOpt() != '\0')
         {
-            shortOpts_vector.push_back(getOptSetup->getOptions()[i]);
+            shortOpts_vector.push_back(i);
         }
         // check if only longOpt isn't empty
-        else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
+        else if (!i.getLongOpt().empty())
         {
-            longOpts_vector.push_back(getOptSetup->getOptions()[i]);
+            longOpts_vector.push_back(i);
         }
     }
 
@@ -158,19 +158,21 @@ string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 {
     string opts;
 
+    // check if shortOpt isn't empty
     if (sortedOpts[i].getShortOpt() != '\0')
     {
         // for e.g. -h
         opts += '-';
         opts += sortedOpts[i].getShortOpt();
+        // check if longOpt isn't empty
+        if (!sortedOpts[i].getLongOpt().empty())
+        {
+            // for e.g. , --help
+            opts.append(", --" + sortedOpts[i].getLongOpt());
+        }
     }
-    // check if longOpt and shortOpt aren't empty
-    if (!sortedOpts[i].getLongOpt().empty() && sortedOpts[i].getShortOpt() != '\0')
-    {
-        // for e.g. , --help
-        opts.append(", --" + sortedOpts[i].getLongOpt());
-    }
-        // check if only longOpt isn't empty
+
+    // check if only longOpt isn't empty
     else if (!sortedOpts[i].getLongOpt().empty())
     {
         // for e.g. --help
@@ -239,8 +241,8 @@ void HelpText::parseOption()
 void HelpText::parseUsage()
 {
     string new_usage;
-    for (int i = 0; i < getOptSetup->getSampleUsages().size(); i++) {
-        new_usage.append(getOptSetup->getSampleUsages()[i] + "\\n");
+    for (const auto & i : getOptSetup->getSampleUsages()) {
+        new_usage.append(i + "\\n");
     }
     printHelpText.append("Usage:\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
 }
