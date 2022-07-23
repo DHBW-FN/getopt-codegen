@@ -214,7 +214,7 @@ void HelpText::parseOption()
             int optionShift = optionParamLength + shift;
 
             // justify the description text
-            string new_description = justify.justifyTheText(getOptSetup->getOptions()[i].getDescription(), new_signPerLine, true, optionShift);
+            string new_description = justify.justifyTheText(sortedOpts[i].getDescription(), new_signPerLine, true, optionShift);
             buffer << new_description;
         }
     }
