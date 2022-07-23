@@ -38,12 +38,6 @@ public:
      */
     explicit XMLParser(const string &filename);
 
-    /**
-     * @brief toString
-     * @return
-     */
-    std::string toString();
-
     void parse();
 
     void startDocument() override;
