@@ -160,6 +160,7 @@ void SourceCodeWriter::headerFileClass() {
     //put all elements inside class -> public here
     fprintf(getHeaderFile(), "void parse();\n");
     createHeaderGetter();
+    createExternalFunctions();
     createHeaderParsingFunction();
     createHeaderUnknownOption();
 
@@ -357,7 +358,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                              "while (optind < argc)\nprintf(\"%s \", argv[optind++]);\nprintf(\"\\n\");\n}\n", "%s");
 
     //Call parse-function
-    fprintf(getSourceFile(), "parse();\n\n");
+    fprintf(getSourceFile(), "parse();\n");
 
     //Close function parseOptions
     fprintf(getSourceFile(), "}\n");
@@ -441,6 +442,22 @@ void SourceCodeWriter::createSourceGetter() {
         }
     }
 }
+
+void SourceCodeWriter::createExternalFunctions() {
+    vector<Option> options = getGetOptSetup()->getOptions();
+
+    for(auto &option : options){
+        if(!option.getConnectToExternalMethod().empty()){
+            fprintf(getHeaderFile(), "virtual void %s(", option.getConnectToExternalMethod().c_str());
+            if(option.isHasArguments() == HasArguments::OPTIONAL || option.isHasArguments() == HasArguments::REQUIRED){
+                std::string type = getValueTypeByOption(option);
+                fprintf(getHeaderFile(), "%s arg", type.c_str());
+            }
+            fprintf(getHeaderFile(), ") = 0;\n");
+        }
+    }
+}
+
 
 void SourceCodeWriter::writeFile() {
     printf("Writing file...\n");
