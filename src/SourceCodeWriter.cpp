@@ -236,7 +236,7 @@ void SourceCodeWriter::sourceFileParse() {
         fprintf(getSourceFile(), "}\n");
     }
 
-    for (auto &option: getGetOptSetup()->getOptions()) {
+    for (Option option: getGetOptSetup()->getOptions()) {
         std::string optionName = determineArgsName(option);
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
 
