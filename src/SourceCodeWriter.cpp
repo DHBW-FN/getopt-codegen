@@ -473,7 +473,7 @@ void SourceCodeWriter::createExternalFunctions() {
 }
 
 void SourceCodeWriter::createHeaderPrintVersion() {
-    fprintf(getHeaderFile(), "virtual void printVersion();\n\n");
+    fprintf(getHeaderFile(), "virtual void printVersion();\n");
 
 }
 
