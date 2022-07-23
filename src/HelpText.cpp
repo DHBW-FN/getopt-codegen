@@ -83,17 +83,6 @@ bool compareOptions(const Option &a, const Option &b) {
 }
 
 /**
- * @brief create new vector of sorted options
- * @return sorted options vector
- */
-vector<Option> HelpText::sortOptions()
-{
-    vector<Option> opts_vector = getOptSetup->getOptions();
-    std::sort(opts_vector.begin(), opts_vector.end(), compareOptions);
-    return opts_vector;
-}
-
-/**
  * @brief concatenate short opt and long opt to one string
  * different checks if shortOpt and LongOpt are empty
  * to concatenate the right signs to the string
@@ -152,7 +141,9 @@ void HelpText::parseOption()
     buffer << std::left << std::setw(maxOptionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
-    vector<Option> sortedOpts = sortOptions();
+    // sorting options
+    vector<Option> sortedOpts = getOptSetup->getOptions();
+    std::sort(sortedOpts.begin(), sortedOpts.end(), compareOptions);
 
     for (int i = 0; i < getOptSetup->getOptions().size(); i++)
     {

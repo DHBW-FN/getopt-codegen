@@ -22,7 +22,6 @@ private:
     void parseUsage();
     void parseAuthor();
     void parseOption();
-    vector<Option> sortOptions();
 
     static string concatParams(const vector<Option>& sortedOpts, int i);
     static int getMaxParamLength(const vector<Option>& options);
