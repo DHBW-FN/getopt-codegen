@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_GETOPTSETUP_H
 #define CODEGENERATOR_GETOPTSETUP_H
 
@@ -43,7 +47,6 @@ public:
     void addOption(const Option &option);
 
     // Helpers
-    char* toString();
     void parseAttributes(AttributeList &attributes);
 private:
     /**

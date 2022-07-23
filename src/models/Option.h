@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef PROGRAMMING_C_OPTION_H
 #define PROGRAMMING_C_OPTION_H
 
@@ -15,7 +19,7 @@ enum class ConvertToOptions {
 };
 
 enum class HasArguments {
-    None,
+    NONE,
     OPTIONAL,
     REQUIRED
 };
@@ -52,14 +56,13 @@ public:
     void setInterface(const std::string &interface);
 
     // Helpers
-    char* toString();
     void parseAttributes(AttributeList &attributes);
 private:
     /**
      * @brief ref: Value between 0 and 63
      * Reference to the option.
      */
-    int ref;
+    int ref{};
     /**
      * @brief shortOpt
      * Short option.
@@ -99,7 +102,7 @@ private:
      * @brief hasArguments
      * True if the option has arguments.
      */
-    HasArguments hasArguments = HasArguments::None;
+    HasArguments hasArguments = HasArguments::NONE;
     /**
      * @brief convertTo
      * Type the argument should be converted to.

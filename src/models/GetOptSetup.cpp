@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include <xercesc/util/XMLString.hpp>
 #include <boost/lexical_cast.hpp>
 #include "GetOptSetup.h"
@@ -45,40 +49,40 @@ const vector<Option> &GetOptSetup::getOptions() const {
 
 
 // Setters
-void GetOptSetup::setSignPerLine(const string &signPerLine) {
-    GetOptSetup::signPerLine = boost::lexical_cast<int>(signPerLine);
+void GetOptSetup::setSignPerLine(const string &_signPerLine) {
+    GetOptSetup::signPerLine = boost::lexical_cast<int>(_signPerLine);
 }
 
-void GetOptSetup::setAuthor(const Author &author) {
-    GetOptSetup::author = author;
+void GetOptSetup::setAuthor(const Author &_author) {
+    GetOptSetup::author = _author;
 }
 
-void GetOptSetup::setHeaderFileName(const string &headerFileName) {
-    GetOptSetup::headerFileName = headerFileName;
+void GetOptSetup::setHeaderFileName(const string &_headerFileName) {
+    GetOptSetup::headerFileName = _headerFileName;
 }
 
-void GetOptSetup::setSourceFileName(const string &sourceFileName) {
-    GetOptSetup::sourceFileName = sourceFileName;
+void GetOptSetup::setSourceFileName(const string &_sourceFileName) {
+    GetOptSetup::sourceFileName = _sourceFileName;
 }
 
-void GetOptSetup::setNamespaceName(const string &namespaceName) {
-    GetOptSetup::namespaceName = namespaceName;
+void GetOptSetup::setNamespaceName(const string &_namespaceName) {
+    GetOptSetup::namespaceName = _namespaceName;
 }
 
-void GetOptSetup::setClassName(const string &className) {
-    GetOptSetup::className = className;
+void GetOptSetup::setClassName(const string &_className) {
+    GetOptSetup::className = _className;
 }
 
-void GetOptSetup::setOverAllDescriptions(const vector<string> &overAllDescriptions) {
-    GetOptSetup::overAllDescriptions = overAllDescriptions;
+void GetOptSetup::setOverAllDescriptions(const vector<string> &_overAllDescriptions) {
+    GetOptSetup::overAllDescriptions = _overAllDescriptions;
 }
 
-void GetOptSetup::setSampleUsages(const vector<string> &sampleUsages) {
-    GetOptSetup::sampleUsages = sampleUsages;
+void GetOptSetup::setSampleUsages(const vector<string> &_sampleUsages) {
+    GetOptSetup::sampleUsages = _sampleUsages;
 }
 
-void GetOptSetup::setOptions(const vector<Option> &options) {
-    GetOptSetup::options = options;
+void GetOptSetup::setOptions(const vector<Option> &_options) {
+    GetOptSetup::options = _options;
 }
 
 // Adders

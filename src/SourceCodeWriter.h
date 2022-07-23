@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Niklas Holl
+ */
+
 #ifndef CODEGENERATOR_SOURCECODEWRITER_H
 #define CODEGENERATOR_SOURCECODEWRITER_H
 
@@ -6,9 +10,12 @@
 
 class SourceCodeWriter {
 private:
-    GetOptSetup *getOptSetup;
+    GetOptSetup *getOptSetup = nullptr;
     FILE *headerFile = nullptr;
     FILE *sourceFile = nullptr;
+
+    // Helpers
+    static string getValueTypeByOption(Option &option);
 public:
     // Constructor
     explicit SourceCodeWriter(GetOptSetup *getOptSetup);
@@ -23,11 +30,10 @@ public:
     void setHeaderFile(FILE *headerFile);
     void setSourceFile(FILE *sourceFile);
 
-    // Helpers
+    // Methods
     void writeFile();
 
     // Write code functions
-
     /**
      * @brief
      * Writes definitions and includes into Header-File
@@ -39,6 +45,18 @@ public:
      * Writes includes into Source-File
      */
     void sourceFileIncludes();
+
+    /**
+     * @brief
+     * Generate Header-File declaration of the function that will handle Options-parsing
+     */
+    void createHeaderParsingFunction();
+
+    /**
+     * @brief
+     * Generate implementation of the function that will handle Options-parsing
+     */
+    void createSourceParsingFunction();
 
     /**
      * @brief
@@ -57,6 +75,69 @@ public:
      * Writes Class into namespace in Header-File
      */
     void headerFileClass();
+
+    /**
+     * @brief
+     * Writes exclusion check and execution of getOpts into Source-File
+     */
+    void sourceFileParse();
+
+    /**
+     * @brief
+     * Determines the name the Args-Struct will have for any given Option
+     * @param option
+     * @return
+     */
+    static string determineArgsName(const Option& option);
+
+    /**
+     * @brief
+     * Creates struct args for header
+     */
+    void createHeaderStructArgs();
+
+    /**
+     * @brief
+     * Generates the declaration of the unknownOption-function
+     */
+    void createHeaderUnknownOption();
+
+    /**
+     * @brief
+     * Generates the implementation of the unknownOption-function
+     */
+    void createSourceUnknownOption();
+
+    /**
+     * @brief
+     * Generates the declaration of all Getters in the Header-File
+     */
+    void createHeaderGetter();
+
+    /**
+     * @brief
+     * Generates the implementation of all Getters in the Header-File
+     */
+    void createSourceGetter();
+
+    /**
+     * @brief
+     * Generates the declaration of every virtual function in the Header-File
+     */
+    void createExternalFunctions();
+
+    /**
+     * @brief
+     * Generates the declaration of the printVersion function in the Header-File
+     */
+     void createHeaderPrintVersion();
+
+     /**
+      * @brief
+      * Generates the implementation of the printVersion function in the Source-File
+      */
+     void createSourcePrintVersion();
+
 };
 
 

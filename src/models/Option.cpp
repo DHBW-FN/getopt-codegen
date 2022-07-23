@@ -1,8 +1,13 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include "Option.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <xercesc/util/XMLString.hpp>
+#include <iostream>
 
 // Constructor
 Option::Option() = default;
@@ -57,65 +62,70 @@ std::string Option::getInterface() const {
 // Setters
 
 void Option::setRef(const std::string &ref) {
-    Option::ref = boost::lexical_cast<int>(ref);
+    int _ref = boost::lexical_cast<int>(ref);
+    if (_ref < 1 || _ref > 63) {
+        std::cerr << "Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    Option::ref = _ref;
 }
 
-void Option::setShortOpt(const std::string &shortOpt) {
-    Option::shortOpt = boost::lexical_cast<char>(shortOpt);
+void Option::setShortOpt(const std::string &_shortOpt) {
+    Option::shortOpt = boost::lexical_cast<char>(_shortOpt);
 }
 
-void Option::setLongOpt(const std::string &longOpt) {
-    Option::longOpt = longOpt;
+void Option::setLongOpt(const std::string &_longOpt) {
+    Option::longOpt = _longOpt;
 }
 
-void Option::setDescription(const std::string &description) {
-    Option::description = description;
+void Option::setDescription(const std::string &_description) {
+    Option::description = _description;
 }
 
-void Option::setExclusions(const std::string &exclusions) {
-    std::vector<std::string> excl;
-    boost::split(excl, exclusions, boost::is_any_of(","));
-    for (auto &excl : excl) {
+void Option::setExclusions(const std::string &_exclusions) {
+    std::vector<std::string> excls;
+    boost::split(excls, _exclusions, boost::is_any_of(","));
+    for (auto &excl : excls) {
         Option::exclusions.push_back(boost::lexical_cast<int>(excl));
     }
 }
 
-void Option::setConnectToInternalMethod(const std::string &connectToInternalMethod) {
-    Option::connectToInternalMethod = connectToInternalMethod;
+void Option::setConnectToInternalMethod(const std::string &_connectToInternalMethod) {
+    Option::connectToInternalMethod = _connectToInternalMethod;
 }
 
-void Option::setConnectToExternalMethod(const std::string &connectToExternalMethod) {
-    Option::connectToExternalMethod = connectToExternalMethod;
+void Option::setConnectToExternalMethod(const std::string &_connectToExternalMethod) {
+    Option::connectToExternalMethod = _connectToExternalMethod;
 }
 
-void Option::setHasArguments(const std::string &hasArguments) {
-    if (boost::iequals(hasArguments, "optional")) {
+void Option::setHasArguments(const std::string &_hasArguments) {
+    if (boost::iequals(_hasArguments, "optional")) {
         Option::hasArguments = HasArguments::OPTIONAL;
-    } else if (boost::iequals(hasArguments, "required")) {
+    } else if (boost::iequals(_hasArguments, "required")) {
         Option::hasArguments = HasArguments::REQUIRED;
     } else {
         throw std::runtime_error("Invalid value for hasArguments");
     }
 }
 
-void Option::setConvertTo(const std::string &convertTo) {
-    if (boost::iequals(convertTo, "String")) {
+void Option::setConvertTo(const std::string &_convertTo) {
+    if (boost::iequals(_convertTo, "String")) {
         Option::convertTo = ConvertToOptions::STRING;
-    } else if (boost::iequals(convertTo, "Integer")) {
+    } else if (boost::iequals(_convertTo, "Integer")) {
         Option::convertTo = ConvertToOptions::INTEGER;
-    } else if (boost::iequals(convertTo, "Boolean")) {
+    } else if (boost::iequals(_convertTo, "Boolean")) {
         Option::convertTo = ConvertToOptions::BOOLEAN;
     } else {
         throw std::runtime_error("Invalid value for convertTo");
     }
 }
 
-void Option::setDefaultValue(const std::string &defaultValue) {
-    Option::defaultValue = defaultValue;
+void Option::setDefaultValue(const std::string &_defaultValue) {
+    Option::defaultValue = _defaultValue;
 }
 
-void Option::setInterface(const std::string &interface) {
-    Option::interface = interface;
+void Option::setInterface(const std::string &_interface) {
+    Option::interface = _interface;
 }
 
 // Helpers

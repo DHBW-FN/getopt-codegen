@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_AUTHOR_H
 #define CODEGENERATOR_AUTHOR_H
 
@@ -24,7 +28,6 @@ public:
     void setMail(const string &email);
 
     // Helpers
-    string toString();
     void parseAttributes(AttributeList &attributes);
 
 private:
