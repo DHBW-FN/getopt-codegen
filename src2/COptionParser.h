@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf
+ */
+
 #ifndef CODEGENERATOR_COPTIONPARSER_H
 #define CODEGENERATOR_COPTIONPARSER_H
 

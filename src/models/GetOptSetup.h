@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_GETOPTSETUP_H
 #define CODEGENERATOR_GETOPTSETUP_H
 

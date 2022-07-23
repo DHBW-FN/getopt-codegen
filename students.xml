@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+  <student deliver="true" surname="Tobias" name="Goetz" mail="goetz.tobias-it21@it.dhbw-ravensburg.de" course="TIM21"/>
+  <student surname="Sebastian" name="Wolf" mail="wolf.sebastian-it21@it.dhbw-ravensburg.de" course="TIS21"/>
+  <student surname="Philipp" name="Kuest" mail="kuest.philipp-it21@it.dhbw-ravensburg.de" course="TIM21"/>
+  <student surname="Noel" name="Kempter" mail="kempter.noel-it21@it.dhbw-ravensburg.de" course="TIM21"/>
+  <student surname="Niklas" name="Holl" mail="holl.niklas-it21@it.dhbw-ravensburg.de" course="TIM21"/>
+</students>
+

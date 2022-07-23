@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf
+ */
+
 #include "COptionParser.h"
 #include <cstring>
 #include <boost/lexical_cast.hpp>
