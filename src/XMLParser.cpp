@@ -12,10 +12,6 @@
 XERCES_CPP_NAMESPACE_USE
 using namespace std;
 
-std::string XMLParser::toString() {
-    return this->filename;
-}
-
 XMLParser::XMLParser(const std::string &filename) {
     this->filename = filename;
 }
@@ -75,11 +71,11 @@ void XMLParser::parse() {
 }
 
 void XMLParser::startDocument() {
-    cout << "Start Document" << endl;
+//    cout << "Start Document" << endl;
 }
 
 void XMLParser::endDocument() {
-    cout << "End Document" << endl;
+//    cout << "End Document" << endl;
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {

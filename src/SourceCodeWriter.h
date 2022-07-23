@@ -10,9 +10,12 @@
 
 class SourceCodeWriter {
 private:
-    GetOptSetup *getOptSetup;
+    GetOptSetup *getOptSetup = nullptr;
     FILE *headerFile = nullptr;
     FILE *sourceFile = nullptr;
+
+    // Helpers
+    static string getValueTypeByOption(Option &option);
 public:
     // Constructor
     explicit SourceCodeWriter(GetOptSetup *getOptSetup);
@@ -27,9 +30,8 @@ public:
     void setHeaderFile(FILE *headerFile);
     void setSourceFile(FILE *sourceFile);
 
-    // Helpers
+    // Methods
     void writeFile();
-    static string getValueTypeByOption(Option &option);
 
     // Write code functions
     /**
