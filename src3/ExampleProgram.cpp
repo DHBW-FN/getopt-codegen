@@ -16,6 +16,10 @@ GC::GeneratedClass *ExampleProgram::getExtendedGeneratedCode() {
     return generatedClass;
 }
 
+/**
+ * @brief prints in command line if option 'version' was set
+ * @param ep object of class ExampleProgram
+ */
 void checkVersion(ExampleProgram ep){
     if(ep.getExtendedGeneratedCode()->isSetVersion()){
         //ep.getExtendedGeneratedCode()->printVersion();
