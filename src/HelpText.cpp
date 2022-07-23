@@ -70,7 +70,11 @@ void HelpText::getLength()
     }
 }
 
-
+/**
+ * @brief sort longOpts alphabetical
+ * @param opts_vector vector of longOpts
+ * @return sorted vector of longOpts
+ */
 vector<Option> HelpText::sortLongOpts(vector<Option> opts_vector)
 {
     // sort options by shortOpt
@@ -89,6 +93,11 @@ vector<Option> HelpText::sortLongOpts(vector<Option> opts_vector)
     return opts_vector;
 }
 
+/**
+ * @brief sort shortOpts alphabetical
+ * @param opts_vector vector of shortOpts
+ * @return sorted vector of shortOpts
+ */
 vector<Option> HelpText::sortShortOpts(vector<Option> opts_vector)
 {
     // sort options by shortOpt
@@ -107,7 +116,10 @@ vector<Option> HelpText::sortShortOpts(vector<Option> opts_vector)
     return opts_vector;
 }
 
-
+/**
+ * @brief create new vector of sorted options
+ * @return sorted options vector
+ */
 vector<Option> HelpText::parseOpts()
 {
     vector<Option> opts_vector;
@@ -140,10 +152,10 @@ vector<Option> HelpText::parseOpts()
 
 /**
  * @brief concatenate short opt and long opt to one string
- * @param i iteration counter to determine which option is parsed
- * @return concatenated opts as string
  * different checks if shortOpt and LongOpt are empty
  * to concatenate the right signs to the string
+ * @param i iteration counter to determine which option is parsed
+ * @return concatenated opts as string
  */
 string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 {
