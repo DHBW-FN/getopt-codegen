@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include <xercesc/util/XMLString.hpp>
 #include <boost/lexical_cast.hpp>
 #include "GetOptSetup.h"

@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest
+ */
+
 #ifndef CODEGENERATOR_SOURCECODEWRITER_H
 #define CODEGENERATOR_SOURCECODEWRITER_H
 
