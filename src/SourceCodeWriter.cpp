@@ -20,7 +20,6 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
 }
 
 SourceCodeWriter::~SourceCodeWriter() {
-    printf("Destructor called.\n");
     if (this->headerFile != nullptr) {
         fclose(this->headerFile);
     }
@@ -32,7 +31,6 @@ SourceCodeWriter::~SourceCodeWriter() {
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
-        printf("Header file is nullptr\n");
         setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
     }
     return headerFile;
@@ -40,7 +38,6 @@ FILE *SourceCodeWriter::getHeaderFile() {
 
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
-        printf("Source file is nullptr\n");
         setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
     }
     return sourceFile;
@@ -84,7 +81,6 @@ string SourceCodeWriter::getValueTypeByOption(Option &option)
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
-    printf("Writing includes into header file\n");
     // Define static and always used includes here
     string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
@@ -160,6 +156,7 @@ void SourceCodeWriter::headerFileClass() {
     //put all elements inside class -> public here
     fprintf(getHeaderFile(), "void parse();\n");
     createHeaderGetter();
+    createExternalFunctions();
     createHeaderParsingFunction();
     createHeaderUnknownOption();
 
@@ -357,7 +354,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                              "while (optind < argc)\nprintf(\"%s \", argv[optind++]);\nprintf(\"\\n\");\n}\n", "%s");
 
     //Call parse-function
-    fprintf(getSourceFile(), "parse();\n\n");
+    fprintf(getSourceFile(), "parse();\n");
 
     //Close function parseOptions
     fprintf(getSourceFile(), "}\n");
@@ -443,8 +440,24 @@ void SourceCodeWriter::createSourceGetter() {
     fprintf(getSourceFile(), "void %s::printVersion() {\nprintf(\"version: 1.0.0\");\n}\n", getGetOptSetup()->getClassName().c_str());
 }
 
+void SourceCodeWriter::createExternalFunctions() {
+    vector<Option> options = getGetOptSetup()->getOptions();
+
+    for(auto &option : options){
+        if(!option.getConnectToExternalMethod().empty()){
+            fprintf(getHeaderFile(), "virtual void %s(", option.getConnectToExternalMethod().c_str());
+            if(option.isHasArguments() == HasArguments::OPTIONAL || option.isHasArguments() == HasArguments::REQUIRED){
+                std::string type = getValueTypeByOption(option);
+                fprintf(getHeaderFile(), "%s arg", type.c_str());
+            }
+            fprintf(getHeaderFile(), ") = 0;\n");
+        }
+    }
+}
+
+
 void SourceCodeWriter::writeFile() {
-    printf("Writing file...\n");
+//    printf("Writing file...\n");
 
     //Write header files --> put methods here
     headerFileIncludes();
