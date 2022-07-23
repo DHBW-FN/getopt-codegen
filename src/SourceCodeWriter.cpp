@@ -347,10 +347,28 @@ void SourceCodeWriter::createSourceParsingFunction() {
                                          "which requires one.\");\n"
                                          "exit(1);\n}\nargs.%s.value = optarg;\n",
                         bothOpts.c_str(), determineArgsName(option).c_str());
+                if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
+                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
+                                             "else\nargs.%s.value = optarg;\n",
+                            determineArgsName(option).c_str(), determineArgsName(option).c_str(),
+                            determineArgsName(option).c_str());
+                } else
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\n",
+                            determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
                 fprintf(getSourceFile(), "if(optarg != nullptr)\nargs.%s.value = optarg;",
                         determineArgsName(option).c_str());
+                if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
+                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
+                                             "else\nargs.%s.value = optarg;\n",
+                            determineArgsName(option).c_str(), determineArgsName(option).c_str(),
+                            determineArgsName(option).c_str());
+                } else
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\n",
+                            determineArgsName(option).c_str());
                 break;
             default:
                 fprintf(getSourceFile(), "if(optarg != nullptr){\n"
