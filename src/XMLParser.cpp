@@ -59,7 +59,10 @@ void XMLParser::parse() {
         cerr << "Unbekannter Fehler" << endl;
     }
 
-    cout << "Anzahl Fehler: " << errorCount << endl;
+    if (errorCount > 0) {
+        perror("There were errors during parsing.");
+        exit(1);
+    }
 
     //Parser sauber beenden
     delete parser;
