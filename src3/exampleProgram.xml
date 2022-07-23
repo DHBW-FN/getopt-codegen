@@ -6,10 +6,8 @@
     <NameSpace>GC</NameSpace>
     <ClassName>GeneratedClass</ClassName>
     <OverAllDescription>
-        <Block>Erstellt einen Rumpf zum einlesen von Argumente aus der Kommandozeile.</Block>
-        <Block>Es kann sowohl mit innenliegenden Container wie externer Klassenanbindung eine Datenhaltung erfolgen.</Block>
-        <Block>Sobald ein Methodenaufruf abstrakt ist, wird die Basisklasse abstrakt.</Block>
-        <Block>Fuer die Formatierung der generierten Dateien wird astyle verwendet.</Block>
+        <Block>Gibt die verschiedenen Werte aus, welche von getOpt angenommen wurden.</Block>
+        <Block>Dies geschieht in der Kommandozeile.</Block>
     </OverAllDescription>
     <SampleUsage>
         <Sample>getoptgen -h</Sample>
