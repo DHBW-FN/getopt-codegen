@@ -20,10 +20,10 @@
         <!-- ReqFunc52 -->
         <Option ShortOpt="v" Interface="Version" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus" />
         <!-- ReqFunc53 -->
-        <Option Ref="2" Exclusion="1" LongOpt="ausschluss" ConnectToInternalMethod="printAusschluss" Description="Dies darf nicht mit help aufgerufen werden" />
+        <Option Ref="2" Exclusion="1" LongOpt="ausschluss" Description="Dies darf nicht mit help aufgerufen werden" />
         <!-- ReqFunc54 -->
-        <Option LongOpt="arguments" HasArguments="Required" ConvertTo="Bool" Description="Dieses hat arguments required und Typwandlung bool" />
+        <Option LongOpt="arguments" HasArguments="Required" ConvertTo="Boolean" Interface="Arguments" Description="Dieses hat arguments required und Typwandlung bool" />
         <!-- ReqFunc55 -->
-        <Option LongOpt="optional" HasArguments="Optional" ConvertTo="Integer" DefaultValue="50" Description="Argumente sind optional. Ohne Argument wird der Standartwert 50 genommen." />
+        <Option LongOpt="optional" HasArguments="Optional" ConvertTo="Integer" Interface="Optional" DefaultValue="50" Description="Argumente sind optional. Ohne Argument wird der Standartwert 50 genommen." />
     </Options>
 </GetOptSetup>
