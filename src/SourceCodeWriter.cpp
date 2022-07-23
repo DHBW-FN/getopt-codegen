@@ -283,7 +283,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
     string shortOpts;
     for (auto &option: options) {
-        if (option.getShortOpt() != '_') {
+        if (option.getShortOpt() != '\0') {
             shortOpts.append(1, option.getShortOpt());
             switch (option.isHasArguments()) {
                 case HasArguments::OPTIONAL:
@@ -354,9 +354,6 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
     //Call parse-function
     fprintf(getSourceFile(), "parse();\n\n");
-
-    //If nothing went wrong -> EXIT_SUCCESS
-    fprintf(getSourceFile(), "exit(EXIT_SUCCESS);\n");
 
     //Close function parseOptions
     fprintf(getSourceFile(), "}\n");
