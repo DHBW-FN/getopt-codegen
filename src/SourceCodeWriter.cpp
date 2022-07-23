@@ -214,7 +214,7 @@ void SourceCodeWriter::createHeaderParsingFunction() {
 
 void SourceCodeWriter::sourceFileParse() {
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
-    for (Option option : getGetOptSetup()->getOptions()) {
+    for (auto &option : getGetOptSetup()->getOptions()) {
         std::string optionName = determineArgsName(option);
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
 
