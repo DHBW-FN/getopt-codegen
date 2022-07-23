@@ -122,7 +122,7 @@ public:
 
     /**
      * @brief
-     * Generates the declaration of every all virtual functions in the Header-File
+     * Generates the declaration of every virtual function in the Header-File
      */
     void createExternalFunctions();
 
