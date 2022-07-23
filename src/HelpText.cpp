@@ -35,11 +35,9 @@ void HelpText::parseDescription()
  */
 void HelpText::getParamLength()
 {
-    int paramLength;
-
     for (const auto & i : getOptSetup->getOptions())
     {
-        paramLength = 0;
+       int paramLength = 0;
 
         // check if longOpt and shortOpt aren't empty
         if (!i.getLongOpt().empty() && i.getShortOpt() != '\0')
