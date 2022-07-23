@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_STATEMACHINE_H
 #define CODEGENERATOR_STATEMACHINE_H
 
