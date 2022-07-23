@@ -71,6 +71,73 @@ void HelpText::getLength()
 }
 
 
+vector<Option> HelpText::sortLongOpts(vector<Option> opts_vector)
+{
+    // sort options by shortOpt
+    for (int i = 0; i < opts_vector.size(); i++)
+    {
+        for (int j = 0; j < opts_vector.size() - 1; j++)
+        {
+            if (opts_vector[j].getLongOpt() > opts_vector[j + 1].getLongOpt())
+            {
+                Option temp = opts_vector[j];
+                opts_vector[j] = opts_vector[j + 1];
+                opts_vector[j + 1] = temp;
+            }
+        }
+    }
+    return opts_vector;
+}
+
+vector<Option> HelpText::sortShortOpts(vector<Option> opts_vector)
+{
+    // sort options by shortOpt
+    for (int i = 0; i < opts_vector.size(); i++)
+    {
+        for (int j = 0; j < opts_vector.size() - 1; j++)
+        {
+            if (opts_vector[j].getShortOpt() > opts_vector[j + 1].getShortOpt())
+            {
+                Option temp = opts_vector[j];
+                opts_vector[j] = opts_vector[j + 1];
+                opts_vector[j + 1] = temp;
+            }
+        }
+    }
+    return opts_vector;
+}
+
+
+vector<Option> HelpText::parseOpts()
+{
+    vector<Option> opts_vector;
+
+    vector<Option> shortOpts_vector;
+    vector<Option> longOpts_vector;
+
+    for (int i = 0; i < getOptSetup->getOptions().size(); i++)
+    {
+        // check if shortOpt isn't empty
+        if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
+        {
+            shortOpts_vector.push_back(getOptSetup->getOptions()[i]);
+        }
+        // check if only longOpt isn't empty
+        else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
+        {
+            longOpts_vector.push_back(getOptSetup->getOptions()[i]);
+        }
+    }
+
+    shortOpts_vector = sortShortOpts(shortOpts_vector);
+    longOpts_vector = sortLongOpts(longOpts_vector);
+
+    opts_vector = shortOpts_vector;
+    opts_vector.insert(opts_vector.end(), longOpts_vector.begin(), longOpts_vector.end());
+
+    return opts_vector;
+}
+
 /**
  * @brief concatenate short opt and long opt to one string
  * @param i iteration counter to determine which option is parsed
@@ -78,31 +145,28 @@ void HelpText::getLength()
  * different checks if shortOpt and LongOpt are empty
  * to concatenate the right signs to the string
  */
-string HelpText::concatParams(int i)
+string HelpText::concatParams(const vector<Option>& sortedOpts, int i)
 {
     string opts;
 
-    if (getOptSetup->getOptions()[i].getShortOpt() != '\0')
+    if (sortedOpts[i].getShortOpt() != '\0')
     {
         // for e.g. -h
         opts += '-';
-        opts += getOptSetup->getOptions()[i].getShortOpt();
+        opts += sortedOpts[i].getShortOpt();
     }
-
     // check if longOpt and shortOpt aren't empty
-    if (!getOptSetup->getOptions()[i].getLongOpt().empty() && getOptSetup->getOptions()[i].getShortOpt() != '\0')
+    if (!sortedOpts[i].getLongOpt().empty() && sortedOpts[i].getShortOpt() != '\0')
     {
         // for e.g. , --help
-        opts.append(", --" + getOptSetup->getOptions()[i].getLongOpt());
+        opts.append(", --" + sortedOpts[i].getLongOpt());
     }
-
         // check if only longOpt isn't empty
-    else if (!getOptSetup->getOptions()[i].getLongOpt().empty())
+    else if (!sortedOpts[i].getLongOpt().empty())
     {
         // for e.g. --help
-        opts.append("--" + getOptSetup->getOptions()[i].getLongOpt());
+        opts.append("--" + sortedOpts[i].getLongOpt());
     }
-
     return opts;
 }
 
@@ -131,10 +195,12 @@ void HelpText::parseOption()
     buffer << std::left << std::setw(optionParamLength + shift) << "Parameters";
     buffer << "Description" << "\\n";
 
+    vector<Option> sortedOpts = parseOpts();
+
     for (int i = 0; i < getOptSetup->getOptions().size(); i++)
     {
         // get the concatenated params
-        string opts = concatParams(i);
+        string opts = concatParams(sortedOpts, i);
         buffer << std::left << std::setw(optionParamLength + shift) << opts;
 
         // check if description isn't empty

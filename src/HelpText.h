@@ -5,6 +5,7 @@
 #include "models/GetOptSetup.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,8 +22,11 @@ private:
     void parseUsage();
     void parseAuthor();
     void parseOption();
+    vector<Option> parseOpts();
+    static vector<Option> sortShortOpts(vector<Option> optsVector);
+    static vector<Option> sortLongOpts(vector<Option> opts_vector);
 
-    string concatParams(int i);
+    string concatParams(const vector<Option>& sortedOpts, int i);
     void getLength();
     /**
      * @brief printHelp Text
