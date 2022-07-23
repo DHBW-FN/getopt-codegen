@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include "CodeGenerator.h"
 #include "XMLParser.h"
 #include "SourceCodeWriter.h"
