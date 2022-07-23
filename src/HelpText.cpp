@@ -252,7 +252,9 @@ void HelpText::parseAuthor()
 string HelpText::parseHelpMessage()
 {
     // add function beginning to string
-    printHelpText.append("void printHelp(){puts(\"");
+    printHelpText.append("void ");
+    printHelpText.append(getOptSetup->getClassName());
+    printHelpText.append("::printHelp(){puts(\"");
 
     // parse the description and add text to string
     parseDescription();
