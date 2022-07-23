@@ -16,6 +16,14 @@ GC::GeneratedClass *ExampleProgram::getExtendedGeneratedCode() {
     return generatedClass;
 }
 
+void checkVersion(ExampleProgram ep){
+    if(ep.getExtendedGeneratedCode()->isSetVersion()){
+        //ep.getExtendedGeneratedCode()->printVersion();
+        printf("The option 'version' was called --> isSetVersion=true\n");
+    } else {
+        printf("The option 'version' was not called --> isSetVersion=false\n");
+    }
+}
 
 /**
  * @brief prints in command line if option 'exclusion' was set
@@ -64,6 +72,7 @@ int main(int argc, char* argv[] ) {
     ExampleProgram exampleProgram = ExampleProgram(new ExtendedGeneratedCode());
     exampleProgram.getExtendedGeneratedCode()->parseOptions(argc, argv);
 
+    checkVersion(exampleProgram);
     checkExclusion(exampleProgram);
     checkArguments(exampleProgram);
     checkOptional(exampleProgram);

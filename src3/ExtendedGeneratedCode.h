@@ -7,6 +7,9 @@
  * class with inheritance to generated class to use getopt of generated files
  */
 class ExtendedGeneratedCode: public GC::GeneratedClass {
+    void printVersion() override {
+        printf("Version: 2.0.0\n");
+    };
 };
 
 

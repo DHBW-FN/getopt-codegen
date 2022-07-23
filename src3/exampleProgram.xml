@@ -16,7 +16,7 @@
         <!-- ReqFunc51 -->
         <Option Ref="1" Exclusion="2" ShortOpt="h" LongOpt="help" ConnectToInternalMethod="printHelp" Description="Hilfe ausgeben" />
         <!-- ReqFunc52 -->
-        <Option ShortOpt="v" Interface="Version" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus" />
+        <Option ShortOpt="v" LongOpt="version" Interface="Version" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus" />
         <!-- ReqFunc53 -->
         <Option Ref="2" Exclusion="1" LongOpt="exclusion" Description="Dies darf nicht mit help aufgerufen werden" />
         <!-- ReqFunc54 -->
