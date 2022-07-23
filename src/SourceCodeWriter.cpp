@@ -440,6 +440,7 @@ void SourceCodeWriter::createSourceGetter() {
                     determineArgsName(option).c_str());
         }
     }
+    fprintf(getSourceFile(), "void %s::printVersion() {\nprintf(\"version: 1.0.0\");\n}\n", getGetOptSetup()->getClassName().c_str());
 }
 
 void SourceCodeWriter::writeFile() {
