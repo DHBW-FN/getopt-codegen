@@ -9,7 +9,7 @@
 
 int main() {
     printf("Starting Codegenerator!\n");
-    XMLParser parser("src3/exampleProgram.xml");
+    XMLParser parser("example/example.xml");
     parser.parse();
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.writeFile();
