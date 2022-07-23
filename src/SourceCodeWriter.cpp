@@ -1,5 +1,5 @@
 /*
- * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf, Niklas Holl
  */
 
 #include "SourceCodeWriter.h"
@@ -213,7 +213,7 @@ void SourceCodeWriter::createHeaderParsingFunction() {
 
 void SourceCodeWriter::sourceFileParse() {
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
-    for (auto &option : getGetOptSetup()->getOptions()) {
+    for (Option option : getGetOptSetup()->getOptions()) {
         std::string optionName = determineArgsName(option);
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
 
@@ -238,7 +238,10 @@ void SourceCodeWriter::sourceFileParse() {
         if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
+            fprintf(getSourceFile(), "try {\n");
             fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+            fprintf(getSourceFile(), "} catch (boost::bad_lexical_cast &) {\n");
+            fprintf(getSourceFile(), "perror(\"%s is not convertible to %s.\");\n}\n", optionName.c_str(), getValueTypeByOption(option).c_str());
             fprintf(getSourceFile(), "}\n");
         }
         // Implement what getopts do here
