@@ -20,7 +20,6 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
 }
 
 SourceCodeWriter::~SourceCodeWriter() {
-    printf("Destructor called.\n");
     if (this->headerFile != nullptr) {
         fclose(this->headerFile);
     }
@@ -32,7 +31,6 @@ SourceCodeWriter::~SourceCodeWriter() {
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
-        printf("Header file is nullptr\n");
         setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
     }
     return headerFile;
@@ -40,7 +38,6 @@ FILE *SourceCodeWriter::getHeaderFile() {
 
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
-        printf("Source file is nullptr\n");
         setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
     }
     return sourceFile;
