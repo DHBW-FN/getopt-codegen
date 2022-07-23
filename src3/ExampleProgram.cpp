@@ -1,16 +1,25 @@
 #include "ExampleProgram.h"
 
-// Constructor
+/**
+ * @brief Constructor, that generates a object of ExtendedGeneratedCode
+ */
 ExampleProgram::ExampleProgram() {
     this->extendedGeneratedCode = new ExtendedGeneratedCode();
 }
 
-// Getter
+/**
+ * @brief Getter for extendedGeneratedCode
+ * @return object of class ExtendedGeneratedCode
+ */
 ExtendedGeneratedCode *ExampleProgram::getExtendedGeneratedCode() {
     return extendedGeneratedCode;
 }
 
-//check if option "exclusion" was set
+
+/**
+ * @brief prints in command line if option 'exclusion' was set
+ * @param ep object of class ExampleProgram
+ */
 void checkExclusion(ExampleProgram ep){
     if(ep.getExtendedGeneratedCode()->isSetExclusion()){
         printf("The option 'exclusion' was called --> isSetExclusion=true\n");
@@ -19,7 +28,10 @@ void checkExclusion(ExampleProgram ep){
     }
 }
 
-//check if option "arguments" was set
+/**
+ * @brief prints in command line if option 'arguments' was set and depending on it the argument
+ * @param ep object of class ExampleProgram
+ */
 void checkArguments(ExampleProgram ep){
     if(ep.getExtendedGeneratedCode()->isSetArguments()){
         printf("The option 'arguments' was called --> isSetExclusion=true\n");
@@ -29,9 +41,10 @@ void checkArguments(ExampleProgram ep){
     }
 }
 
-//--optional=27
-//-o27
-//check if option "arguments" was set
+/**
+ * @brief prints in command line if option 'arguments' was set and depending on it the argument
+ * @param ep object of class ExampleProgram
+ */
 void checkOptional(ExampleProgram ep){
     if(ep.getExtendedGeneratedCode()->isSetOptional()){
         printf("The option 'optional' was called --> isSetOptional=true\n");
@@ -41,6 +54,11 @@ void checkOptional(ExampleProgram ep){
     }
 }
 
+/**
+ * @brief Generates object of class ExampleProgram, calls parseOptions and checks which options were set
+ * @param argc amount of arguments
+ * @param argv array of arguments
+ */
 int main(int argc, char* argv[] ) {
     ExampleProgram exampleProgram = ExampleProgram();
     exampleProgram.getExtendedGeneratedCode()->parseOptions(argc, argv);
