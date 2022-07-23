@@ -1,7 +1,9 @@
-//https://gist.github.com/avances123/2406651
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf
+ */
+
 #include "COptionParser.h"
 #include <cstring>
-#include <iostream>
 #include <boost/lexical_cast.hpp>
 
 namespace DHBW {
@@ -23,10 +25,6 @@ namespace DHBW {
             }
 
             // More exclusions here in other if statements
-
-            // Main functionality here
-            printHelp();
-            return;
         }
 
         if (args.version.isSet) {
@@ -36,22 +34,26 @@ namespace DHBW {
             }
 
             // More exclusions here in other if statements
-
-            // Main functionality here
-            printVersion();
-            return;
         }
 
         if (args.outputPath.isSet) {
             // More exclusions here in other if statements
-
-            // Main functionality here
-            outputPathValue = boost::lexical_cast<typeof outputPathValue>(args.outputPath.value);
-            return;
         }
 
-        perror("No known option was set.");
-        exit(1);
+        // Run code here
+        if (args.help.isSet) {
+            printHelp();
+        }
+
+        if (args.version.isSet) {
+            printVersion();
+        }
+
+        if (args.outputPath.isSet) {
+            // Set values of argument optional or required and param not empty
+            outputPathValue = boost::lexical_cast<typeof outputPathValue>(args.outputPath.value);
+            // Interface doesn't need function call
+        }
     }
 
     void COptionParser::printHelp() {

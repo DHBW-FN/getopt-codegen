@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include <xercesc/sax/HandlerBase.hpp>
 XERCES_CPP_NAMESPACE_USE
 
@@ -33,12 +37,6 @@ public:
      * @param filename
      */
     explicit XMLParser(const string &filename);
-
-    /**
-     * @brief toString
-     * @return
-     */
-    std::string toString();
 
     void parse();
 

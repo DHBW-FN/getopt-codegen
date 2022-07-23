@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include "StateMachine.h"
 
 // Constructor

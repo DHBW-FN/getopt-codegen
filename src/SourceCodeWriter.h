@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Niklas Holl
+ */
+
 #ifndef CODEGENERATOR_SOURCECODEWRITER_H
 #define CODEGENERATOR_SOURCECODEWRITER_H
 
@@ -6,9 +10,12 @@
 
 class SourceCodeWriter {
 private:
-    GetOptSetup *getOptSetup;
+    GetOptSetup *getOptSetup = nullptr;
     FILE *headerFile = nullptr;
     FILE *sourceFile = nullptr;
+
+    // Helpers
+    static string getValueTypeByOption(Option &option);
 public:
     // Constructor
     explicit SourceCodeWriter(GetOptSetup *getOptSetup);
@@ -23,9 +30,8 @@ public:
     void setHeaderFile(FILE *headerFile);
     void setSourceFile(FILE *sourceFile);
 
-    // Helpers
+    // Methods
     void writeFile();
-    static string getValueTypeByOption(Option &option);
 
     // Write code functions
     /**
@@ -113,6 +119,25 @@ public:
      * Generates the implementation of all Getters in the Header-File
      */
     void createSourceGetter();
+
+    /**
+     * @brief
+     * Generates the declaration of every virtual function in the Header-File
+     */
+    void createExternalFunctions();
+
+    /**
+     * @brief
+     * Generates the declaration of the printVersion function in the Header-File
+     */
+     void createHeaderPrintVersion();
+
+     /**
+      * @brief
+      * Generates the implementation of the printVersion function in the Source-File
+      */
+     void createSourcePrintVersion();
+
 };
 
 

@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #include <xercesc/parsers/SAXParser.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 
@@ -7,10 +11,6 @@
 
 XERCES_CPP_NAMESPACE_USE
 using namespace std;
-
-std::string XMLParser::toString() {
-    return this->filename;
-}
 
 XMLParser::XMLParser(const std::string &filename) {
     this->filename = filename;
@@ -59,7 +59,10 @@ void XMLParser::parse() {
         cerr << "Unbekannter Fehler" << endl;
     }
 
-    cout << "Anzahl Fehler: " << errorCount << endl;
+    if (errorCount > 0) {
+        perror("There were errors during parsing.");
+        exit(1);
+    }
 
     //Parser sauber beenden
     delete parser;
@@ -68,11 +71,11 @@ void XMLParser::parse() {
 }
 
 void XMLParser::startDocument() {
-    cout << "Start Document" << endl;
+//    cout << "Start Document" << endl;
 }
 
 void XMLParser::endDocument() {
-    cout << "End Document" << endl;
+//    cout << "End Document" << endl;
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {

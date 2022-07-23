@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf, Niklas Holl
+ */
+
 #include "SourceCodeWriter.h"
 #include <boost/algorithm/string.hpp>
 
@@ -16,7 +20,6 @@ SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
 }
 
 SourceCodeWriter::~SourceCodeWriter() {
-    printf("Destructor called.\n");
     if (this->headerFile != nullptr) {
         fclose(this->headerFile);
     }
@@ -28,7 +31,6 @@ SourceCodeWriter::~SourceCodeWriter() {
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
-        printf("Header file is nullptr\n");
         setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
     }
     return headerFile;
@@ -36,7 +38,6 @@ FILE *SourceCodeWriter::getHeaderFile() {
 
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
-        printf("Source file is nullptr\n");
         setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
     }
     return sourceFile;
@@ -80,7 +81,6 @@ string SourceCodeWriter::getValueTypeByOption(Option &option)
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
-    printf("Writing includes into header file\n");
     // Define static and always used includes here
     string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
@@ -147,6 +147,7 @@ void SourceCodeWriter::headerFileClass() {
         }
     }
 
+    createHeaderPrintVersion();
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "protected:\n");
     //put all elements inside class -> protected here
@@ -156,6 +157,7 @@ void SourceCodeWriter::headerFileClass() {
     //put all elements inside class -> public here
     fprintf(getHeaderFile(), "void parse();\n");
     createHeaderGetter();
+    createExternalFunctions();
     createHeaderParsingFunction();
     createHeaderUnknownOption();
 
@@ -192,7 +194,7 @@ void SourceCodeWriter::sourceFileNamespace() {
         fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
     }
     createSourceGetter();
-
+    createSourcePrintVersion();
     //put all elements inside namespace here
     sourceFileParse();
     createSourceParsingFunction();
@@ -231,22 +233,42 @@ void SourceCodeWriter::sourceFileParse() {
                 }
             }
         }
+        fprintf(getSourceFile(), "}\n");
+    }
 
-        //TODO insert handle getOpt
-        //TODO set values if not empty - needs helper function for argName and convertTo helper function
+    for (Option option: getGetOptSetup()->getOptions()) {
+        std::string optionName = determineArgsName(option);
+        fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
+
+        //Handle option
         if (option.isHasArguments() != HasArguments::NONE) {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
+            fprintf(getSourceFile(), "try {\n");
             fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+            fprintf(getSourceFile(), "} catch (boost::bad_lexical_cast &) {\n");
+            fprintf(getSourceFile(), "perror(\"%s is not convertible to %s.\");\n}\n", optionName.c_str(), getValueTypeByOption(option).c_str());
             fprintf(getSourceFile(), "}\n");
         }
-        // Implement what getopts do here
 
+        if (!option.getConnectToInternalMethod().empty()) {
+            fprintf(getSourceFile(), "%s(", option.getConnectToInternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
+        }
 
-        fprintf(getSourceFile(), "return;\n}\n");
+        if (!option.getConnectToExternalMethod().empty()) {
+            fprintf(getSourceFile(), "%s(", option.getConnectToExternalMethod().c_str());
+            if (option.isHasArguments() != HasArguments::NONE) {
+                fprintf(getSourceFile(), "%sValue", optionName.c_str());
+            }
+            fprintf(getSourceFile(), ");\n");
+        }
+        fprintf(getSourceFile(), "}\n");
     }
-
-    fprintf(getSourceFile(), "perror(\"No valid option given.\");\nexit(1);\n}\n");
+    fprintf(getSourceFile(), "}\n");
 }
 
 void SourceCodeWriter::createSourceParsingFunction() {
@@ -283,7 +305,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
     string shortOpts;
     for (auto &option: options) {
-        if (option.getShortOpt() != '_') {
+        if (option.getShortOpt() != '\0') {
             shortOpts.append(1, option.getShortOpt());
             switch (option.isHasArguments()) {
                 case HasArguments::OPTIONAL:
@@ -325,10 +347,28 @@ void SourceCodeWriter::createSourceParsingFunction() {
                                          "which requires one.\");\n"
                                          "exit(1);\n}\nargs.%s.value = optarg;\n",
                         bothOpts.c_str(), determineArgsName(option).c_str());
+                if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
+                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
+                                             "else\nargs.%s.value = optarg;\n",
+                            determineArgsName(option).c_str(), determineArgsName(option).c_str(),
+                            determineArgsName(option).c_str());
+                } else
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\n",
+                            determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
                 fprintf(getSourceFile(), "if(optarg != nullptr)\nargs.%s.value = optarg;",
                         determineArgsName(option).c_str());
+                if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
+                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
+                                             "else\nargs.%s.value = optarg;\n",
+                            determineArgsName(option).c_str(), determineArgsName(option).c_str(),
+                            determineArgsName(option).c_str());
+                } else
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\n",
+                            determineArgsName(option).c_str());
                 break;
             default:
                 fprintf(getSourceFile(), "if(optarg != nullptr){\n"
@@ -353,10 +393,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                              "while (optind < argc)\nprintf(\"%s \", argv[optind++]);\nprintf(\"\\n\");\n}\n", "%s");
 
     //Call parse-function
-    fprintf(getSourceFile(), "parse();\n\n");
-
-    //If nothing went wrong -> EXIT_SUCCESS
-    fprintf(getSourceFile(), "exit(EXIT_SUCCESS);\n");
+    fprintf(getSourceFile(), "parse();\n");
 
     //Close function parseOptions
     fprintf(getSourceFile(), "}\n");
@@ -441,8 +478,34 @@ void SourceCodeWriter::createSourceGetter() {
     }
 }
 
+void SourceCodeWriter::createExternalFunctions() {
+    vector<Option> options = getGetOptSetup()->getOptions();
+
+    for(auto &option : options){
+        if(!option.getConnectToExternalMethod().empty()){
+            fprintf(getHeaderFile(), "virtual void %s(", option.getConnectToExternalMethod().c_str());
+            if(option.isHasArguments() == HasArguments::OPTIONAL || option.isHasArguments() == HasArguments::REQUIRED){
+                std::string type = getValueTypeByOption(option);
+                fprintf(getHeaderFile(), "%s arg", type.c_str());
+            }
+            fprintf(getHeaderFile(), ") = 0;\n");
+        }
+    }
+}
+
+void SourceCodeWriter::createHeaderPrintVersion() {
+    fprintf(getHeaderFile(), "virtual void printVersion();\n");
+
+}
+
+void SourceCodeWriter::createSourcePrintVersion() {
+    fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\");\n}\n",
+            getGetOptSetup()->getClassName().c_str());
+
+}
+
 void SourceCodeWriter::writeFile() {
-    printf("Writing file...\n");
+//    printf("Writing file...\n");
 
     //Write header files --> put methods here
     headerFileIncludes();
@@ -451,3 +514,4 @@ void SourceCodeWriter::writeFile() {
     sourceFileIncludes();
     sourceFileNamespace();
 }
+
