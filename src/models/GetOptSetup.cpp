@@ -4,7 +4,8 @@
 
 #include <xercesc/util/XMLString.hpp>
 #include <boost/lexical_cast.hpp>
-#include "GetOptSetup.h"
+#include "models/GetOptSetup.h"
+#include "Logger.h"
 
 // Constructors
 GetOptSetup::GetOptSetup() = default;
@@ -100,9 +101,11 @@ void GetOptSetup::addOption(const Option &option) {
 
 // Helpers
 void GetOptSetup::parseAttributes(AttributeList &attributes) {
+    LOG_TRACE("Starting GetOptSetup-Attributes parse");
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"SignPerLine")) {
             setSignPerLine(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
+    LOG_TRACE("Finished GetOptSetup-Attributes parse");
 }
