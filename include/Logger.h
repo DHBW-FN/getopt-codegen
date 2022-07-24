@@ -14,6 +14,10 @@ BOOST_LOG_GLOBAL_LOGGER(sysLogger,
 BOOST_LOG_GLOBAL_LOGGER(dataLogger,
                         boost::log::sources::severity_channel_logger_mt<boost::log::trivial::severity_level>);
 
+/**
+ * @brief Custom logger class.
+ * Custom logger according to https://objectcomputing.com/resources/publications/sett/may-2016-boostlog-library
+ */
 class Logger {
 public:
     /// Init with default trivial logging
