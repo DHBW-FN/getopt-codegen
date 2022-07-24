@@ -13,7 +13,7 @@ public:
     explicit ExampleProgram(GC::GeneratedClass *generatedClass);
 
     //Getter
-    GC::GeneratedClass *getExtendedGeneratedCode();
+    GC::GeneratedClass *getGeneratedClass();
 };
 
 

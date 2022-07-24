@@ -12,7 +12,7 @@ ExampleProgram::ExampleProgram(GC::GeneratedClass *generatedClass) {
  * @brief Getter for generatedClass
  * @return object of class ExtendedGeneratedCode
  */
-GC::GeneratedClass *ExampleProgram::getExtendedGeneratedCode() {
+GC::GeneratedClass *ExampleProgram::getGeneratedClass() {
     return generatedClass;
 }
 
@@ -21,8 +21,8 @@ GC::GeneratedClass *ExampleProgram::getExtendedGeneratedCode() {
  * @param ep object of class ExampleProgram
  */
 void checkVersion(ExampleProgram ep){
-    if(ep.getExtendedGeneratedCode()->isSetVersion()){
-        //ep.getExtendedGeneratedCode()->printVersion();
+    if(ep.getGeneratedClass()->isSetVersion()){
+        //ep.getGeneratedClass()->printVersion();
         printf("The option 'version' was called --> isSetVersion=true\n");
     } else {
         printf("The option 'version' was not called --> isSetVersion=false\n");
@@ -34,7 +34,7 @@ void checkVersion(ExampleProgram ep){
  * @param ep object of class ExampleProgram
  */
 void checkExclusion(ExampleProgram ep){
-    if(ep.getExtendedGeneratedCode()->isSetExclusion()){
+    if(ep.getGeneratedClass()->isSetExclusion()){
         printf("The option 'exclusion' was called --> isSetExclusion=true\n");
     } else {
         printf("The option 'exclusion' was not called --> isSetExclusion=false\n");
@@ -46,9 +46,9 @@ void checkExclusion(ExampleProgram ep){
  * @param ep object of class ExampleProgram
  */
 void checkArguments(ExampleProgram ep){
-    if(ep.getExtendedGeneratedCode()->isSetArguments()){
+    if(ep.getGeneratedClass()->isSetArguments()){
         printf("The option 'arguments' was called --> isSetExclusion=true\n");
-        printf("The argument is: %d\n", ep.getExtendedGeneratedCode()->getValueOfArguments());
+        printf("The argument is: %d\n", ep.getGeneratedClass()->getValueOfArguments());
     } else {
         printf("The option 'arguments' was not called --> isSetExclusion=false\n");
     }
@@ -59,9 +59,9 @@ void checkArguments(ExampleProgram ep){
  * @param ep object of class ExampleProgram
  */
 void checkOptional(ExampleProgram ep){
-    if(ep.getExtendedGeneratedCode()->isSetOptional()){
+    if(ep.getGeneratedClass()->isSetOptional()){
         printf("The option 'optional' was called --> isSetOptional=true\n");
-        printf("The argument is: %d\n", ep.getExtendedGeneratedCode()->getValueOfOptional());
+        printf("The argument is: %d\n", ep.getGeneratedClass()->getValueOfOptional());
     } else {
         printf("The option 'optional' was not called --> isSetOptional=false\n");
     }
@@ -74,7 +74,7 @@ void checkOptional(ExampleProgram ep){
  */
 int main(int argc, char* argv[] ) {
     ExampleProgram exampleProgram = ExampleProgram(new ExtendedGeneratedCode());
-    exampleProgram.getExtendedGeneratedCode()->parseOptions(argc, argv);
+    exampleProgram.getGeneratedClass()->parseOptions(argc, argv);
 
     checkVersion(exampleProgram);
     checkExclusion(exampleProgram);
