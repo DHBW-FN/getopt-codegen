@@ -60,7 +60,10 @@ int main(int argc, char **argv) {
                 generator.setFilePath(optarg);
                 break;
             case 'o':
-                if(optarg != nullptr)
+                if(optarg == nullptr){
+                    perror("When using \"-o/--output\" the path to the target directory must be set.");
+                    exit(EXIT_FAILURE);
+                }
                     generator.setOutputDir(optarg);
                 break;
             case '?':
