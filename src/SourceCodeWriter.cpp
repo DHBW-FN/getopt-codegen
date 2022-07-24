@@ -499,7 +499,7 @@ void SourceCodeWriter::createHeaderPrintVersion() {
 }
 
 void SourceCodeWriter::createSourcePrintVersion() {
-    fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\");\n}\n",
+    fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\\n\");\n}\n",
             getGetOptSetup()->getClassName().c_str());
 
 }
