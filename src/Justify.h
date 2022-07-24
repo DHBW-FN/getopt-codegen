@@ -1,3 +1,7 @@
+/*
+ * Editors: Sebastian Wolf
+ */
+
 #ifndef CODEGENERATOR_JUSTIFY_H
 #define CODEGENERATOR_JUSTIFY_H
 #include "bits/stdc++.h"

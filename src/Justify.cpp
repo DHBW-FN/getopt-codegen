@@ -1,3 +1,7 @@
+/*
+ * Editors: Sebastian Wolf
+ */
+
 #include "Justify.h"
 
 /**

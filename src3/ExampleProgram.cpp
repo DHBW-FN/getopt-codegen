@@ -1,3 +1,7 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #include "ExampleProgram.h"
 #include "generatedCode.h"
 

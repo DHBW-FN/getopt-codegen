@@ -1,3 +1,7 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_EXAMPLEPROGRAM_H
 #define CODEGENERATOR_EXAMPLEPROGRAM_H
 

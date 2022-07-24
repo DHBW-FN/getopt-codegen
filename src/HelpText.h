@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_HELPTEXT_H
 #define CODEGENERATOR_HELPTEXT_H
 

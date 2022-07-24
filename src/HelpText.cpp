@@ -1,3 +1,7 @@
+/*
+ * Editors: Sebastian Wolf
+ */
+
 #include "HelpText.h"
 
 HelpText::HelpText(GetOptSetup *getOptSetup)
