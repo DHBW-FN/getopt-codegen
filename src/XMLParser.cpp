@@ -55,6 +55,7 @@ void XMLParser::parse() {
     }
 
     if (errorCount > 0) {
+        LOG_ERROR("There were " + to_string(errorCount) + " errors during parsing of file " + filename);
         perror("There were errors during parsing.");
         exit(1);
     }
