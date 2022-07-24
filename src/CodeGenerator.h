@@ -5,6 +5,8 @@
 #ifndef PROGRAMMING_C_CODEGENERATOR_H
 #define PROGRAMMING_C_CODEGENERATOR_H
 
+#include <string>
+
 /**
  * @brief Class for the CodeGenerator
  */
