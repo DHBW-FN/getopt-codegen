@@ -47,6 +47,9 @@ public:
      */
     explicit XMLParser(const string &filename);
 
+    /**
+     * @brief The main parser function.
+     */
     void parse();
 
     void startDocument() override;
@@ -57,7 +60,7 @@ public:
 
     /**
      * @brief getGetOptSetup
-     * @return
+     * @return getOptSetup
      */
     GetOptSetup *getGetOptSetup() const;
 };
