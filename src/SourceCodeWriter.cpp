@@ -49,12 +49,12 @@ GetOptSetup *SourceCodeWriter::getGetOptSetup() const {
 }
 
 // Setter
-void SourceCodeWriter::setHeaderFile(FILE *headerFile) {
-    this->headerFile = headerFile;
+void SourceCodeWriter::setHeaderFile(FILE *_headerFile) {
+    this->headerFile = _headerFile;
 }
 
-void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
-    this->sourceFile = sourceFile;
+void SourceCodeWriter::setSourceFile(FILE *_sourceFile) {
+    this->sourceFile = _sourceFile;
 }
 
 /*
