@@ -2,8 +2,8 @@
  * Editors: Philipp Kuest, Tobias Goetz
  */
 
-#include "ExampleProgram.h"
-#include "generatedCode.h"
+#include "../headerFiles/ExampleProgram.h"
+#include "../headerFiles/generatedCode.h"
 
 ExampleProgram::ExampleProgram(GC::GeneratedClass *generatedClass) {
     this->generatedClass = generatedClass;

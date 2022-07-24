@@ -13,7 +13,7 @@ XERCES_CPP_NAMESPACE_USE
 #include <codecvt>
 #include <locale>
 #include "StateMachine.h"
-#include "models/GetOptSetup.h"
+#include "models/headerFiles/GetOptSetup.h"
 
 using namespace std;
 

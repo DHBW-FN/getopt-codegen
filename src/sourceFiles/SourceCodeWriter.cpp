@@ -2,8 +2,8 @@
  * Editors: Tobias Goetz, Noel Kempter, Philipp Kuest, Sebastian Wolf, Niklas Holl
  */
 
-#include "SourceCodeWriter.h"
-#include "HelpText.h"
+#include "headerFiles/SourceCodeWriter.h"
+#include "headerFiles/HelpText.h"
 #include <boost/algorithm/string.hpp>
 
 // Constructor

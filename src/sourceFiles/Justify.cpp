@@ -2,7 +2,7 @@
  * Editors: Sebastian Wolf
  */
 
-#include "Justify.h"
+#include "headerFiles/Justify.h"
 
 string Justify::JoinALineWithSpace(
         vector<string>& words,
