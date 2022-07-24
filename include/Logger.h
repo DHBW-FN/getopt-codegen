@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Sebastian Wolf
+ */
+
 #ifndef LOG_LOGGER_H
 #define LOG_LOGGER_H
 #pragma once
