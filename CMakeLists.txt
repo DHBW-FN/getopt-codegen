@@ -13,7 +13,7 @@ add_executable(
 
 file(GLOB Source_Files2 src2/*.cpp)
 add_executable(
-        COptionParser
+        ExampleProgram
         ${Source_Files2}
 )
 

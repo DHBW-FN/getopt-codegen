@@ -29,8 +29,7 @@ void XMLParser::parse() {
         XMLString::release(&message);
     }
 
-    SAXParser* parser = {nullptr};
-    parser = new SAXParser;
+    auto* parser = new SAXParser;
 
     int errorCount = {0};
 
@@ -49,12 +48,6 @@ void XMLParser::parse() {
     {
         char* message = XMLString::transcode(toCatch.getMessage());
 
-        //XMLString::release(message);
-        /*
-        XERCES_STD_QUALIFIER cerr << "\nAn error occurred\n  Error: "
-                                  << StrX(toCatch.getMessage())
-                                  << "\n" << XERCES_STD_QUALIFIER endl;
-                                  */
         cerr << "XMLException: " << message << endl;
     }
     catch(...) {
@@ -82,8 +75,6 @@ void XMLParser::endDocument() {
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {
-//    cout << "Start-Element: " << converter.to_bytes(name) << endl;
-
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPSTART);
         getOptSetup->parseAttributes(attributes);
@@ -119,8 +110,6 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
 }
 
 void XMLParser::endElement(const XMLCh *const name) {
-//    cout << "End-Element: " << converter.to_bytes(name) << endl;
-
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPEND);
     } else if (!XMLString::compareString(name, u"Author")) {
@@ -149,7 +138,6 @@ void XMLParser::endElement(const XMLCh *const name) {
 }
 
 void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
-//    cout << "Characters (" << length << "):" << converter.to_bytes(chars, chars + length) << endl;
     switch (sm->getState()) {
         case State::START:
             break;

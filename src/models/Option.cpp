@@ -2,7 +2,7 @@
  * Editors: Tobias Goetz
  */
 
-#include "Option.h"
+#include "models/Option.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <boost/algorithm/string.hpp>
