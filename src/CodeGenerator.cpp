@@ -7,16 +7,15 @@
 #include "Logger.h"
 
 int main() {
+    Logger::initFromConfig("logconfig.ini");
+
     printf("Starting Codegenerator!\n");
     XMLParser parser("example/Example.xml");
     parser.parse();
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.writeFile();
     printf("Codegenerator finished!\n");
-
-    Logger::initLogger();
-
-    CUSTOM_LOG(Logger::lg, debug) << "A regular message";
+    LOG_DATA_FATAL("Codegenerator finished!");
 
     return 0;
 }
