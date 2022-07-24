@@ -304,7 +304,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
             else
                 fprintf(getSourceFile(), "0, '%c'},\n", option.getShortOpt());
         }
-    };
+    }
     longOptsWithoutShortOpt = 0;
 
     fprintf(getSourceFile(), "{0, 0, 0, 0}\n};\nint option_index = 0;\n\n");
@@ -386,7 +386,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
         //Close case
         fprintf(getSourceFile(), "break;\n");
-    };
+    }
 
     //Close switch-case
     fprintf(getSourceFile(), "case '?':\ndefault:\nunknownOption(std::to_string(optopt));\nbreak;}\n");
