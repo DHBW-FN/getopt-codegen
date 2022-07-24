@@ -8,14 +8,19 @@
 
 int main() {
     Logger::initFromConfig("logconfig.ini");
+    LOG_INFO("Starting CodeGenerator");
 
-    printf("Starting Codegenerator!\n");
+    LOG_INFO("Starting XMLParser");
     XMLParser parser("example/Example.xml");
     parser.parse();
+    LOG_INFO("Finished XMLParser");
+
+    LOG_INFO("Starting SourceCodeWriter");
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.writeFile();
-    printf("Codegenerator finished!\n");
-    LOG_DATA_FATAL("Codegenerator finished!");
+    LOG_INFO("Finished SourceCodeWriter");
+
+    LOG_INFO("Codegenerator finished!");
 
     return 0;
 }

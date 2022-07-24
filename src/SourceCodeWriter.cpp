@@ -3,6 +3,7 @@
  */
 
 #include "SourceCodeWriter.h"
+#include "Logger.h"
 #include <boost/algorithm/string.hpp>
 
 // Constructor
@@ -505,6 +506,7 @@ void SourceCodeWriter::createSourcePrintVersion() {
 }
 
 void SourceCodeWriter::writeFile() {
+    LOG_INFO("Starting to write source code...");
 //    printf("Writing file...\n");
 
     //Write header files --> put methods here
@@ -513,5 +515,6 @@ void SourceCodeWriter::writeFile() {
     //Write source files --> put methods here
     sourceFileIncludes();
     sourceFileNamespace();
+    LOG_INFO("Finished writing source code.");
 }
 

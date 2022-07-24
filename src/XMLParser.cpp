@@ -6,6 +6,7 @@
 #include <xercesc/util/OutOfMemoryException.hpp>
 
 #include "XMLParser.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -17,6 +18,7 @@ XMLParser::XMLParser(const std::string &filename) {
 }
 
 void XMLParser::parse() {
+    LOG_INFO("Starting parsing of file " + filename);
     try {
         XMLPlatformUtils::Initialize();
     }
@@ -68,6 +70,7 @@ void XMLParser::parse() {
     delete parser;
     //Terminate muss immer am Schluss stehen
     XMLPlatformUtils::Terminate();
+    LOG_INFO("Finished parsing of file " + filename);
 }
 
 void XMLParser::startDocument() {
