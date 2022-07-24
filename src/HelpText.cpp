@@ -2,7 +2,7 @@
  * Editors: Sebastian Wolf, Tobias Goetz
  */
 
-#include "headerFiles/HelpText.h"
+#include "HelpText.h"
 
 HelpText::HelpText(GetOptSetup *getOptSetup)
 {

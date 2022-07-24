@@ -3,8 +3,8 @@ project(CodeGenerator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-file(GLOB Source_Files src/sourceFiles/*.cpp)
-file(GLOB Model_Files src/models/sourceFiles/*.cpp)
+file(GLOB Source_Files src/*.cpp)
+file(GLOB Model_Files src/models/*.cpp)
 add_executable(
         CodeGenerator
         ${Source_Files}
@@ -12,12 +12,6 @@ add_executable(
 )
 
 file(GLOB Source_Files2 src2/*.cpp)
-add_executable(
-        COptionParser
-        ${Source_Files2}
-)
-
-file(GLOB Source_Files2 src3/sourceFiles/*.cpp)
 add_executable(
         ExampleProgram
         ${Source_Files2}

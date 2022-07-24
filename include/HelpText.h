@@ -6,7 +6,7 @@
 #define CODEGENERATOR_HELPTEXT_H
 
 #include "Justify.h"
-#include "models/headerFiles/GetOptSetup.h"
+#include "models/GetOptSetup.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>

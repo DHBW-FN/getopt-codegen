@@ -5,7 +5,7 @@
 #include <xercesc/parsers/SAXParser.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 
-#include "headerFiles/XMLParser.h"
+#include "XMLParser.h"
 
 #include <iostream>
 

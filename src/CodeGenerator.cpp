@@ -2,9 +2,9 @@
  * Editors: Tobias Goetz, Noel Kempter
  */
 
-#include "headerFiles/CodeGenerator.h"
-#include "headerFiles/XMLParser.h"
-#include "headerFiles/SourceCodeWriter.h"
+#include "CodeGenerator.h"
+#include "XMLParser.h"
+#include "SourceCodeWriter.h"
 #include <getopt.h>
 
 void CodeGenerator::setFilePath(const std::string &filename) {

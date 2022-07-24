@@ -6,7 +6,7 @@
 #define CODEGENERATOR_SOURCECODEWRITER_H
 
 #include <iostream>
-#include "models/headerFiles/GetOptSetup.h"
+#include "models/GetOptSetup.h"
 
 /**
  * @brief Class for the SourceCodeWriter
