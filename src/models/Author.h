@@ -1,5 +1,5 @@
 /*
- * Editors: Tobias Goetz
+ * Editors: Sebastian Wolf
  */
 
 #ifndef CODEGENERATOR_AUTHOR_H
