@@ -516,8 +516,7 @@ void SourceCodeWriter::createHeaderPrintHelp() {
 }
 
 void SourceCodeWriter::createSourcePrintHelp() {
-    HelpText *helpText = nullptr;
-    helpText = new HelpText(getGetOptSetup());
+    auto *helpText = new HelpText(getGetOptSetup());
     fprintf(getSourceFile(), "%s", helpText->parseHelpMessage().c_str());
 }
 
