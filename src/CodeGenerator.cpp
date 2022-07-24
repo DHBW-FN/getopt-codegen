@@ -5,12 +5,10 @@
 #include "CodeGenerator.h"
 #include "XMLParser.h"
 #include "SourceCodeWriter.h"
-#include <iostream>
-#include <utility>
 #include <getopt.h>
 
-void CodeGenerator::setFilePath(std::string filename) {
-    CodeGenerator::filePath = std::move(filename);
+void CodeGenerator::setFilePath(const std::string &filename) {
+    CodeGenerator::filePath = filename;
 }
 
 std::string CodeGenerator::getFilePath() {

@@ -10,7 +10,7 @@
 /**
  * @brief Class of CodeGenerator
  */
-class CodeGenerator{
+class CodeGenerator {
 private:
     /**
      * @brief String containing path to the file
@@ -27,7 +27,7 @@ public:
      * @brief Set the path to the file
      * @param filename
      */
-    void setFilePath(std::string filename);
+    void setFilePath(const std::string &filename);
 
     /**
      * @brief Get the path to the file
