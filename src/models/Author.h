@@ -42,7 +42,7 @@ public:
 
     /**
      * @brief Function to parse the Author-Tag
-     * @param attr AttributeList of the Author-Tag
+     * @param attributes AttributeList of the Author-Tag
      */
     void parseAttributes(AttributeList &attributes);
 
