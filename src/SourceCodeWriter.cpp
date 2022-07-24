@@ -361,8 +361,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
                             determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
-                fprintf(getSourceFile(), "if(optarg != nullptr){\n",
-                        determineArgsName(option).c_str());
+                fprintf(getSourceFile(), "if(optarg != nullptr){\n");
                 if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
                     fprintf(getSourceFile(), "args.%s.value = optarg;\nif(strcmp(optarg, \"true\"))"
                                              "\nargs.%s.value = \"1\";\n"
