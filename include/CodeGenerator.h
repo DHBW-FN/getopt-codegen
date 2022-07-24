@@ -17,11 +17,28 @@ private:
      */
     std::string filePath;
 
+    /**
+     * @brief Output directory
+     */
+    std::string outputDir;
+
 public:
     /**
      * @brief Constructor
      */
     CodeGenerator() = default;
+
+    /**
+     * @brief Get the path to the file
+     * @return
+     */
+    std::string getFilePath();
+
+    /**
+     * Get the output directory
+     * @return the out directory as string
+     */
+    std::string getOutputDir();
 
     /**
      * @brief Set the path to the file
@@ -30,10 +47,10 @@ public:
     void setFilePath(const std::string &filename);
 
     /**
-     * @brief Get the path to the file
-     * @return
+     * @brief Set the output directory
+     * @param dir
      */
-    std::string getFilePath();
+    void setOutputDir(const std::string &dir);
 
     /**
      * @brief Runs the CodeGenerator

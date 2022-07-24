@@ -26,6 +26,11 @@ private:
      */
     FILE *sourceFile = nullptr;
 
+    /**
+     * @brief Output directory
+     */
+    std::string outputDir;
+
     // Helpers
     /**
      * @brief Get the type of the option depending on ConvertTo
@@ -169,14 +174,16 @@ public:
     GetOptSetup *getGetOptSetup() const;
     FILE *getHeaderFile();
     FILE *getSourceFile();
+    std::string getOutputDir();
     ///@}
 
-    /** @name Getter
-    * @brief  Getter for the class
+    /** @name Setter
+    * @brief  Setter for the class
     */
     ///@{
     void setHeaderFile(FILE *headerFile);
     void setSourceFile(FILE *sourceFile);
+    void setOutputDir(const std::string &dir);
     ///@}
 
     // Methods

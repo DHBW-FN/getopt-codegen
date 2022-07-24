@@ -32,16 +32,20 @@ SourceCodeWriter::~SourceCodeWriter() {
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
     if (headerFile == nullptr) {
-        setHeaderFile(fopen(getGetOptSetup()->getHeaderFileName().c_str(), "w"));
+        setHeaderFile(fopen((getOutputDir() + getGetOptSetup()->getHeaderFileName()).c_str(), "w"));
     }
     return headerFile;
 }
 
 FILE *SourceCodeWriter::getSourceFile() {
     if (sourceFile == nullptr) {
-        setSourceFile(fopen(getGetOptSetup()->getSourceFileName().c_str(), "w"));
+        setSourceFile(fopen((getOutputDir() + getGetOptSetup()->getSourceFileName()).c_str(), "w"));
     }
     return sourceFile;
+}
+
+std::string SourceCodeWriter::getOutputDir() {
+    return outputDir;
 }
 
 GetOptSetup *SourceCodeWriter::getGetOptSetup() const {
@@ -55,6 +59,10 @@ void SourceCodeWriter::setHeaderFile(FILE *_headerFile) {
 
 void SourceCodeWriter::setSourceFile(FILE *_sourceFile) {
     this->sourceFile = _sourceFile;
+}
+
+void SourceCodeWriter::setOutputDir(const std::string &dir) {
+    outputDir = dir;
 }
 
 /*
