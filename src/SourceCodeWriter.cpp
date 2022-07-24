@@ -49,12 +49,12 @@ GetOptSetup *SourceCodeWriter::getGetOptSetup() const {
 }
 
 // Setter
-void SourceCodeWriter::setHeaderFile(FILE *headerFile) {
-    this->headerFile = headerFile;
+void SourceCodeWriter::setHeaderFile(FILE *_headerFile) {
+    this->headerFile = _headerFile;
 }
 
-void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
-    this->sourceFile = sourceFile;
+void SourceCodeWriter::setSourceFile(FILE *_sourceFile) {
+    this->sourceFile = _sourceFile;
 }
 
 /*
@@ -304,7 +304,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
             else
                 fprintf(getSourceFile(), "0, '%c'},\n", option.getShortOpt());
         }
-    };
+    }
     longOptsWithoutShortOpt = 0;
 
     fprintf(getSourceFile(), "{0, 0, 0, 0}\n};\nint option_index = 0;\n\n");
@@ -386,7 +386,7 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
         //Close case
         fprintf(getSourceFile(), "break;\n");
-    };
+    }
 
     //Close switch-case
     fprintf(getSourceFile(), "case '?':\ndefault:\nunknownOption(std::to_string(optopt));\nbreak;}\n");
@@ -516,8 +516,7 @@ void SourceCodeWriter::createHeaderPrintHelp() {
 }
 
 void SourceCodeWriter::createSourcePrintHelp() {
-    HelpText *helpText = nullptr;
-    helpText = new HelpText(getGetOptSetup());
+    auto *helpText = new HelpText(getGetOptSetup());
     fprintf(getSourceFile(), "%s", helpText->parseHelpMessage().c_str());
 }
 

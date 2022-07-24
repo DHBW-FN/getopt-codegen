@@ -33,40 +33,6 @@ private:
      * @return The type of the option as string
      */
     static string getValueTypeByOption(Option &option);
-public:
-    // Constructor
-    /**
-     * @brief Constructor for the SourceCodeWriter
-     * @param getOptSetup The GetOptSetup
-     */
-    explicit SourceCodeWriter(GetOptSetup *getOptSetup);
-    /**
-     * @brief Destructor for the SourceCodeWriter
-     */
-    ~SourceCodeWriter();
-
-    /** @name Getter
-    * @brief  Getter for the class
-    */
-    ///@{
-    GetOptSetup *getGetOptSetup() const;
-    FILE *getHeaderFile();
-    FILE *getSourceFile();
-    ///@}
-
-    /** @name Getter
-    * @brief  Getter for the class
-    */
-    ///@{
-    void setHeaderFile(FILE *headerFile);
-    void setSourceFile(FILE *sourceFile);
-    ///@}
-
-    // Methods
-    /**
-     * @brief Write the .h and .cpp files
-     */
-    void writeFile();
 
     // Write code functions
     /**
@@ -165,26 +131,59 @@ public:
      * @brief
      * Generates the declaration of the printVersion function in the Header-File
      */
-     void createHeaderPrintVersion();
+    void createHeaderPrintVersion();
 
-     /**
-      * @brief
-      * Generates the implementation of the printVersion function in the Source-File
-      */
-     void createSourcePrintVersion();
+    /**
+     * @brief
+     * Generates the implementation of the printVersion function in the Source-File
+     */
+    void createSourcePrintVersion();
 
-     /**
-      * @brief
-      * Generates the declaration of the printHelp function in the Header-File
-      */
-     void createHeaderPrintHelp();
+    /**
+     * @brief
+     * Generates the declaration of the printHelp function in the Header-File
+     */
+    void createHeaderPrintHelp();
 
-     /**
-      * @brief
-      * Generates the implementation of the printHelp function in the Source-File
-      */
-        void createSourcePrintHelp();
+    /**
+     * @brief
+     * Generates the implementation of the printHelp function in the Source-File
+     */
+    void createSourcePrintHelp();
+public:
+    // Constructor
+    /**
+     * @brief Constructor for the SourceCodeWriter
+     * @param getOptSetup The GetOptSetup
+     */
+    explicit SourceCodeWriter(GetOptSetup *getOptSetup);
+    /**
+     * @brief Destructor for the SourceCodeWriter
+     */
+    ~SourceCodeWriter();
 
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
+    GetOptSetup *getGetOptSetup() const;
+    FILE *getHeaderFile();
+    FILE *getSourceFile();
+    ///@}
+
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
+    void setHeaderFile(FILE *headerFile);
+    void setSourceFile(FILE *sourceFile);
+    ///@}
+
+    // Methods
+    /**
+     * @brief Write the .h and .cpp files
+     */
+    void writeFile();
 };
 
 
