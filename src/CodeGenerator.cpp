@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     int c;
     int option_index;
     static struct option long_options[] = {
-            {"file", no_argument, 0, 'p'},
+            {"path", required_argument, 0, 'p'},
             {0, 0, 0, 0}
     };
 
