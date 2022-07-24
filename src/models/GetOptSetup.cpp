@@ -4,7 +4,7 @@
 
 #include <xercesc/util/XMLString.hpp>
 #include <boost/lexical_cast.hpp>
-#include "GetOptSetup.h"
+#include "models/GetOptSetup.h"
 
 // Constructors
 GetOptSetup::GetOptSetup() = default;

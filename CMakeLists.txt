@@ -13,12 +13,6 @@ add_executable(
 
 file(GLOB Source_Files2 src2/*.cpp)
 add_executable(
-        COptionParser
-        ${Source_Files2}
-)
-
-file(GLOB Source_Files2 src3/*.cpp)
-add_executable(
         ExampleProgram
         ${Source_Files2}
 )
