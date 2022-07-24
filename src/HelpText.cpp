@@ -1,5 +1,5 @@
 /*
- * Editors: Sebastian Wolf
+ * Editors: Sebastian Wolf, Tobias Goetz
  */
 
 #include "HelpText.h"
