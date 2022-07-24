@@ -12,22 +12,38 @@
 XERCES_CPP_NAMESPACE_USE
 using namespace std;
 
+/**
+ * @brief Class for the Author-Tag
+ */
 class Author {
 public:
-    // Constructors
+    /**
+     * @brief Constructor for the Author-Tag
+     */
     Author();
 
-    // Getters
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     const string &getName() const;
     const string &getPhone() const;
     const string &getMail() const;
+    ///@}
 
-    // Setters
+    /** @name Setter
+    * @brief  Setter for the class
+    */
+    ///@{
     void setName(const string &name);
     void setPhone(const string &phone);
     void setMail(const string &email);
+    ///@}
 
-    // Helpers
+    /**
+     * @brief Function to parse the Author-Tag
+     * @param attributes AttributeList of the Author-Tag
+     */
     void parseAttributes(AttributeList &attributes);
 
 private:

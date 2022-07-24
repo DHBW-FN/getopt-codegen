@@ -17,6 +17,9 @@ XERCES_CPP_NAMESPACE_USE
 
 using namespace std;
 
+/**
+ * @brief Class for the XMLParser
+ */
 class XMLParser : public HandlerBase {
 private:
     /**
@@ -25,11 +28,17 @@ private:
      */
     std::string filename;
 
+    /**
+     * @brief stateMachine
+     * StateMachine to parse the file.
+     */
     StateMachine *sm = new StateMachine();
 
+    /**
+     * @brief getOptSetup
+     * GetOptSetup to parse the file.
+     */
     GetOptSetup *getOptSetup = new GetOptSetup();
-
-    wstring_convert<codecvt_utf8_utf16<char16_t>,char16_t> converter;
 public:
     /**
      * @brief XMLParser
@@ -38,6 +47,9 @@ public:
      */
     explicit XMLParser(const string &filename);
 
+    /**
+     * @brief The main parser function.
+     */
     void parse();
 
     void startDocument() override;
@@ -48,7 +60,7 @@ public:
 
     /**
      * @brief getGetOptSetup
-     * @return
+     * @return getOptSetup
      */
     GetOptSetup *getGetOptSetup() const;
 };

@@ -1,3 +1,7 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #include "ExtendedGeneratedCode.h"
 
 void ExtendedGeneratedCode::printVersion() {

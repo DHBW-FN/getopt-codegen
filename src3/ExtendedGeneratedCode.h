@@ -1,3 +1,7 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_EXTENDEDGENERATEDCODE_H
 #define CODEGENERATOR_EXTENDEDGENERATEDCODE_H
 

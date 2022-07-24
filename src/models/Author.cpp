@@ -5,11 +5,10 @@
 #include <xercesc/util/XMLString.hpp>
 #include "Author.h"
 
-// Constructors
+//Constructor
 Author::Author() = default;
 
-
-// Getters
+//Getters
 const string &Author::getName() const {
     return name;
 }
@@ -23,7 +22,7 @@ const string &Author::getMail() const {
 }
 
 
-// Setters
+//Setters
 void Author::setName(const string &_name) {
     Author::name = _name;
 }
@@ -36,8 +35,7 @@ void Author::setMail(const string &_mail) {
     Author::mail = _mail;
 }
 
-
-// Helpers
+//helper function to parse the Author-Tag
 void Author::parseAttributes(AttributeList &attributes) {
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"Name")) {
