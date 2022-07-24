@@ -14,6 +14,7 @@ using namespace boost;
 
 /**
  * @brief Class to justify a string
+ * Custom Justify class according to https://www.geeksforgeeks.org/justify-the-given-text-based-on-the-given-width-of-each-line/
  */
 class Justify
 {
