@@ -33,10 +33,8 @@ void CodeGenerator::run() {
     XMLParser parser(getFilePath());
     parser.parse();
 
-    parser.getGetOptSetup()->setSourceFileName(getOutputDir() + parser.getGetOptSetup()->getSourceFileName());
-    parser.getGetOptSetup()->setHeaderFileName(getOutputDir() + parser.getGetOptSetup()->getHeaderFileName());
-
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
+    writer.setOutputDir(getOutputDir());
     writer.writeFile();
     printf("Codegenerator finished!\n");
 }
@@ -48,10 +46,11 @@ int main(int argc, char **argv) {
     int option_index;
     static struct option long_options[] = {
             {"path", required_argument, 0, 'p'},
+            {"output", required_argument, 0, 'o'},
             {0, 0, 0, 0}
     };
 
-    while((c = getopt_long(argc, argv, "p:", long_options, &option_index)) != -1 ){
+    while((c = getopt_long(argc, argv, "p:o:", long_options, &option_index)) != -1 ){
         switch(c){
             case 'p':
                 if (optarg == nullptr){
@@ -59,6 +58,10 @@ int main(int argc, char **argv) {
                     exit(EXIT_FAILURE);
                 }
                 generator.setFilePath(optarg);
+                break;
+            case 'o':
+                if(optarg != nullptr)
+                    generator.setOutputDir(optarg);
                 break;
             case '?':
             default:
