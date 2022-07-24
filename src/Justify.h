@@ -12,6 +12,9 @@
 using namespace std;
 using namespace boost;
 
+/**
+ * @brief Class to justify a string
+ */
 class Justify
 {
 private:
