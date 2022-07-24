@@ -5,33 +5,63 @@
 #include "SourceCodeWriter.h"
 #include <iostream>
 
-#include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/sinks/text_file_backend.hpp>
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/sources/severity_logger.hpp>
-#include <boost/log/sources/record_ostream.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/attributes/mutable_constant.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/log/attributes/mutable_constant.hpp>
 
-namespace logging = boost::log;
-namespace src = boost::log::sources;
-namespace sinks = boost::log::sinks;
+namespace logging  = boost::log;
+namespace attrs    = boost::log::attributes;
+namespace expr     = boost::log::expressions;
+namespace src      = boost::log::sources;
 namespace keywords = boost::log::keywords;
 
-void init_logging() {
-    logging::add_file_log
-            (
-                    keywords::file_name = "sample_%N.log",                                        /*< file name pattern >*/
-                    keywords::rotation_size = 10 * 1024 * 1024,                                   /*< rotate files every 10 MiB... >*/
-                    keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0), /*< ...or at midnight >*/
-                    keywords::format = "[%TimeStamp%]: %Message%"                                 /*< log record format >*/
-            );
+// New macro that includes severity, filename and line number
+#define CUSTOM_LOG(logger, sev) \
+   BOOST_LOG_STREAM_WITH_PARAMS( \
+      (logger), \
+         (set_get_attrib("File", path_to_filename(__FILE__))) \
+         (set_get_attrib("Line", __LINE__)) \
+         (::boost::log::keywords::severity = (boost::log::trivial::sev)) \
+   )
 
-    logging::core::get()->set_filter
-            (
-                    logging::trivial::severity >= logging::trivial::trace
-            );
+// Set attribute and return the new value
+template<typename ValueType>
+ValueType set_get_attrib(const char* name, ValueType value) {
+    auto attr = logging::attribute_cast<attrs::mutable_constant<ValueType>>(logging::core::get()->get_global_attributes()[name]);
+    attr.set(value);
+    return attr.get();
+}
+
+// Convert file path to only the filename
+std::string path_to_filename(std::string path) {
+    return path.substr(path.find_last_of("/\\")+1);
+}
+
+void init() {
+    // New attributes that hold filename and line number
+    logging::core::get()->add_global_attribute("File", attrs::mutable_constant<std::string>(""));
+    logging::core::get()->add_global_attribute("Line", attrs::mutable_constant<int>(0));
+
+    // A file log with time, severity, filename, line and message
+    logging::add_file_log (
+            keywords::file_name = "sample_%N.log",
+            keywords::format = (
+                    expr::stream
+                            << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d_%H:%M:%S.%f")
+                            << ": <" << boost::log::trivial::severity << "> "
+                            << '['   << expr::attr<std::string>("File")
+                            << ':' << expr::attr<int>("Line") << "] "
+                            << expr::smessage
+            )
+    );
+    logging::add_common_attributes();
 }
 
 
@@ -43,19 +73,10 @@ int main() {
     writer.writeFile();
     printf("Codegenerator finished!\n");
 
-    init_logging();
+    init();
+    src::severity_logger<logging::trivial::severity_level> lg;
 
-    logging::add_common_attributes();
-
-    using namespace logging::trivial;
-    src::severity_logger< severity_level > lg;
-
-    BOOST_LOG_SEV(lg, trace) << "A trace severity message";
-    BOOST_LOG_SEV(lg, debug) << "A debug severity message";
-    BOOST_LOG_SEV(lg, info) << "An informational severity message";
-    BOOST_LOG_SEV(lg, warning) << "A warning severity message";
-    BOOST_LOG_SEV(lg, error) << "An error severity message";
-    BOOST_LOG_SEV(lg, fatal) << "A fatal severity message";
+    CUSTOM_LOG(lg, debug) << "A regular message";
 
     return 0;
 }
