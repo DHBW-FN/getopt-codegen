@@ -12,18 +12,27 @@
 
 XERCES_CPP_NAMESPACE_USE
 
+/**
+ * @brief enum for the ConvertTo of the Option-Tag
+ */
 enum class ConvertToOptions {
     STRING,
     INTEGER,
     BOOLEAN
 };
 
+/**
+ * @brief enum for the HasArguments of the Option-Tag
+ */
 enum class HasArguments {
     NONE,
     OPTIONAL,
     REQUIRED
 };
 
+/**
+ * @brief Class for the Option-Tag
+ */
 class Option {
 public:
     // Constructor

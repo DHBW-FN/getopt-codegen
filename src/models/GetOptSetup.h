@@ -14,6 +14,9 @@
 
 XERCES_CPP_NAMESPACE_USE
 
+/**
+ * @brief Class for the GetOptSetup-Tag
+ */
 class GetOptSetup {
 public:
     /**
