@@ -7,12 +7,20 @@
 #include "SourceCodeWriter.h"
 #include <getopt.h>
 
+std::string CodeGenerator::getFilePath() {
+    return CodeGenerator::filePath;
+}
+
+std::string CodeGenerator::getOutputDir() {
+    return outputDir;
+}
+
 void CodeGenerator::setFilePath(const std::string &filename) {
     CodeGenerator::filePath = filename;
 }
 
-std::string CodeGenerator::getFilePath() {
-    return CodeGenerator::filePath;
+void CodeGenerator::setOutputDir(const std::string &dir) {
+    outputDir = dir;
 }
 
 void CodeGenerator::run() {
@@ -24,6 +32,10 @@ void CodeGenerator::run() {
 
     XMLParser parser(getFilePath());
     parser.parse();
+
+    parser.getGetOptSetup()->setSourceFileName(getOutputDir() + parser.getGetOptSetup()->getSourceFileName());
+    parser.getGetOptSetup()->setHeaderFileName(getOutputDir() + parser.getGetOptSetup()->getHeaderFileName());
+
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.writeFile();
     printf("Codegenerator finished!\n");
