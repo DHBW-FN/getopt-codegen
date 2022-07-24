@@ -3,6 +3,7 @@
  */
 
 #include "SourceCodeWriter.h"
+#include "HelpText.h"
 #include <boost/algorithm/string.hpp>
 
 // Constructor
@@ -151,6 +152,7 @@ void SourceCodeWriter::headerFileClass() {
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "protected:\n");
     //put all elements inside class -> protected here
+    createHeaderPrintHelp();
 
     fprintf(getHeaderFile(), "\n");
     fprintf(getHeaderFile(), "public:\n");
@@ -201,6 +203,7 @@ void SourceCodeWriter::sourceFileNamespace() {
     createSourceUnknownOption();
 
     //Hier kommt der Help-Text dazu
+    createSourcePrintHelp();
 
     //end of namespace
     if (!getGetOptSetup()->getNamespaceName().empty()) {
@@ -502,6 +505,16 @@ void SourceCodeWriter::createSourcePrintVersion() {
     fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\\n\");\n}\n",
             getGetOptSetup()->getClassName().c_str());
 
+}
+
+void SourceCodeWriter::createHeaderPrintHelp() {
+    fprintf(getHeaderFile(), "virtual void printHelp();\n");
+}
+
+void SourceCodeWriter::createSourcePrintHelp() {
+    HelpText *helpText = nullptr;
+    helpText = new HelpText(getGetOptSetup());
+    fprintf(getSourceFile(), "%s", helpText->parseHelpMessage().c_str());
 }
 
 void SourceCodeWriter::writeFile() {

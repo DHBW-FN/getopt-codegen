@@ -138,6 +138,18 @@ public:
       */
      void createSourcePrintVersion();
 
+     /**
+      * @brief
+      * Generates the declaration of the printHelp function in the Header-File
+      */
+     void createHeaderPrintHelp();
+
+     /**
+      * @brief
+      * Generates the implementation of the printHelp function in the Source-File
+      */
+        void createSourcePrintHelp();
+
 };
 
 
