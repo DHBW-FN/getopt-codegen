@@ -11,9 +11,7 @@ class ExtendedGeneratedCode: public GC::GeneratedClass {
     /**
      * @brief overrides printVersion function in generated Code
      */
-    void printVersion() override {
-        printf("Version: 2.0.0\n");
-    };
+    void printVersion() override;
 };
 
 
