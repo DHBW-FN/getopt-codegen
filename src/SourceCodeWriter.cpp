@@ -32,16 +32,20 @@ SourceCodeWriter::~SourceCodeWriter() {
 
 // Getter
 FILE *SourceCodeWriter::getHeaderFile() {
+    LOG_DEBUG("Getting Header-File: " + (getOutputDir() + getGetOptSetup()->getHeaderFileName()));
     if (headerFile == nullptr) {
         setHeaderFile(fopen((getOutputDir() + getGetOptSetup()->getHeaderFileName()).c_str(), "w"));
     }
+    LOG_TRACE("Finished getting Header-File");
     return headerFile;
 }
 
 FILE *SourceCodeWriter::getSourceFile() {
+    LOG_DEBUG("Getting Source-File: " + (getOutputDir() + getGetOptSetup()->getSourceFileName()));
     if (sourceFile == nullptr) {
         setSourceFile(fopen((getOutputDir() + getGetOptSetup()->getSourceFileName()).c_str(), "w"));
     }
+    LOG_TRACE("Finished getting Source-File");
     return sourceFile;
 }
 
@@ -90,6 +94,7 @@ string SourceCodeWriter::getValueTypeByOption(Option &option) {
 
 //from here on are all the headerFiles
 void SourceCodeWriter::headerFileIncludes() {
+    LOG_TRACE("Writing includes to Header-File");
     // Define static and always used includes here
     string includes[] = {"getopt.h", "iostream", "boost/lexical_cast.hpp"};
 
@@ -109,9 +114,11 @@ void SourceCodeWriter::headerFileIncludes() {
 
     // Close header file
     fprintf(getHeaderFile(), "\n#endif //%s_H", defineString.c_str());
+    LOG_TRACE("Finished writing includes to Header-File");
 }
 
 void SourceCodeWriter::headerFileNamespace() {
+    LOG_TRACE("Writing namespace to Header-File");
     //start of namespace
     if (!getGetOptSetup()->getNamespaceName().empty()) {
         fprintf(getHeaderFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
@@ -125,9 +132,11 @@ void SourceCodeWriter::headerFileNamespace() {
     if (!getGetOptSetup()->getNamespaceName().empty()) {
         fprintf(getHeaderFile(), "}\n");
     }
+    LOG_TRACE("Finished writing namespace to Header-File");
 }
 
 void SourceCodeWriter::headerFileClass() {
+    LOG_TRACE("Writing class to Header-File");
     //start of class
     fprintf(getHeaderFile(), "class %s {\n", getGetOptSetup()->getClassName().c_str());
 
@@ -174,9 +183,11 @@ void SourceCodeWriter::headerFileClass() {
 
     //end of class
     fprintf(getHeaderFile(), "};\n");
+    LOG_TRACE("Finished writing class to Header-File");
 }
 
 void SourceCodeWriter::createHeaderStructArgs() {
+    LOG_TRACE("Writing struct Args to Header-File");
     fprintf(getHeaderFile(), "struct Args {\n");
     for (auto &option: getGetOptSetup()->getOptions()) {
         fprintf(getHeaderFile(), "struct {\n");
@@ -187,19 +198,23 @@ void SourceCodeWriter::createHeaderStructArgs() {
         fprintf(getHeaderFile(), "} %s;\n", determineArgsName(option).c_str());
     }
     fprintf(getHeaderFile(), "};\n\n");
+    LOG_TRACE("Finished writing struct Args to Header-File");
 }
 
 //from here on are all the sourceFiles
 void SourceCodeWriter::sourceFileIncludes() {
+    LOG_TRACE("Writing includes to Source-File");
     fprintf(getSourceFile(), "#include \"%s\"\n\n", getGetOptSetup()->getHeaderFileName().c_str());
 
     //Here further generation-Methods
 
     // Close source file includes
     fprintf(getSourceFile(), "\n");
+    LOG_TRACE("Finished writing includes to Source-File");
 }
 
 void SourceCodeWriter::sourceFileNamespace() {
+    LOG_TRACE("Writing namespace to Source-File");
     //start of namespace
     if (!getGetOptSetup()->getNamespaceName().empty()) {
         fprintf(getSourceFile(), "namespace %s {\n\n", getGetOptSetup()->getNamespaceName().c_str());
@@ -218,13 +233,17 @@ void SourceCodeWriter::sourceFileNamespace() {
     if (!getGetOptSetup()->getNamespaceName().empty()) {
         fprintf(getSourceFile(), "}\n");
     }
+    LOG_TRACE("Finished writing namespace to Source-File");
 }
 
 void SourceCodeWriter::createHeaderParsingFunction() {
+    LOG_TRACE("Writing parsing function to Header-File");
     fprintf(getHeaderFile(), "void parseOptions(int argc, char **argv);\n");
+    LOG_TRACE("Finished writing parsing function to Header-File");
 }
 
 void SourceCodeWriter::sourceFileParse() {
+    LOG_TRACE("Writing parsing function to Source-File");
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
     for (auto &option: getGetOptSetup()->getOptions()) {
         std::string optionName = determineArgsName(option);
@@ -284,9 +303,11 @@ void SourceCodeWriter::sourceFileParse() {
         fprintf(getSourceFile(), "}\n");
     }
     fprintf(getSourceFile(), "}\n");
+    LOG_TRACE("Finished writing parsing function to Source-File");
 }
 
 void SourceCodeWriter::createSourceParsingFunction() {
+    LOG_TRACE("Writing parsing function to Source-File");
     vector<Option> options = getGetOptSetup()->getOptions();
     fprintf(getSourceFile(), "void %s::parseOptions(int argc, char **argv){\nargs = Args();\n"
                              "opterr = 0;\nint opt;\nstatic struct option long_options[] = {\n",
@@ -411,20 +432,26 @@ void SourceCodeWriter::createSourceParsingFunction() {
 
     //Close function parseOptions
     fprintf(getSourceFile(), "}\n");
+    LOG_TRACE("Finished generating parseOptions()");
 }
 
 void SourceCodeWriter::createHeaderUnknownOption() {
+    LOG_TRACE("Generating unknownOption() header");
     fprintf(getHeaderFile(), "virtual void unknownOption(const std::string &unknownOption);\n\n");
+    LOG_TRACE("Finished generating unknownOption() header");
 }
 
 void SourceCodeWriter::createSourceUnknownOption() {
+    LOG_TRACE("Generating unknownOption() source");
     fprintf(getSourceFile(), "void %s::unknownOption(const std::string &unknownOption){\n"
                              "perror(\"GetOpt encountered an unknown option.\");\n"
                              "exit(1);\n}\n", getGetOptSetup()->getClassName().c_str());
+    LOG_TRACE("Finished generating unknownOption() source");
 }
 
 // Helper functions
 std::string SourceCodeWriter::determineArgsName(const Option &option) {
+    LOG_TRACE("Determining args name for " + option.getLongOpt() + " (" + option.getShortOpt() + ")");
     std::string argsName;
     if (!option.getInterface().empty()) {
         argsName = option.getInterface();
@@ -450,10 +477,12 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
         exit(1);
     }
 
+    LOG_TRACE("Determined args name for " + option.getLongOpt() + " (" + option.getShortOpt() + ") as " + argsName);
     return argsName;
 }
 
 void SourceCodeWriter::createHeaderGetter() {
+    LOG_TRACE("Generating getter() header");
     for (Option option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
         capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
@@ -468,9 +497,11 @@ void SourceCodeWriter::createHeaderGetter() {
             fprintf(getHeaderFile(), "bool isSet%s() const;\n", capitalizedArgsName.c_str());
         }
     }
+    LOG_TRACE("Finished generating getter() header");
 }
 
 void SourceCodeWriter::createSourceGetter() {
+    LOG_TRACE("Generating getter() source");
     for (Option option: getGetOptSetup()->getOptions()) {
         string capitalizedArgsName = determineArgsName(option);
         capitalizedArgsName[0] = toupper(capitalizedArgsName[0], locale());
@@ -491,9 +522,11 @@ void SourceCodeWriter::createSourceGetter() {
                     determineArgsName(option).c_str());
         }
     }
+    LOG_TRACE("Finished generating getter() source");
 }
 
 void SourceCodeWriter::createExternalFunctions() {
+    LOG_TRACE("Generating external functions");
     vector<Option> options = getGetOptSetup()->getOptions();
 
     for (auto &option: options) {
@@ -507,26 +540,34 @@ void SourceCodeWriter::createExternalFunctions() {
             fprintf(getHeaderFile(), ") = 0;\n");
         }
     }
+    LOG_TRACE("Finished generating external functions");
 }
 
 void SourceCodeWriter::createHeaderPrintVersion() {
+    LOG_TRACE("Generating printVersion() header");
     fprintf(getHeaderFile(), "virtual void printVersion();\n");
+    LOG_TRACE("Finished generating printVersion() header");
 
 }
 
 void SourceCodeWriter::createSourcePrintVersion() {
+    LOG_TRACE("Generating printVersion() source");
     fprintf(getSourceFile(), "void %s::printVersion(){\nprintf(\"version: 1.0.0\\n\");\n}\n",
             getGetOptSetup()->getClassName().c_str());
+    LOG_TRACE("Finished generating printVersion() source");
 
 }
 
 void SourceCodeWriter::createHeaderPrintHelp() {
+    LOG_TRACE("Generating printHelp() header");
     fprintf(getHeaderFile(), "virtual void printHelp();\n");
+    LOG_TRACE("Finished generating printHelp() header");
 }
 
 void SourceCodeWriter::createSourcePrintHelp() {
-    auto *helpText = new HelpText(getGetOptSetup());
-    fprintf(getSourceFile(), "%s", helpText->parseHelpMessage().c_str());
+    LOG_TRACE("Generating printHelp() source");
+    fprintf(getSourceFile(), "%s", HelpText(getGetOptSetup()).parseHelpMessage().c_str());
+    LOG_TRACE("Finished generating printHelp() source");
 }
 
 void SourceCodeWriter::writeFile() {

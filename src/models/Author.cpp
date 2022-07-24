@@ -4,6 +4,7 @@
 
 #include <xercesc/util/XMLString.hpp>
 #include "models/Author.h"
+#include "Logger.h"
 
 //Constructor
 Author::Author() = default;
@@ -37,6 +38,7 @@ void Author::setMail(const string &_mail) {
 
 //helper function to parse the Author-Tag
 void Author::parseAttributes(AttributeList &attributes) {
+    LOG_TRACE("Starting Author-Attributes parse");
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"Name")) {
             setName(std::string(XMLString::transcode(attributes.getValue(i))));
@@ -46,4 +48,5 @@ void Author::parseAttributes(AttributeList &attributes) {
             setMail(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
+    LOG_TRACE("Finished Author-Attributes parse");
 }

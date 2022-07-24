@@ -3,6 +3,7 @@
  */
 
 #include "HelpText.h"
+#include "Logger.h"
 
 HelpText::HelpText(GetOptSetup *getOptSetup)
 {
@@ -132,25 +133,35 @@ void HelpText::parseAuthor()
 
 string HelpText::parseHelpMessage()
 {
+    LOG_TRACE("Starting to parse help message");
     // add function beginning to string
     printHelpText.append("void ");
     printHelpText.append(getOptSetup->getClassName());
     printHelpText.append("::printHelp(){puts(\"");
 
     // parse the description and add text to string
+    LOG_TRACE("Starting to parse description");
     parseDescription();
+    LOG_TRACE("Finished parsing description");
 
     // parse the option and add text to string
+    LOG_TRACE("Starting to parse option");
     parseOption();
+    LOG_TRACE("Finished parsing option");
 
     // parse the usage and add text to string
+    LOG_TRACE("Starting to parse usage");
     parseUsage();
+    LOG_TRACE("Finished parsing usage");
 
     // parse the author and add text to string
+    LOG_TRACE("Starting to parse author");
     parseAuthor();
+    LOG_TRACE("Finished parsing author");
 
     // add function ending to string
     printHelpText.append(R"(");})");
+    LOG_TRACE("Finished parsing help message");
 
     return printHelpText;
 }

@@ -3,6 +3,7 @@
  */
 
 #include "models/Option.h"
+#include "Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <boost/algorithm/string.hpp>
@@ -131,6 +132,7 @@ void Option::setInterface(const std::string &_interface) {
 // Helpers
 
 void Option::parseAttributes(AttributeList &attributes) {
+    LOG_TRACE("Starting Option-Attributes parse");
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"Ref")) {
             setRef(std::string(XMLString::transcode(attributes.getValue(i))));
@@ -156,4 +158,5 @@ void Option::parseAttributes(AttributeList &attributes) {
             setInterface(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
+    LOG_TRACE("Finished Option-Attributes parse");
 }

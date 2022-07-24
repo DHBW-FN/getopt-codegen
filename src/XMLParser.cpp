@@ -75,6 +75,7 @@ void XMLParser::endDocument() {
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {
+    LOG_TRACE("Start Element: " + string(XMLString::transcode(name)));
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPSTART);
         getOptSetup->parseAttributes(attributes);
@@ -110,6 +111,7 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
 }
 
 void XMLParser::endElement(const XMLCh *const name) {
+    LOG_TRACE("End Element: " + string(XMLString::transcode(name)));
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPEND);
     } else if (!XMLString::compareString(name, u"Author")) {
@@ -138,6 +140,7 @@ void XMLParser::endElement(const XMLCh *const name) {
 }
 
 void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
+    LOG_TRACE("Characters: " + string(XMLString::transcode(chars)));
     switch (sm->getState()) {
         case State::START:
             break;
