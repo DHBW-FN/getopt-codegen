@@ -1,4 +1,4 @@
-#include "HelpText.h"
+#include "headerFiles/HelpText.h"
 
 HelpText::HelpText(GetOptSetup *getOptSetup)
 {

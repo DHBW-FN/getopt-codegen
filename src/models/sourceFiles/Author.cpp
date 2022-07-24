@@ -3,7 +3,7 @@
  */
 
 #include <xercesc/util/XMLString.hpp>
-#include "Author.h"
+#include "models/headerFiles/Author.h"
 
 // Constructors
 Author::Author() = default;

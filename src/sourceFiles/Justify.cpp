@@ -1,4 +1,4 @@
-#include "Justify.h"
+#include "headerFiles/Justify.h"
 
 /**
  * @brief Function to join the words with spaces spread evenly

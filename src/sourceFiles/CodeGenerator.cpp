@@ -2,9 +2,9 @@
  * Editors: Tobias Goetz
  */
 
-#include "CodeGenerator.h"
-#include "XMLParser.h"
-#include "SourceCodeWriter.h"
+#include "headerFiles/CodeGenerator.h"
+#include "headerFiles/XMLParser.h"
+#include "headerFiles/SourceCodeWriter.h"
 #include <iostream>
 
 int main() {

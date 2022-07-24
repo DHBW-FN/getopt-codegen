@@ -1,5 +1,5 @@
-#include "ExampleProgram.h"
-#include "generatedCode.h"
+#include "../headerFiles/ExampleProgram.h"
+#include "../headerFiles/generatedCode.h"
 
 /**
  * @brief Constructor, that generates a object of ExtendedGeneratedCode

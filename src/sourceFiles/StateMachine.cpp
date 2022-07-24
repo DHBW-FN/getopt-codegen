@@ -2,7 +2,7 @@
  * Editors: Tobias Goetz
  */
 
-#include "StateMachine.h"
+#include "headerFiles/StateMachine.h"
 
 // Constructor
 StateMachine::StateMachine() {

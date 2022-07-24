@@ -3,8 +3,8 @@ project(CodeGenerator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-file(GLOB Source_Files src/*.cpp)
-file(GLOB Model_Files src/models/*.cpp)
+file(GLOB Source_Files src/sourceFiles/*.cpp)
+file(GLOB Model_Files src/models/sourceFiles/*.cpp)
 add_executable(
         CodeGenerator
         ${Source_Files}
@@ -17,7 +17,7 @@ add_executable(
         ${Source_Files2}
 )
 
-file(GLOB Source_Files2 src3/*.cpp)
+file(GLOB Source_Files2 src3/sourceFiles/*.cpp)
 add_executable(
         ExampleProgram
         ${Source_Files2}

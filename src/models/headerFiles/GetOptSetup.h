@@ -6,7 +6,7 @@
 #define CODEGENERATOR_GETOPTSETUP_H
 
 
-#include "Author.h"
+#include "models/headerFiles/Author.h"
 #include "Option.h"
 #include <vector>
 #include <xercesc/util/XercesDefs.hpp>
