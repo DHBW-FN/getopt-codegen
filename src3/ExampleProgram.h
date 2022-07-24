@@ -1,3 +1,7 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #ifndef CODEGENERATOR_EXAMPLEPROGRAM_H
 #define CODEGENERATOR_EXAMPLEPROGRAM_H
 
@@ -9,10 +13,15 @@ private:
     GC::GeneratedClass *generatedClass = nullptr;
 protected:
 public:
-    //Constructor
+    /**
+    * @brief Constructor, that generates a object of ExtendedGeneratedCode
+    */
     explicit ExampleProgram(GC::GeneratedClass *generatedClass);
 
-    //Getter
+    /**
+    * @brief Getter for generatedClass
+    * @return object of class ExtendedGeneratedCode
+    */
     GC::GeneratedClass *getGeneratedClass();
 };
 

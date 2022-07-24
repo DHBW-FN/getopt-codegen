@@ -8,29 +8,64 @@
 #include <iostream>
 #include "models/GetOptSetup.h"
 
+/**
+ * @brief Class for the SourceCodeWriter
+ */
 class SourceCodeWriter {
 private:
+    /**
+     * @brief The GetOptSetup
+     */
     GetOptSetup *getOptSetup = nullptr;
+    /**
+     * @brief The header file
+     */
     FILE *headerFile = nullptr;
+    /**
+     * @brief The source file
+     */
     FILE *sourceFile = nullptr;
 
     // Helpers
+    /**
+     * @brief Get the type of the option depending on ConvertTo
+     * @param option The option
+     * @return The type of the option as string
+     */
     static string getValueTypeByOption(Option &option);
 public:
     // Constructor
+    /**
+     * @brief Constructor for the SourceCodeWriter
+     * @param getOptSetup The GetOptSetup
+     */
     explicit SourceCodeWriter(GetOptSetup *getOptSetup);
+    /**
+     * @brief Destructor for the SourceCodeWriter
+     */
     ~SourceCodeWriter();
 
-    // Getter
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     GetOptSetup *getGetOptSetup() const;
     FILE *getHeaderFile();
     FILE *getSourceFile();
+    ///@}
 
-    // Setter
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     void setHeaderFile(FILE *headerFile);
     void setSourceFile(FILE *sourceFile);
+    ///@}
 
     // Methods
+    /**
+     * @brief Write the .h and .cpp files
+     */
     void writeFile();
 
     // Write code functions
