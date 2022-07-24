@@ -1,17 +1,14 @@
+/*
+ * Editors: Philipp Kuest, Tobias Goetz
+ */
+
 #include "ExampleProgram.h"
 #include "generatedCode.h"
 
-/**
- * @brief Constructor, that generates a object of ExtendedGeneratedCode
- */
 ExampleProgram::ExampleProgram(GC::GeneratedClass *generatedClass) {
     this->generatedClass = generatedClass;
 }
 
-/**
- * @brief Getter for generatedClass
- * @return object of class ExtendedGeneratedCode
- */
 GC::GeneratedClass *ExampleProgram::getGeneratedClass() {
     return generatedClass;
 }

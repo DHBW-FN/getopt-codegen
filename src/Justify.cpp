@@ -1,16 +1,9 @@
+/*
+ * Editors: Sebastian Wolf
+ */
+
 #include "Justify.h"
 
-/**
- * @brief Function to join the words with spaces spread evenly
- * @param words vector with separated words
- * @param start current line start
- * @param end iterator
- * @param num_spaces
- * @param isOption check if its an options string
- * @param curr_line current line string is in
- * @param optionShift shift that needs to be added to aline lines
- * @return justified text
- */
 string Justify::JoinALineWithSpace(
         vector<string>& words,
         int start, int end,
@@ -61,14 +54,6 @@ string Justify::JoinALineWithSpace(
     return line;
 }
 
-/**
- * @brief Function that justify the words of sentence of length of line L
- * @param words vector with separated words
- * @param L length of sign per line
- * @param isOption check if its an options string
- * @param optionShift shift that needs to be added to aline lines
- * @return whole justified string
- */
 vector<string> Justify::JustifyText(
         vector<string>& words,
         int L,
@@ -194,11 +179,6 @@ vector<string> Justify::JustifyText(
     return result;
 }
 
-/**
- * @brief separates a string in single words
- * @param str string to parse
- * @return vector with splitted words
- */
 vector<string> Justify::splitWords(const string& str)
 {
 
@@ -219,11 +199,6 @@ vector<string> Justify::splitWords(const string& str)
     return words;
 }
 
-/**
- * @brief Function to return justified text
- * @param result vector with justified strings
- * @return justified text in as a string
- */
 string Justify::returnJustifiedText(vector<string>& result)
 {
     stringstream buffer;
@@ -234,14 +209,6 @@ string Justify::returnJustifiedText(vector<string>& result)
     return buffer.str();
 }
 
-/**
- * @brief function to call the justification
- * @param str string to justify
- * @param L length of sign per line
- * @param isOption check if its an options string
- * @param optionShift shift that needs to be added to aline lines
- * @return justified text as a string
- */
 string Justify::justifyTheText(const string& str, int L, bool isOption, int optionShift)
 {
 

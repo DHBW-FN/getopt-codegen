@@ -1,3 +1,7 @@
+/*
+ * Editors: Sebastian Wolf, Tobias Goetz
+ */
+
 #include "HelpText.h"
 
 HelpText::HelpText(GetOptSetup *getOptSetup)
@@ -6,10 +10,6 @@ HelpText::HelpText(GetOptSetup *getOptSetup)
 }
 HelpText::~HelpText() = default;
 
-/**
- * @brief concatenate the description strings to one string
- * @brief and add to printHelpText
- */
 void HelpText::parseDescription()
 {
     string new_description;
@@ -42,13 +42,6 @@ bool compareOptions(const Option &a, const Option &b) {
     }
 }
 
-/**
- * @brief concatenate short opt and long opt to one string
- * different checks if shortOpt and LongOpt are empty
- * to concatenate the right signs to the string
- * @param i iteration counter to determine which option is parsed
- * @return concatenated opts as string
- */
 vector<string> HelpText::concatParams(const vector<Option>& options)
 {
     vector<string> opts;
@@ -85,21 +78,6 @@ vector<string> HelpText::concatParams(const vector<Option>& options)
     return opts;
 }
 
-/**
- * @brief concatenate the options to one string
- * @brief and add to printHelpText
- * call the getMaxParamLength() Method. Get concatenated params
- * by calling concatParams function with i as iterator.
- * write strings to buffer with a spacing using set()
- * calculate a new signPerLine to space out the
- * option description accordingly to the length
- * of param and the shift.
- * calculate a new shift for every line of the description
- * that is pushed to the next line because of signPerLine,
- * in order to shift the line to the right, matching the above.
- * Justify the description text. Write justified text to
- * class variable.
- */
 void HelpText::parseOption()
 {
     // sorting options
@@ -138,11 +116,6 @@ void HelpText::parseOption()
     printHelpText.append(buffer.str());
 }
 
-/**
- * @brief concatenate usage strings to one string
- * @brief and add to printHelpText
- * @return all usage strings as a string with line break.
- */
 void HelpText::parseUsage()
 {
     string new_usage;
@@ -152,19 +125,11 @@ void HelpText::parseUsage()
     printHelpText.append("Usage:\\n" + justify.justifyTheText(new_usage, getOptSetup->getSignPerLine(), false, 0));
 }
 
-/**
- * @brief concatenate the author information to one string
- * @brief and add to printHelpText
- */
 void HelpText::parseAuthor()
 {
     printHelpText.append("Author:\\n" + justify.justifyTheText(getOptSetup->getAuthor().getName() + ", " + getOptSetup->getAuthor().getMail(), getOptSetup->getSignPerLine(), false, 0));
 }
 
-/**
- * @brief add function wrapper and call parse methods
- * @return getHelp() Function with message as string
- */
 string HelpText::parseHelpMessage()
 {
     // add function beginning to string
