@@ -3,6 +3,7 @@
  */
 
 #include "Justify.h"
+#include "Logger.h"
 
 string Justify::JoinALineWithSpace(
         vector<string>& words,
@@ -211,19 +212,25 @@ string Justify::returnJustifiedText(vector<string>& result)
 
 string Justify::justifyTheText(const string& str, int L, bool isOption, int optionShift)
 {
+    LOG_TRACE("Starting Justify::justifyTheText");
 
     vector<string> words;
 
     // Inserting words from
     // given string
+    LOG_TRACE("Inserting words from given string");
     words = this->splitWords(str);
+    LOG_TRACE("Inserting words from given string done");
 
     // Function call to
     // justify the text
+    LOG_TRACE("Function call to justify the text");
     vector<string> result
             = this->JustifyText(words, L, isOption, optionShift);
-
+    LOG_TRACE("Function call to justify the text done");
     // Return the justified
     // text
+
+    LOG_TRACE("Returning the justified text");
     return returnJustifiedText(result);
 }

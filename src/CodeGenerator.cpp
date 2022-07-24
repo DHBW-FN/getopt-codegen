@@ -1,10 +1,10 @@
 /*
  * Editors: Tobias Goetz, Noel Kempter
  */
-
 #include "CodeGenerator.h"
 #include "XMLParser.h"
 #include "SourceCodeWriter.h"
+#include "Logger.h"
 #include <getopt.h>
 
 std::string CodeGenerator::getFilePath() {
@@ -24,23 +24,31 @@ void CodeGenerator::setOutputDir(const std::string &dir) {
 }
 
 void CodeGenerator::run() {
-    printf("Starting Codegenerator!\n");
+    LOG_INFO("Starting CodeGenerator");
     if(getFilePath().empty()){
         perror("The path to the XML-File must be set.");
+        LOG_ERROR("The path to the XML-File must be set.");
         exit(EXIT_FAILURE);
     }
 
+    LOG_INFO("Starting XMLParser");
     XMLParser parser(getFilePath());
     parser.parse();
+    LOG_INFO("Finished XMLParser");
 
+    LOG_INFO("Starting SourceCodeWriter");
     SourceCodeWriter writer = SourceCodeWriter(parser.getGetOptSetup());
     writer.setOutputDir(getOutputDir());
     writer.writeFile();
-    printf("Codegenerator finished!\n");
+    LOG_INFO("Finished SourceCodeWriter");
+
+    LOG_INFO("Codegenerator finished!");
 }
 
 
 int main(int argc, char **argv) {
+    Logger::initFromConfig("logconfig.ini");
+
     CodeGenerator generator;
     int c;
     int option_index;
@@ -55,6 +63,7 @@ int main(int argc, char **argv) {
             case 'p':
                 if (optarg == nullptr){
                     perror("The path to the XML-File to be parsed was not set.");
+                    LOG_ERROR("The path to the XML-File to be parsed was not set.");
                     exit(EXIT_FAILURE);
                 }
                 generator.setFilePath(optarg);
@@ -62,6 +71,7 @@ int main(int argc, char **argv) {
             case 'o':
                 if(optarg == nullptr){
                     perror("When using \"-o/--output\" the path to the target directory must be set.");
+                    LOG_ERROR("When using \"-o/--output\" the path to the target directory must be set.");
                     exit(EXIT_FAILURE);
                 }
                     generator.setOutputDir(optarg);
@@ -69,6 +79,7 @@ int main(int argc, char **argv) {
             case '?':
             default:
                 perror("GetOpt encountered an unknown option.");
+                LOG_ERROR("GetOpt encountered an unknown option.");
                 exit(EXIT_FAILURE);
         }
     }

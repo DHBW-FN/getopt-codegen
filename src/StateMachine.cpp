@@ -3,6 +3,93 @@
  */
 
 #include "StateMachine.h"
+#include "Logger.h"
+
+inline std::string eventToString(Event event) {
+    switch (event) {
+        case Event::GETOPTSETUPSTART:
+            return "GETOPTSETUPSTART";
+        case Event::GETOPTSETUPEND:
+            return "GETOPTSETUPEND";
+        case Event::AUTHORSTART:
+            return "AUTHORSTART";
+        case Event::AUTHOREND:
+            return "AUTHOREND";
+        case Event::HEADERFILENAMESTART:
+            return "HEADERFILENAMESTART";
+        case Event::HEADERFILENAMEEND:
+            return "HEADERFILENAMEEND";
+        case Event::SOURCEFILENAMESTART:
+            return "SOURCEFILENAMESTART";
+        case Event::SOURCEFILENAMEEND:
+            return "SOURCEFILENAMEEND";
+        case Event::NAMESPACESTART:
+            return "NAMESPACESTART";
+        case Event::NAMESPACEEND:
+            return "NAMESPACEEND";
+        case Event::CLASSNAMESTART:
+            return "CLASSNAMESTART";
+        case Event::CLASSNAMEEND:
+            return "CLASSNAMEEND";
+        case Event::OVERALLDESCRIPTIONSTART:
+            return "OVERALLDESCRIPTIONSTART";
+        case Event::OVERALLDESCRIPTIONEND:
+            return "OVERALLDESCRIPTIONEND";
+        case Event::BLOCKSTART:
+            return "BLOCKSTART";
+        case Event::BLOCKEND:
+            return "BLOCKEND";
+        case Event::SAMPLEUSAGESTART:
+            return "SAMPLEUSAGESTART";
+        case Event::SAMPLEUSAGEEND:
+            return "SAMPLEUSAGEEND";
+        case Event::SAMPLESTART:
+            return "SAMPLESTART";
+        case Event::SAMPLEEND:
+            return "SAMPLEEND";
+        case Event::OPTIONSSTART:
+            return "OPTIONSSTART";
+        case Event::OPTIONSEND:
+            return "OPTIONSEND";
+        case Event::OPTIONSTART:
+            return "OPTIONSTART";
+        case Event::OPTIONEND:
+            return "OPTIONEND";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+inline std::string stateToString(State state) {
+    switch (state) {
+        case State::GETOPTSETUP:
+            return "GETOPTSETUP";
+        case State::AUTHOR:
+            return "AUTHOR";
+        case State::HEADERFILENAME:
+            return "HEADERFILENAME";
+        case State::SOURCEFILENAME:
+            return "SOURCEFILENAME";
+        case State::NAMESPACE:
+            return "NAMESPACE";
+        case State::CLASSNAME:
+            return "CLASSNAME";
+        case State::OVERALLDESCRIPTION:
+            return "OVERALLDESCRIPTION";
+        case State::BLOCK:
+            return "BLOCK";
+        case State::SAMPLEUSAGE:
+            return "SAMPLEUSAGE";
+        case State::SAMPLE:
+            return "SAMPLE";
+        case State::OPTIONS:
+            return "OPTIONS";
+        case State::OPTION:
+            return "OPTION";
+        default:
+            return "UNKNOWN";
+    }
+}
 
 // Constructor
 StateMachine::StateMachine() {
@@ -24,6 +111,7 @@ void StateMachine::setState(State state) {
 
 // Methods
 void StateMachine::handleEvent(Event event) {
+    LOG_TRACE("State: " + stateToString(currentState) + " Event: " + eventToString(event));
     switch (currentState) {
         case State::START:
             switch (event) {

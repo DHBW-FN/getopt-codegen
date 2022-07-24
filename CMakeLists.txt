@@ -19,7 +19,7 @@ add_executable(
 
 
 
-find_package (Boost REQUIRED)
+find_package (Boost COMPONENTS log log_setup REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(CodeGenerator ${Boost_LIBRARIES})

@@ -6,6 +6,7 @@
 #include <xercesc/util/OutOfMemoryException.hpp>
 
 #include "XMLParser.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -17,6 +18,7 @@ XMLParser::XMLParser(const std::string &filename) {
 }
 
 void XMLParser::parse() {
+    LOG_INFO("Starting parsing of file " + filename);
     try {
         XMLPlatformUtils::Initialize();
     }
@@ -53,6 +55,7 @@ void XMLParser::parse() {
     }
 
     if (errorCount > 0) {
+        LOG_ERROR("There were " + to_string(errorCount) + " errors during parsing of file " + filename);
         perror("There were errors during parsing.");
         exit(1);
     }
@@ -61,6 +64,7 @@ void XMLParser::parse() {
     delete parser;
     //Terminate muss immer am Schluss stehen
     XMLPlatformUtils::Terminate();
+    LOG_INFO("Finished parsing of file " + filename);
 }
 
 void XMLParser::startDocument() {
@@ -72,6 +76,7 @@ void XMLParser::endDocument() {
 }
 
 void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes) {
+    LOG_TRACE("Start Element: " + string(XMLString::transcode(name)));
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPSTART);
         getOptSetup->parseAttributes(attributes);
@@ -107,6 +112,7 @@ void XMLParser::startElement(const XMLCh *const name, AttributeList &attributes)
 }
 
 void XMLParser::endElement(const XMLCh *const name) {
+    LOG_TRACE("End Element: " + string(XMLString::transcode(name)));
     if (!XMLString::compareString(name, u"GetOptSetup")) {
         sm->handleEvent(Event::GETOPTSETUPEND);
     } else if (!XMLString::compareString(name, u"Author")) {
@@ -135,6 +141,7 @@ void XMLParser::endElement(const XMLCh *const name) {
 }
 
 void XMLParser::characters(const XMLCh *const chars, const XMLSize_t length) {
+    LOG_TRACE("Characters: " + string(XMLString::transcode(chars)));
     switch (sm->getState()) {
         case State::START:
             break;

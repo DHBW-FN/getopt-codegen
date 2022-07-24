@@ -3,6 +3,7 @@
  */
 
 #include "models/Option.h"
+#include "Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <vector>
 #include <boost/algorithm/string.hpp>
@@ -65,6 +66,7 @@ void Option::setRef(const std::string &ref) {
     int _ref = boost::lexical_cast<int>(ref);
     if (_ref < 1 || _ref > 63) {
         std::cerr << "Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63." << std::endl;
+        LOG_ERROR("Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63.");
         exit(EXIT_FAILURE);
     }
     Option::ref = _ref;
@@ -105,6 +107,7 @@ void Option::setHasArguments(const std::string &_hasArguments) {
         Option::hasArguments = HasArguments::REQUIRED;
     } else {
         throw std::runtime_error("Invalid value for hasArguments");
+        LOG_ERROR("Invalid value for hasArguments");
     }
 }
 
@@ -117,6 +120,7 @@ void Option::setConvertTo(const std::string &_convertTo) {
         Option::convertTo = ConvertToOptions::BOOLEAN;
     } else {
         throw std::runtime_error("Invalid value for convertTo");
+        LOG_ERROR("Invalid value for convertTo");
     }
 }
 
@@ -131,6 +135,7 @@ void Option::setInterface(const std::string &_interface) {
 // Helpers
 
 void Option::parseAttributes(AttributeList &attributes) {
+    LOG_TRACE("Starting Option-Attributes parse");
     for (unsigned int i = 0; i < attributes.getLength(); i++) {
         if (!XMLString::compareString(attributes.getName(i), u"Ref")) {
             setRef(std::string(XMLString::transcode(attributes.getValue(i))));
@@ -156,4 +161,5 @@ void Option::parseAttributes(AttributeList &attributes) {
             setInterface(std::string(XMLString::transcode(attributes.getValue(i))));
         }
     }
+    LOG_TRACE("Finished Option-Attributes parse");
 }
