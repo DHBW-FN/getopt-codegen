@@ -16,10 +16,15 @@ XERCES_CPP_NAMESPACE_USE
 
 class GetOptSetup {
 public:
-    // Constructors
+    /**
+     * @brief Constructor for the GetOptSetup-Class
+     */
     GetOptSetup();
 
-    // Getters
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     const int &getSignPerLine() const;
     const Author &getAuthor() const;
     const string &getHeaderFileName() const;
@@ -29,8 +34,12 @@ public:
     const vector<string> &getOverAllDescriptions() const;
     const vector<string> &getSampleUsages() const;
     const vector<Option> &getOptions() const;
+    ///@}
 
-    // Setters
+    /** @name Setter
+    * @brief  Setter for the class
+    */
+    ///@{
     void setSignPerLine(const string &signPerLine);
     void setAuthor(const Author &author);
     void setHeaderFileName(const string &headerFileName);
@@ -40,13 +49,22 @@ public:
     void setOverAllDescriptions(const vector<string> &overAllDescriptions);
     void setSampleUsages(const vector<string> &sampleUsages);
     void setOptions(const vector<Option> &options);
+    ///@}
 
-    // Adders
+    /** @name Adder
+    * @brief  Adder for the class
+    */
+    ///@{
     void addOverAllDescription(const string &overAllDescription);
     void addSampleUsage(const string &sampleUsage);
     void addOption(const Option &option);
+    ///@}
 
     // Helpers
+    /**
+     * @brief Function to check if the class is valid
+     * @param attributes AttributeList of the GetOptSetup-Tag
+     */
     void parseAttributes(AttributeList &attributes);
 private:
     /**

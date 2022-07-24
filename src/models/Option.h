@@ -29,7 +29,10 @@ public:
     // Constructor
     Option();
 
-    // Getters
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     int getRef() const;
     char getShortOpt() const;
     const std::string &getLongOpt() const;
@@ -41,8 +44,12 @@ public:
     ConvertToOptions getConvertTo() const;
     std::string getDefaultValue() const;
     std::string getInterface() const;
+    ///@}
 
-    // Setters
+    /** @name Setter
+    * @brief  Setter for the class
+    */
+    ///@{
     void setRef(const std::string &ref);
     void setShortOpt(const std::string &shortOpt);
     void setLongOpt(const std::string &longOpt);
@@ -54,8 +61,12 @@ public:
     void setConvertTo(const std::string &convertTo);
     void setDefaultValue(const std::string &defaultValue);
     void setInterface(const std::string &interface);
+    ///@}
 
-    // Helpers
+    /**
+     * @brief Function to parse the Option-Tag
+     * @param attributes AttributeList of the Option-Tag
+     */
     void parseAttributes(AttributeList &attributes);
 private:
     /**

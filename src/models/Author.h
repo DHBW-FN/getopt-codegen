@@ -22,38 +22,23 @@ public:
      */
     Author();
 
-    /**
-     * @brief Getter for name
-     */
+    /** @name Getter
+    * @brief  Getter for the class
+    */
+    ///@{
     const string &getName() const;
-
-    /**
-     * @brief Getter for phone
-     */
     const string &getPhone() const;
-
-    /**
-     * @brief Getter for mail
-     */
     const string &getMail() const;
+    ///@}
 
-    /**
-     * @brief Setter for name
-     * @param _name name of author
-     */
+    /** @name Setter
+    * @brief  Setter for the class
+    */
+    ///@{
     void setName(const string &name);
-
-    /**
-     * @brief Setter for phone
-     * @param _phone phone number of author
-     */
     void setPhone(const string &phone);
-
-    /**
-     * @brief Setter for mail
-     * @param _mail mail of author
-     */
     void setMail(const string &email);
+    ///@}
 
     /**
      * @brief Function to parse the Author-Tag
