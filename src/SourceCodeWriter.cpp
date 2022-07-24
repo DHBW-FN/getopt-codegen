@@ -10,11 +10,13 @@
 // Constructor
 SourceCodeWriter::SourceCodeWriter(GetOptSetup *getOptSetup) {
     if (getOptSetup->getSourceFileName().empty() || getOptSetup->getHeaderFileName().empty()) {
+        LOG_ERROR("No source or header file name given.");
         perror("Both the Header-Filename and the Sourcefilename must be set.");
         exit(1);
     }
 
     if (getOptSetup->getClassName().empty()) {
+        LOG_ERROR("No class name given.");
         perror("The Class-Name must be set. ");
         exit(1);
     }
@@ -473,6 +475,7 @@ std::string SourceCodeWriter::determineArgsName(const Option &option) {
     }
 
     if (argsName.empty()) {
+        LOG_ERROR("Could not determine args name for " + option.getLongOpt() + " (" + option.getShortOpt() + ")");
         perror("Every option must at least have either an Interface, a LongOpt or a ShortOpt.");
         exit(1);
     }
