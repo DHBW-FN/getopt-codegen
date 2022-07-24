@@ -14,13 +14,9 @@ int main() {
     writer.writeFile();
     printf("Codegenerator finished!\n");
 
-    initLogger();
+    Logger::initLogger();
 
-    src::severity_logger< >& lg = my_logger::get();
-    CUSTOM_LOG(lg, debug) << "Hello, world!";
-
-//    src::severity_logger<logging::trivial::severity_level> lg;
-//    CUSTOM_LOG(lg, debug) << "A regular message";
+    CUSTOM_LOG(Logger::lg, debug) << "A regular message";
 
     return 0;
 }
