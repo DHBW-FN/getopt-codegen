@@ -66,6 +66,7 @@ void Option::setRef(const std::string &ref) {
     int _ref = boost::lexical_cast<int>(ref);
     if (_ref < 1 || _ref > 63) {
         std::cerr << "Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63." << std::endl;
+        LOG_ERROR("Error: Invalid ref value: [" << _ref << "]. Must be between 1 and 63.");
         exit(EXIT_FAILURE);
     }
     Option::ref = _ref;
@@ -106,6 +107,7 @@ void Option::setHasArguments(const std::string &_hasArguments) {
         Option::hasArguments = HasArguments::REQUIRED;
     } else {
         throw std::runtime_error("Invalid value for hasArguments");
+        LOG_ERROR("Invalid value for hasArguments");
     }
 }
 
@@ -118,6 +120,7 @@ void Option::setConvertTo(const std::string &_convertTo) {
         Option::convertTo = ConvertToOptions::BOOLEAN;
     } else {
         throw std::runtime_error("Invalid value for convertTo");
+        LOG_ERROR("Invalid value for convertTo");
     }
 }
 

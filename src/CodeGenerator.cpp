@@ -27,6 +27,7 @@ void CodeGenerator::run() {
     LOG_INFO("Starting CodeGenerator");
     if(getFilePath().empty()){
         perror("The path to the XML-File must be set.");
+        LOG_ERROR("The path to the XML-File must be set.");
         exit(EXIT_FAILURE);
     }
 
@@ -62,6 +63,7 @@ int main(int argc, char **argv) {
             case 'p':
                 if (optarg == nullptr){
                     perror("The path to the XML-File to be parsed was not set.");
+                    LOG_ERROR("The path to the XML-File to be parsed was not set.");
                     exit(EXIT_FAILURE);
                 }
                 generator.setFilePath(optarg);
@@ -69,6 +71,7 @@ int main(int argc, char **argv) {
             case 'o':
                 if(optarg == nullptr){
                     perror("When using \"-o/--output\" the path to the target directory must be set.");
+                    LOG_ERROR("When using \"-o/--output\" the path to the target directory must be set.");
                     exit(EXIT_FAILURE);
                 }
                     generator.setOutputDir(optarg);
@@ -76,6 +79,7 @@ int main(int argc, char **argv) {
             case '?':
             default:
                 perror("GetOpt encountered an unknown option.");
+                LOG_ERROR("GetOpt encountered an unknown option.");
                 exit(EXIT_FAILURE);
         }
     }
