@@ -10,7 +10,9 @@
         <Block>Dies geschieht in der Kommandozeile.</Block>
     </OverAllDescription>
     <SampleUsage>
-        <Sample>getoptgen -h</Sample>
+        <Sample>ExampleProgram -h</Sample>
+        <Sample>ExampleProgram --optional=23</Sample>
+        <Sample>ExampleProgram --arguments=45</Sample>
     </SampleUsage>
     <Options>
         <!-- ReqFunc51 -->
