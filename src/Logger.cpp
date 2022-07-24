@@ -1,3 +1,7 @@
+/*
+ * Editors: Tobias Goetz, Sebastian Wolf
+ */
+
 #include "Logger.h"
 
 #include <boost/algorithm/string/predicate.hpp>
