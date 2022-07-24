@@ -66,8 +66,7 @@ void SourceCodeWriter::setSourceFile(FILE *sourceFile) {
  * @param option a single option object
  * @return string with correct value type
  */
-string SourceCodeWriter::getValueTypeByOption(Option &option)
-{
+string SourceCodeWriter::getValueTypeByOption(Option &option) {
     switch (option.getConvertTo()) {
         case ConvertToOptions::STRING:
             return "std::string";
@@ -130,7 +129,8 @@ void SourceCodeWriter::headerFileClass() {
     // Values for the options
     for (Option option: getGetOptSetup()->getOptions()) {
         if (option.isHasArguments() != HasArguments::NONE) {
-            fprintf(getHeaderFile(), "%s %sValue", getValueTypeByOption(option).c_str(), determineArgsName(option).c_str());
+            fprintf(getHeaderFile(), "%s %sValue", getValueTypeByOption(option).c_str(),
+                    determineArgsName(option).c_str());
             if (option.isHasArguments() == HasArguments::OPTIONAL && !option.getDefaultValue().empty()) {
                 switch (option.getConvertTo()) {
                     case ConvertToOptions::STRING:
@@ -217,19 +217,20 @@ void SourceCodeWriter::createHeaderParsingFunction() {
 
 void SourceCodeWriter::sourceFileParse() {
     fprintf(getSourceFile(), "void %s::parse() {\n", getGetOptSetup()->getClassName().c_str());
-    for (auto &option : getGetOptSetup()->getOptions()) {
+    for (auto &option: getGetOptSetup()->getOptions()) {
         std::string optionName = determineArgsName(option);
         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", optionName.c_str());
 
         // exclusions
         if (!option.getExclusions().empty()) {
-            for (auto &exclusion : option.getExclusions()) {
+            for (auto &exclusion: option.getExclusions()) {
                 // Iterate over options again and compare exclusion with ref
-                for (auto &option2 : getGetOptSetup()->getOptions()) {
+                for (auto &option2: getGetOptSetup()->getOptions()) {
                     std::string option2Name = determineArgsName(option2);
                     if (option2.getRef() == exclusion) {
                         fprintf(getSourceFile(), "if (args.%s.isSet) {\n", option2Name.c_str());
-                        fprintf(getSourceFile(), "perror(\"%s and %s cannot be used together.\");\n", optionName.c_str(), option2Name.c_str());
+                        fprintf(getSourceFile(), "perror(\"%s and %s cannot be used together.\");\n",
+                                optionName.c_str(), option2Name.c_str());
                         fprintf(getSourceFile(), "exit(1);\n");
                         fprintf(getSourceFile(), "}\n");
                     }
@@ -248,9 +249,11 @@ void SourceCodeWriter::sourceFileParse() {
             fprintf(getSourceFile(), "if (!args.%s.value.empty()) {\n", optionName.c_str());
             //TODO This might not work this way, check back later
             fprintf(getSourceFile(), "try {\n");
-            fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n", optionName.c_str(), optionName.c_str(), optionName.c_str());
+            fprintf(getSourceFile(), "%sValue = boost::lexical_cast<typeof %sValue>(args.%s.value);\n",
+                    optionName.c_str(), optionName.c_str(), optionName.c_str());
             fprintf(getSourceFile(), "} catch (boost::bad_lexical_cast &) {\n");
-            fprintf(getSourceFile(), "perror(\"%s is not convertible to %s.\");\n}\n", optionName.c_str(), getValueTypeByOption(option).c_str());
+            fprintf(getSourceFile(), "perror(\"%s is not convertible to %s.\");\n}\n", optionName.c_str(),
+                    getValueTypeByOption(option).c_str());
             fprintf(getSourceFile(), "}\n");
         }
 
@@ -348,12 +351,12 @@ void SourceCodeWriter::createSourceParsingFunction() {
                 fprintf(getSourceFile(), "if(optarg == nullptr){\n"
                                          "perror(\"There was no argument passed for the option \\\"%s\\\" "
                                          "which requires one.\");\n"
-                                         "exit(1);\n}\nargs.%s.value = optarg;\n",
+                                         "exit(1);\n}\n",
                         bothOpts.c_str(), determineArgsName(option).c_str());
                 if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
-                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
-                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
-                                             "else\nargs.%s.value = optarg;\n",
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\nif(strcmp(optarg, \"true\")"
+                                             ")\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n",
                             determineArgsName(option).c_str(), determineArgsName(option).c_str(),
                             determineArgsName(option).c_str());
                 } else
@@ -361,16 +364,15 @@ void SourceCodeWriter::createSourceParsingFunction() {
                             determineArgsName(option).c_str());
                 break;
             case HasArguments::OPTIONAL:
-                fprintf(getSourceFile(), "if(optarg != nullptr)\nargs.%s.value = optarg;",
-                        determineArgsName(option).c_str());
+                fprintf(getSourceFile(), "if(optarg != nullptr){\n");
                 if (option.getConvertTo() == ConvertToOptions::BOOLEAN) {
-                    fprintf(getSourceFile(), "if(strcmp(optarg, \"true\"))\nargs.%s.value = \"1\";\n"
-                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n"
-                                             "else\nargs.%s.value = optarg;\n",
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\nif(strcmp(optarg, \"true\"))"
+                                             "\nargs.%s.value = \"1\";\n"
+                                             "else if(strcmp(optarg, \"false\"))\nargs.%s.value = \"0\";\n}\n",
                             determineArgsName(option).c_str(), determineArgsName(option).c_str(),
                             determineArgsName(option).c_str());
                 } else
-                    fprintf(getSourceFile(), "args.%s.value = optarg;\n",
+                    fprintf(getSourceFile(), "args.%s.value = optarg;\n}\n",
                             determineArgsName(option).c_str());
                 break;
             default:
@@ -469,7 +471,8 @@ void SourceCodeWriter::createSourceGetter() {
                     determineArgsName(option).c_str());
             if (option.isHasArguments() != HasArguments::NONE) {
                 fprintf(getSourceFile(), "%s %s::getValueOf%s() const{\nreturn %sValue;\n}\n",
-                        getValueTypeByOption(option).c_str(), getGetOptSetup()->getClassName().c_str(), capitalizedArgsName.c_str(),
+                        getValueTypeByOption(option).c_str(), getGetOptSetup()->getClassName().c_str(),
+                        capitalizedArgsName.c_str(),
                         determineArgsName(option).c_str());
             }
         } else if (option.getInterface().empty() && option.getConnectToInternalMethod().empty()
@@ -484,10 +487,11 @@ void SourceCodeWriter::createSourceGetter() {
 void SourceCodeWriter::createExternalFunctions() {
     vector<Option> options = getGetOptSetup()->getOptions();
 
-    for(auto &option : options){
-        if(!option.getConnectToExternalMethod().empty()){
+    for (auto &option: options) {
+        if (!option.getConnectToExternalMethod().empty()) {
             fprintf(getHeaderFile(), "virtual void %s(", option.getConnectToExternalMethod().c_str());
-            if(option.isHasArguments() == HasArguments::OPTIONAL || option.isHasArguments() == HasArguments::REQUIRED){
+            if (option.isHasArguments() == HasArguments::OPTIONAL ||
+                option.isHasArguments() == HasArguments::REQUIRED) {
                 std::string type = getValueTypeByOption(option);
                 fprintf(getHeaderFile(), "%s arg", type.c_str());
             }
